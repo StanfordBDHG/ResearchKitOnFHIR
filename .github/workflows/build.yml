@@ -31,6 +31,3 @@ jobs:
       run: xcodebuild test -scheme ResearchKitOnFHIR -sdk iphonesimulator -destination "name=iPhone 13 Pro" CODE_SIGNING_ALLOWED="NO" -enableCodeCoverage YES -resultBundlePath ResearchKitOnFHIR.xcresult
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
-      with:
-        xcode: true
-        xcode_archive_path: ResearchKitOnFHIR.xcresult
