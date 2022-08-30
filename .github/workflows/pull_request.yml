@@ -30,6 +30,7 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         xcode: true
         xcode_archive_path: ResearchKitOnFHIR.xcresult
   reuse:
