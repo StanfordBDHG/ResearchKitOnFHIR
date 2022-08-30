@@ -44,7 +44,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: GitHub Action for SwiftLint
-        uses: norio-nomura/action-swiftlint@3
+        uses: norio-nomura/action-swiftlint@3.2.1
         with:
           args: --strict
         env:
