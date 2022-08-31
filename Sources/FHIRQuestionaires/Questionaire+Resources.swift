@@ -11,6 +11,7 @@ import Foundation
 
 
 extension Questionnaire {
+    /// A FHIR questionaire demonstrating conditional steps using an ice cream-based example.
     public static var iceCreamExample: Questionnaire = loadQuestionaire(withName: "IceCreamExample")
     
     

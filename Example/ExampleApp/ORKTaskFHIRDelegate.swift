@@ -22,7 +22,10 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
 
-            let data = try! encoder.encode(fhirResponses)
+            guard let data = try? encoder.encode(fhirResponses) else {
+                return
+            }
+            
             print(String(decoding: data, as: UTF8.self))
         default:
             break
