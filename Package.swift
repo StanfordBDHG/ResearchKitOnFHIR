@@ -17,7 +17,8 @@ let package = Package(
         .iOS(.v11)
     ],
     products: [
-        .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"])
+        .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
+        .library(name: "FHIRQuestionaires", targets: ["FHIRQuestionaires"])
     ],
     dependencies: [
         .package(url: "https://github.com/PSchmiedmayer/ResearchKit.git", from: "2.1.1"),
@@ -31,13 +32,20 @@ let package = Package(
                 .product(name: "ModelsR4", package: "FHIRModels")
             ]
         ),
+        .target(
+            name: "FHIRQuestionaires",
+            dependencies: [
+                .product(name: "ModelsR4", package: "FHIRModels")
+            ],
+            resources: [
+                .copy("Resources/IceCreamExample.json")
+            ]
+        ),
         .testTarget(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
-                .target(name: "ResearchKitOnFHIR")
-            ],
-            resources: [
-                .copy("Resources")
+                .target(name: "ResearchKitOnFHIR"),
+                .target(name: "FHIRQuestionaires")
             ]
         )
     ]
