@@ -13,7 +13,7 @@ Package.resolved
 .build/
 .xcodebuild/
 coverage.lcov
-.xcresult
+*.xcresult
 
 # IDE related folders
 .idea
