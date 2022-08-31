@@ -203,7 +203,7 @@ extension ORKNavigableOrderedTask {
             return ORKBooleanAnswerFormat.booleanAnswerFormat()
         case .choice:
             let answerOptions = fhirChoicesToORKTextChoice(question)
-            guard answerOptions.isEmpty else {
+            guard !answerOptions.isEmpty else {
                 throw FHIRToResearchKitConversionError.noOptions
             }
             return ORKTextChoiceAnswerFormat(style: ORKChoiceAnswerStyle.singleChoice, textChoices: answerOptions)
