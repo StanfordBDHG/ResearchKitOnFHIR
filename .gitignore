@@ -26,3 +26,6 @@ xcuserdata/
 
 # Documentation generation
 *.doccarchive
+
+# Example Project
+!Example/Example.xcodeproj

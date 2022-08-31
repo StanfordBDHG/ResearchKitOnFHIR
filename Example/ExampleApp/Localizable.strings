@@ -1,0 +1,10 @@
+/* 
+ This source file is part of the ResearchKitOnFHIR open source project
+
+ SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+
+ SPDX-License-Identifier: MIT
+*/
+
+"START_QUESTIONAIRE" = "Start ResearchKitOnFHIR Questionaire";
+"ERROR_MESSAGE" = "Could not load the FHIR-based questionnaire. Please check your JSON file or any errors thrown during the decoding.";

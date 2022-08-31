@@ -6,17 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import ModelsR4
-import ResearchKit
+import FHIRQuestionaires
 @testable import ResearchKitOnFHIR
 import XCTest
 
 
 final class ResearchKitOnFHIRTests: XCTestCase {
     func testFHIRToResearchKit() throws {
-        let exampleJSONData = try Data(contentsOf: try XCTUnwrap(Bundle.module.url(forResource: "IceCreamExample", withExtension: "json")))
-        let questionaire = try JSONDecoder().decode(Questionnaire.self, from: exampleJSONData)
-        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: questionaire)
+        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.iceCreamExample)
         
         XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
     }
