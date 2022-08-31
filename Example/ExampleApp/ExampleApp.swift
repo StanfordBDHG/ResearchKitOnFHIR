@@ -15,11 +15,19 @@ import SwiftUI
 struct ExampleApp: App {
     @State
     private var presentQuestionaire = false
-    
+
+    func createTask(questionnaire: Questionnaire) -> ORKNavigableOrderedTask? {
+        do {
+            return try ORKNavigableOrderedTask(questionnaire: questionnaire)
+        } catch {
+            print("Error creating task: \(error)")
+        }
+        return nil
+    }
     
     var body: some Scene {
         WindowGroup {
-            if let orknavigableOrderedTask = try? ORKNavigableOrderedTask(questionnaire: Questionnaire.iceCreamExample) {
+            if let task = createTask(questionnaire: Questionnaire.iceCreamExample) {
                 VStack {
                     Button("START_QUESTIONAIRE") {
                         presentQuestionaire = true
@@ -27,7 +35,7 @@ struct ExampleApp: App {
                         .buttonStyle(.borderedProminent)
                 }
                     .sheet(isPresented: $presentQuestionaire) {
-                        ORKOrderedTaskView(tasks: orknavigableOrderedTask)
+                        ORKOrderedTaskView(tasks: task)
                     }
             } else {
                 Text("ERROR_MESSAGE")
