@@ -46,17 +46,7 @@ public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
 
 /// A class that converts FHIR Questionnaires to ResearchKit ORKOrderedTasks
 extension ORKNavigableOrderedTask {
-    /// Supported FHIR extensions
-    private enum SupportedExtensions {
-        static let questionaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
-        static let regex = "http://hl7.org/fhir/StructureDefinition/regex"
-        static let validationMessage = "http://cardinalkit.org/fhir/StructureDefinition/validationtext"
-        static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
-        static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
-        static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"
-    }
-    
-    
+
     /// Create a `ORKNavigableOrderedTask` by parsing a FHIR `Questionnaire`. Throws a `FHIRToResearchKitConversionError` if an error happens during the parsing.
     /// - Parameters:
     ///  - title: The title of the questionnaire. If you pass in a `String` the translation overrides the title that might be provided in the FHIR `Questionnaire`.
@@ -211,24 +201,24 @@ extension ORKNavigableOrderedTask {
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.date)
         case .decimal:
             let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: "")
-            answerFormat.maximumFractionDigits = getMaximumDecimalPlaces(question)
-            answerFormat.minimum = getMinValue(question)
-            answerFormat.maximum = getMaxValue(question)
+            answerFormat.maximumFractionDigits = question.maximumDecimalPlaces
+            answerFormat.minimum = question.minValue
+            answerFormat.maximum = question.maxValue
             return answerFormat
         case .integer:
             let answerFormat = ORKNumericAnswerFormat.integerAnswerFormat(withUnit: "")
-            answerFormat.minimum = getMinValue(question)
-            answerFormat.maximum = getMaxValue(question)
+            answerFormat.minimum = question.minValue
+            answerFormat.maximum = question.maxValue
             return answerFormat
         case .quantity: // a numeric answer with an included unit to be displayed
-            let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: getUnit(question))
-            answerFormat.maximumFractionDigits = getMaximumDecimalPlaces(question)
-            answerFormat.minimum = getMinValue(question)
-            answerFormat.maximum = getMaxValue(question)
+            let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: question.unit)
+            answerFormat.maximumFractionDigits = question.maximumDecimalPlaces
+            answerFormat.minimum = question.minValue
+            answerFormat.maximum = question.maxValue
             return answerFormat
         case .text, .string:
-            let validationRegularExpression = getValidationRegularExpression(question)
-            let validationMessage = getValidationMessage(question)
+            let validationRegularExpression = question.validationRegularExpression
+            let validationMessage = question.validationMessage
             let maximumLength = Int(question.maxLength?.value?.integer ?? 0)
 
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
@@ -262,88 +252,5 @@ extension ORKNavigableOrderedTask {
         }
         
         return choices
-    }
-    
-    
-    // MARK: FHIR Extensions
-
-    /// Gets the minimum value for a numerical answer.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a numerical answer type (integer, decimal).
-    /// - Returns: An optional `NSNumber` containing the minimum value allowed.
-    private static func getMinValue(_ question: QuestionnaireItem) -> NSNumber? {
-        guard let minValueExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.minValue),
-              case let .integer(integerValue) = minValueExtension.value,
-              let minValue = integerValue.value?.integer as? Int32 else {
-            return nil
-        }
-        return NSNumber(value: minValue)
-    }
-
-    /// Gets the maximum value for a numerical answer.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a numerical answer type (integer, decimal).
-    /// - Returns: An optional `NSNumber` containing the maximum value allowed.
-    private static func getMaxValue(_ question: QuestionnaireItem) -> NSNumber? {
-        guard let maxValueExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.maxValue),
-              case let .integer(integerValue) = maxValueExtension.value,
-              let maxValue = integerValue.value?.integer as? Int32 else {
-            return nil
-        }
-        return NSNumber(value: maxValue)
-    }
-
-    /// Gets the maximum number of decimal palces for a decimal answer.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a decimal answer type.
-    /// - Returns: An optional `NSNumber` representing the maximum number of digits to the right of the decimal place.
-    private static func getMaximumDecimalPlaces(_ question: QuestionnaireItem) -> NSNumber? {
-        guard let maxDecimalPlacesExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.maxDecimalPlaces),
-              case let .integer(integerValue) = maxDecimalPlacesExtension.value,
-              let maxDecimalPlaces = integerValue.value?.integer as? Int32 else {
-                return nil
-        }
-        return NSNumber(value: maxDecimalPlaces)
-    }
-    
-    /// Gets the unit of a quantity answer type.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a quantity answer type.
-    /// - Returns: An optional `String` containing the unit (i.e. cm) if it was provided.
-    private static func getUnit(_ question: QuestionnaireItem) -> String? {
-        guard let unitExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.questionaireUnit),
-              case let .coding(coding) = unitExtension.value else {
-            return nil
-        }
-        return coding.code?.value?.string
-    }
-
-    /// Checks a QuestionnaireItem for an extension matching the given URL and then return it if it exists.
-    /// - Parameters:
-    ///   - question: A FHIR `QuestionnaireItem`.
-    ///   - url: A `String` identifying the extension.
-    /// - Returns: an optional Extension if it was found.
-    private static func getExtensionInQuestionnaireItem(question: QuestionnaireItem, url: String) -> Extension? {
-        question.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
-    }
-
-    /// Gets the regular expression specified for validating a text input in a question.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a text or string input that contains a regular expression for validation.
-    /// - Returns: An optional `String` containing the regular expression, if it exists.
-    private static func getValidationRegularExpression(_ question: QuestionnaireItem) -> NSRegularExpression? {
-        guard let regexExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.regex),
-              case let .string(regex) = regexExtension.value,
-              let stringRegularExpression = regex.value?.string else {
-            return nil
-        }
-        return try? NSRegularExpression(pattern: stringRegularExpression)
-    }
-    
-    /// Gets the validation message for a question.
-    /// - Parameter question: A FHIR `QuestionnaireItem` with a text or string input that contains a validation message
-    /// - Returns: An optional `String` containing the validation message, if it exists.
-    private static func getValidationMessage(_ question: QuestionnaireItem) -> String? {
-        guard let validationMessageExtension = getExtensionInQuestionnaireItem(question: question, url: SupportedExtensions.validationMessage),
-              case let .string(message) = validationMessageExtension.value,
-              let stringMessage = message.value?.string else {
-            return nil
-        }
-        return stringMessage
     }
 }
