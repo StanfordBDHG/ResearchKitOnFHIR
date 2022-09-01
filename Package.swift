@@ -38,8 +38,8 @@ let package = Package(
                 .product(name: "ModelsR4", package: "FHIRModels")
             ],
             resources: [
-                .copy("Resources/IceCreamExample.json"),
-                .copy("Resources/EmailExample.json")
+                .copy("Resources/SkipLogicExample.json"),
+                .copy("Resources/TextValidationExample.json")
             ]
         ),
         .testTarget(

@@ -17,8 +17,8 @@ struct ExampleApp: App {
     @State private var activeQuestionnaire: Questionnaire?
 
     private let exampleQuestionnaires: [Questionnaire] = [
-        .iceCreamExample,
-        .emailExample
+        .skipLogicExample,
+        .textValidationExample
     ]
     
     var body: some Scene {

@@ -1,11 +1,11 @@
 {
   "resourceType": "Questionnaire",
-  "id": "cardinalkit-email-example",
-  "title": "Email Validation Example",
+  "id": "cardinalkit-text-validation-example",
+  "title": "Text Validation Example",
   "language": "en-US",
   "status": "draft",
   "publisher": "CardinalKit",
-  "url": "http://cardinalkit.org/fhir/questionnaires/email-example",
+  "url": "http://cardinalkit.org/fhir/questionnaires/text-validation-example",
   "meta": {
     "profile": [
       "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
@@ -57,7 +57,7 @@
           "valueString": "Please enter a valid email address."
         }
       ],
-      "required": false
+      "required": true
     }
   ]
 }
