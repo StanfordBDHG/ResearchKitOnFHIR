@@ -10,4 +10,3 @@
 "START_QUESTIONNAIRE" = "Start ResearchKitOnFHIR Questionaire";
 "ERROR_MESSAGE" = "Could not load the FHIR-based questionnaire. Please check your JSON file or any errors thrown during the decoding.";
 "QUESTIONNAIRE_LIST_HEADER" = "Example FHIR Questionnaires";
-"COPYRIGHT" = "Created for the CardinalKit Framework at Stanford University";

@@ -188,6 +188,7 @@ extension ORKNavigableOrderedTask {
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter question: A FHIR `QuestionnaireItem` object.
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
+    // swiftlint:disable:next cyclomatic_complexity
     private static func fhirQuestionnaireItemToORKAnswerFormat(question: QuestionnaireItem) throws -> ORKAnswerFormat {
         switch question.type.value {
         case .boolean:
