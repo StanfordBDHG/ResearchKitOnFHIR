@@ -17,7 +17,8 @@ struct QuestionnaireListView: View {
     
     private let exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
-        .textValidationExample
+        .textValidationExample,
+        .containedValueSetExample
     ]
     
     var body: some View {

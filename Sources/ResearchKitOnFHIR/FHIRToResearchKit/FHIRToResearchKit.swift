@@ -43,8 +43,20 @@ public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
     }
 }
 
+extension Questionnaire {
+    /// Get ValueSets defined as a contained resource within a FHIR `Questionnaire`
+    /// - Returns: An array of `ValueSet`
+    func getContainedValueSets() -> [ValueSet] {
+        guard let contained = self.contained else {
+            return []
+        }
+        let valueSets = contained.compactMap { resource in
+            resource.get() as? ValueSet
+        }
+        return valueSets
+    }
+}
 
-/// A class that converts FHIR Questionnaires to ResearchKit ORKOrderedTasks
 extension ORKNavigableOrderedTask {
     /// Create a `ORKNavigableOrderedTask` by parsing a FHIR `Questionnaire`. Throws a `FHIRToResearchKitConversionError` if an error happens during the parsing.
     /// - Parameters:
@@ -66,7 +78,8 @@ extension ORKNavigableOrderedTask {
         }
 
         // Convert each FHIR Questionnaire Item to an ORKStep
-        var steps = ORKNavigableOrderedTask.fhirQuestionnaireItemsToORKSteps(items: item, title: (title ?? questionnaire.title?.value?.string) ?? "")
+        let valueSets = questionnaire.getContainedValueSets()
+        var steps = ORKNavigableOrderedTask.fhirQuestionnaireItemsToORKSteps(items: item, title: (title ?? questionnaire.title?.value?.string) ?? "", valueSets: valueSets)
         
         // Add a summary step at the end of the task if defined
         if let summaryStep = summaryStep {
@@ -78,14 +91,13 @@ extension ORKNavigableOrderedTask {
         // If any questions have defined skip logic, convert to ResearchKit navigation rules
         try constructNavigationRules(questions: item)
     }
-    
 
     /// Converts FHIR `QuestionnaireItems` (questions) to ResearchKit `ORKSteps`.
     /// - Parameters:
     ///   - questions: An array of FHIR `QuestionnaireItems`.
     ///   - title: A `String` that will be rendered above the questions by ResearchKit.
     /// - Returns:An `Array` of ResearchKit `ORKSteps`.
-    private static func fhirQuestionnaireItemsToORKSteps(items: [QuestionnaireItem], title: String) -> [ORKStep] {
+    private static func fhirQuestionnaireItemsToORKSteps(items: [QuestionnaireItem], title: String, valueSets: [ValueSet]) -> [ORKStep] {
         var surveySteps: [ORKStep] = []
         surveySteps.reserveCapacity(items.count)
         
@@ -96,18 +108,18 @@ extension ORKNavigableOrderedTask {
             
             switch questionType {
             case QuestionnaireItemType.group:
-                // multiple questions in a group
-                if let groupStep = fhirGroupToORKFormStep(question: question, title: title) {
+                /// Converts multiple questions in a group into a ResearchKit form step
+                if let groupStep = fhirGroupToORKFormStep(question: question, title: title, valueSets: valueSets) {
                     surveySteps.append(groupStep)
                 }
             case QuestionnaireItemType.display:
-                // a string to display that does not take an answer
+                /// Creates a ResearchKit instruction step with the string to display
                 if let instructionStep = fhirDisplayToORKInstructionStep(question: question, title: title) {
                     surveySteps.append(instructionStep)
                 }
             default:
-                // individual questions
-                if let step = fhirQuestionnaireItemToORKQuestionStep(question: question, title: title) {
+                /// Converts individual questions to ResearchKit Question steps
+                if let step = fhirQuestionnaireItemToORKQuestionStep(question: question, title: title, valueSets: valueSets) {
                     if let required = question.required?.value?.bool {
                         step.isOptional = !required
                     }
@@ -124,13 +136,13 @@ extension ORKNavigableOrderedTask {
     ///   - question: A FHIR `QuestionnaireItem` object (a single question or a set of questions in a group).
     ///   - title: A `String` that will be displayed above the question when rendered by ResearchKit.
     /// - Returns: An `ORKQuestionStep` object (a ResearchKit question step containing the above question).
-    private static func fhirQuestionnaireItemToORKQuestionStep(question: QuestionnaireItem, title: String) -> ORKQuestionStep? {
+    private static func fhirQuestionnaireItemToORKQuestionStep(question: QuestionnaireItem, title: String, valueSets: [ValueSet]) -> ORKQuestionStep? {
         guard let questionText = question.text?.value?.string,
               let identifier = question.linkId.value?.string else {
             return nil
         }
 
-        let answer = try? fhirQuestionnaireItemToORKAnswerFormat(question: question)
+        let answer = try? fhirQuestionnaireItemToORKAnswerFormat(question: question, valueSets: valueSets)
         return ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
     }
 
@@ -139,7 +151,7 @@ extension ORKNavigableOrderedTask {
     ///   - question: A FHIR QuestionnaireItem object which contains a group of nested questions.
     ///   - title: A String that will be displayed at the top of the form when rendered by ResearchKit.
     /// - Returns: An ORKFormStep object (a ResearchKit form step containing all of the nested questions).
-    private static func fhirGroupToORKFormStep(question: QuestionnaireItem, title: String) -> ORKFormStep? {
+    private static func fhirGroupToORKFormStep(question: QuestionnaireItem, title: String, valueSets: [ValueSet]) -> ORKFormStep? {
         guard let id = question.linkId.value?.string,
               let nestedQuestions = question.item else {
             return nil
@@ -152,7 +164,7 @@ extension ORKNavigableOrderedTask {
         for question in nestedQuestions {
             guard let questionId = question.linkId.value?.string,
                   let questionText = question.text?.value?.string,
-                  let answerFormat = try? fhirQuestionnaireItemToORKAnswerFormat(question: question) else {
+                  let answerFormat = try? fhirQuestionnaireItemToORKAnswerFormat(question: question, valueSets: valueSets) else {
                 continue
             }
             
@@ -189,12 +201,12 @@ extension ORKNavigableOrderedTask {
     /// - Parameter question: A FHIR `QuestionnaireItem` object.
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
     // swiftlint:disable:next cyclomatic_complexity
-    private static func fhirQuestionnaireItemToORKAnswerFormat(question: QuestionnaireItem) throws -> ORKAnswerFormat {
+    private static func fhirQuestionnaireItemToORKAnswerFormat(question: QuestionnaireItem, valueSets: [ValueSet]) throws -> ORKAnswerFormat {
         switch question.type.value {
         case .boolean:
             return ORKBooleanAnswerFormat.booleanAnswerFormat()
         case .choice:
-            let answerOptions = fhirChoicesToORKTextChoice(question)
+            let answerOptions = fhirChoicesToORKTextChoice(question: question, valueSets: valueSets)
             guard !answerOptions.isEmpty else {
                 throw FHIRToResearchKitConversionError.noOptions
             }
@@ -239,22 +251,49 @@ extension ORKNavigableOrderedTask {
     /// Converts FHIR text answer choices to ResearchKit `ORKTextChoice`.
     /// - Parameter question: A FHIR `QuestionnaireItem`.
     /// - Returns: An array of `ORKTextChoice` objects, each representing a textual answer option.
-    private static func fhirChoicesToORKTextChoice(_ question: QuestionnaireItem) -> [ORKTextChoice] {
+    private static func fhirChoicesToORKTextChoice(question: QuestionnaireItem, valueSets: [ValueSet]) -> [ORKTextChoice] {
         var choices: [ORKTextChoice] = []
-        guard let answerOptions = question.answerOption else {
-            return choices
-        }
-        
-        for option in answerOptions {
-            guard case let .coding(coding) = option.value,
-                  let display = coding.display?.value?.string,
-                  let code = coding.code?.value?.string else {
-                continue
+
+        /// If the `QuestionnaireItem` has an `answerValueSet` defined which is a reference to a contained `ValueSet`,
+        /// search the available `ValueSets`and, if a match is found, convert the options to `ORKTextChoice`
+        if let answerValueSetURL = question.answerValueSet?.value?.url.absoluteString,
+           answerValueSetURL.starts(with: "#") {
+            let valueSet = valueSets.first { valueSet in
+                if let valueSetID = valueSet.id?.value?.string {
+                    return "#\(valueSetID)" == answerValueSetURL
+                }
+                return false
             }
-            
-            choices.append(ORKTextChoice(text: display, value: code as NSCoding & NSCopying & NSObjectProtocol))
+
+            guard let answerOptions = valueSet?.compose?.include.first?.concept else {
+                return choices
+            }
+
+            for option in answerOptions {
+                guard let display = option.display?.value?.string,
+                      let code = option.code.value?.string else {
+                    continue
+                }
+                let choice = ORKTextChoice(text: display, value: code as NSCoding & NSCopying & NSObjectProtocol)
+                choices.append(choice)
+            }
+        } else {
+            /// If the `QuestionnaireItem` has `answerOptions` defined instead, extract these options
+            /// and convert them to `ORKTextChoice`
+            guard let answerOptions = question.answerOption else {
+                return choices
+            }
+
+            for option in answerOptions {
+                guard case let .coding(coding) = option.value,
+                      let display = coding.display?.value?.string,
+                      let code = coding.code?.value?.string else {
+                    continue
+                }
+                let choice = ORKTextChoice(text: display, value: code as NSCoding & NSCopying & NSObjectProtocol)
+                choices.append(choice)
+            }
         }
-        
         return choices
     }
 }
