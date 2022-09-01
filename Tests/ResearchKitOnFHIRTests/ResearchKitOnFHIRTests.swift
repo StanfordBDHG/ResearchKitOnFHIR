@@ -13,7 +13,7 @@ import XCTest
 
 final class ResearchKitOnFHIRTests: XCTestCase {
     func testFHIRToResearchKit() throws {
-        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.iceCreamExample)
+        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
         
         XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
     }
