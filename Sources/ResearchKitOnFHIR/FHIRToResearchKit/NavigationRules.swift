@@ -77,7 +77,7 @@ extension Coding {
         }
         
         switch fhirOperator {
-        case .exists, .equal:
+        case .equal:
             let matchingPattern = "^(?!\(matchValue)).*$"
             return ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector, matchingPattern: matchingPattern)
         default:
@@ -93,6 +93,9 @@ extension FHIRPrimitive where PrimitiveType == FHIRBool {
         }
         
         switch fhirOperator {
+        case .exists:
+            let nilCheckPredicate = ORKResultPredicate.predicateForNilQuestionResult(with: resultSelector)
+            return booleanValue ? nilCheckPredicate : NSCompoundPredicate(notPredicateWithSubpredicate: nilCheckPredicate)
         case .equal:
             return ORKResultPredicate.predicateForBooleanQuestionResult(
                 with: resultSelector,
