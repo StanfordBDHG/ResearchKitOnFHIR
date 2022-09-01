@@ -6,15 +6,44 @@
 // SPDX-License-Identifier: MIT
 //
 
-import FHIRQuestionaires
+import FHIRQuestionnaires
 import ResearchKitOnFHIR
 import SwiftUI
 
 
 @main
 struct ExampleApp: App {
-    @State
-    private var presentQuestionaire = false
+    @State private var presentQuestionnaire = false
+    @State private var activeQuestionnaire: Questionnaire?
+
+    private let exampleQuestionnaires: [Questionnaire] = [
+        .iceCreamExample,
+        .emailExample
+    ]
+    
+    var body: some Scene {
+        WindowGroup {
+            List {
+                Section{
+                    ForEach(exampleQuestionnaires, id: \.self) { questionnaire in
+                        Button(questionnaire.title?.value?.string ?? "Untitled Questionnaire") {
+                            activeQuestionnaire = questionnaire
+                            presentQuestionnaire = true
+                        }
+                    }
+                } header: {
+                    Text("Example FHIR Questionnaires")
+                }
+            }
+            .sheet(isPresented: $presentQuestionnaire) {
+                QuestionnaireView(questionnaire: self.$activeQuestionnaire)
+            }
+        }
+    }
+}
+
+struct QuestionnaireView: View {
+    @Binding var questionnaire: Questionnaire?
 
     func createTask(questionnaire: Questionnaire) -> ORKNavigableOrderedTask? {
         do {
@@ -24,23 +53,13 @@ struct ExampleApp: App {
         }
         return nil
     }
-    
-    var body: some Scene {
-        WindowGroup {
-            if let task = createTask(questionnaire: Questionnaire.iceCreamExample) {
-                VStack {
-                    Button("START_QUESTIONAIRE") {
-                        presentQuestionaire = true
-                    }
-                        .buttonStyle(.borderedProminent)
-                }
-                    .sheet(isPresented: $presentQuestionaire) {
-                        ORKOrderedTaskView(tasks: task)
-                    }
-            } else {
-                Text("ERROR_MESSAGE")
-                    .multilineTextAlignment(.center)
-            }
+
+    var body: some View {
+        if let activeQuestionnaire = questionnaire,
+           let task = createTask(questionnaire: activeQuestionnaire) {
+            ORKOrderedTaskView(tasks: task)
+        } else {
+            Text("ERROR_MESSAGE")
         }
     }
 }

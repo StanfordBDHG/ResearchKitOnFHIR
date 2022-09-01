@@ -18,7 +18,7 @@ let package = Package(
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
-        .library(name: "FHIRQuestionaires", targets: ["FHIRQuestionaires"])
+        .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
         .package(url: "https://github.com/PSchmiedmayer/ResearchKit.git", from: "2.1.1"),
@@ -33,19 +33,20 @@ let package = Package(
             ]
         ),
         .target(
-            name: "FHIRQuestionaires",
+            name: "FHIRQuestionnaires",
             dependencies: [
                 .product(name: "ModelsR4", package: "FHIRModels")
             ],
             resources: [
-                .copy("Resources/IceCreamExample.json")
+                .copy("Resources/IceCreamExample.json"),
+                .copy("Resources/EmailExample.json")
             ]
         ),
         .testTarget(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
                 .target(name: "ResearchKitOnFHIR"),
-                .target(name: "FHIRQuestionaires")
+                .target(name: "FHIRQuestionnaires")
             ]
         )
     ]

@@ -218,13 +218,15 @@ extension ORKNavigableOrderedTask {
             answerFormat.maximum = question.maxValue
             return answerFormat
         case .text, .string:
-            let validationRegularExpression = question.validationRegularExpression
-            let validationMessage = question.validationMessage
             let maximumLength = Int(question.maxLength?.value?.integer ?? 0)
-
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
-            answerFormat.validationRegularExpression = validationRegularExpression
-            answerFormat.invalidMessage = validationMessage
+
+            /// Applies a regular expression for validation, if defined
+            if let validationRegularExpression = question.validationRegularExpression {
+                answerFormat.validationRegularExpression = validationRegularExpression
+                answerFormat.invalidMessage = question.validationMessage ?? "Invalid input"
+            }
+
             return answerFormat
         case .time:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.dateAndTime)

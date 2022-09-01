@@ -1,6 +1,7 @@
 {
   "resourceType": "Questionnaire",
-  "id": "sample-fhir-questionnaire-cardinalkit",
+  "id": "cardinalkit-icecream-example",
+  "title": "Ice Cream Questionnaire",
   "language": "en-US",
   "status": "draft",
   "publisher": "CardinalKit",

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import FHIRQuestionaires
+import FHIRQuestionnaires
 @testable import ResearchKitOnFHIR
 import XCTest
 
