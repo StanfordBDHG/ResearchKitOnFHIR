@@ -14,24 +14,28 @@ import ModelsR4
 struct QuestionnaireListView: View {
     @State private var presentQuestionnaire = false
     @State private var activeQuestionnaire: Questionnaire?
-
+    
     private let exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample
     ]
-
+    
     var body: some View {
-        List {
-            Section{
-                ForEach(exampleQuestionnaires, id: \.self) { questionnaire in
-                    Button(questionnaire.title?.value?.string ?? "Untitled Questionnaire") {
-                        activeQuestionnaire = questionnaire
-                        presentQuestionnaire = true
+        VStack {
+            Text("TITLE")
+            List {
+                Section{
+                    ForEach(exampleQuestionnaires, id: \.self) { questionnaire in
+                        Button(questionnaire.title?.value?.string ?? "Untitled Questionnaire") {
+                            activeQuestionnaire = questionnaire
+                            presentQuestionnaire = true
+                        }
                     }
+                } header: {
+                    Text("QUESTIONNAIRE_LIST_HEADER")
                 }
-            } header: {
-                Text("Example FHIR Questionnaires")
             }
+            Text("COPYRIGHT")
         }
         .sheet(isPresented: $presentQuestionnaire) {
             QuestionnaireView(questionnaire: self.$activeQuestionnaire)
