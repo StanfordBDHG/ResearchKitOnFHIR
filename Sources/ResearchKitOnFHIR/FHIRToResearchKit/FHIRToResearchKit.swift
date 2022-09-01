@@ -18,7 +18,7 @@ import ResearchKit
 /// An error that is thrown when translating a FHIR `Questionnaire` to an `ORKNavigableOrderedTask`
 public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
     case noItems
-    case noId
+    case noURL
     case unsupportedOperator(QuestionnaireItemOperator)
     case unsupportedAnswer(QuestionnaireItemEnableWhen.AnswerX)
     case noOptions
@@ -29,8 +29,8 @@ public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
         switch self {
         case .noItems:
             return "The parsed FHIR Questionaire didn't contain any items"
-        case .noId:
-            return "This FHIR Questionnaire does not have an id"
+        case .noURL:
+            return "This FHIR Questionnaire does not have a URL"
         case let .unsupportedOperator(fhirOperator):
             return "An unsupported operator was used: \(fhirOperator)"
         case let .unsupportedAnswer(answer):
@@ -73,7 +73,7 @@ extension ORKNavigableOrderedTask {
 
         // The task ID is set to the canonical URL of the questionnaire
         guard let id = questionnaire.url?.value?.url.absoluteString else {
-            throw FHIRToResearchKitConversionError.noId
+            throw FHIRToResearchKitConversionError.noURL
         }
 
         // Convert each FHIR Questionnaire Item to an ORKStep
