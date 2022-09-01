@@ -46,7 +46,6 @@ public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
 
 /// A class that converts FHIR Questionnaires to ResearchKit ORKOrderedTasks
 extension ORKNavigableOrderedTask {
-
     /// Create a `ORKNavigableOrderedTask` by parsing a FHIR `Questionnaire`. Throws a `FHIRToResearchKitConversionError` if an error happens during the parsing.
     /// - Parameters:
     ///  - title: The title of the questionnaire. If you pass in a `String` the translation overrides the title that might be provided in the FHIR `Questionnaire`.

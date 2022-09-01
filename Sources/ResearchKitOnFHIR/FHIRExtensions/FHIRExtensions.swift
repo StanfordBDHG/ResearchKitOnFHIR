@@ -10,7 +10,6 @@ import Foundation
 import ModelsR4
 
 extension QuestionnaireItem {
-
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
         static let questionaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
@@ -93,5 +92,4 @@ extension QuestionnaireItem {
         }
         return stringMessage
     }
-
 }
