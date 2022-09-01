@@ -71,7 +71,8 @@ extension ORKNavigableOrderedTask {
             throw FHIRToResearchKitConversionError.noItems
         }
 
-        guard let id = questionnaire.id?.value?.string else {
+        // The task ID is set to the canonical URL of the questionnaire
+        guard let id = questionnaire.url?.value?.url.absoluteString else {
             throw FHIRToResearchKitConversionError.noId
         }
 
@@ -84,6 +85,7 @@ extension ORKNavigableOrderedTask {
         }
 
         self.init(identifier: id, steps: steps)
+        
         // If any questions have defined skip logic, convert to ResearchKit navigation rules
         try constructNavigationRules(questions: item)
     }

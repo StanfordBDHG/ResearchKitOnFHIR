@@ -4,6 +4,7 @@
   "language": "en-US",
   "status": "draft",
   "publisher": "CardinalKit",
+  "url": "http://cardinalkit.org/questionnaires/ice-cream",
   "meta": {
     "profile": [
       "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"

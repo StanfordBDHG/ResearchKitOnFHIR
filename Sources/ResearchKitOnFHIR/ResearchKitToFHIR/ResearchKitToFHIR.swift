@@ -19,7 +19,8 @@ extension ORKTaskResult {
     public var fhirResponses: QuestionnaireResponse {
         var questionnaireResponses: [QuestionnaireResponseItem] = []
         let taskResults = self.results as? [ORKStepResult] ?? []
-        let id = self.identifier
+        let questionnaireID = self.identifier // a URL representing the questionnaire answered
+        let questionnaireResponseID = UUID().uuidString // a unique identifier for this set of answers
         
         for result in taskResults.compactMap(\.results).flatMap({ $0 }) {
             let response = createResponse(result)
@@ -30,8 +31,12 @@ extension ORKTaskResult {
 
         let questionnaireResponse = QuestionnaireResponse(status: FHIRPrimitive(QuestionnaireResponseStatus.completed))
         questionnaireResponse.item = questionnaireResponses
-        questionnaireResponse.id = FHIRPrimitive(FHIRString(id))
+        questionnaireResponse.id = FHIRPrimitive(FHIRString(questionnaireResponseID))
         questionnaireResponse.authored = FHIRPrimitive(try? DateTime(date: Date()))
+
+        if let questionnaireURL = URL(string: questionnaireID) {
+            questionnaireResponse.questionnaire = FHIRPrimitive(Canonical(questionnaireURL))
+        }
 
         return questionnaireResponse
     }
