@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import FHIRQuestionaires
+import FHIRQuestionnaires
 @testable import ResearchKitOnFHIR
 import XCTest
 
 
 final class ResearchKitOnFHIRTests: XCTestCase {
     func testFHIRToResearchKit() throws {
-        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.iceCreamExample)
+        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
         
         XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
     }

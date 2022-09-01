@@ -1,10 +1,11 @@
 {
   "resourceType": "Questionnaire",
-  "id": "sample-fhir-questionnaire-cardinalkit",
+  "id": "cardinalkit-skip-logic-example",
+  "title": "Skip Logic Example",
   "language": "en-US",
   "status": "draft",
   "publisher": "CardinalKit",
-  "url": "http://cardinalkit.org/questionnaires/ice-cream",
+  "url": "http://cardinalkit.org/questionnaires/skiplogicexample",
   "meta": {
     "profile": [
       "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"

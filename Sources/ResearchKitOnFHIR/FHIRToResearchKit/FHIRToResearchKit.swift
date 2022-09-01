@@ -188,6 +188,7 @@ extension ORKNavigableOrderedTask {
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter question: A FHIR `QuestionnaireItem` object.
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
+    // swiftlint:disable:next cyclomatic_complexity
     private static func fhirQuestionnaireItemToORKAnswerFormat(question: QuestionnaireItem) throws -> ORKAnswerFormat {
         switch question.type.value {
         case .boolean:
@@ -218,13 +219,15 @@ extension ORKNavigableOrderedTask {
             answerFormat.maximum = question.maxValue
             return answerFormat
         case .text, .string:
-            let validationRegularExpression = question.validationRegularExpression
-            let validationMessage = question.validationMessage
             let maximumLength = Int(question.maxLength?.value?.integer ?? 0)
-
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
-            answerFormat.validationRegularExpression = validationRegularExpression
-            answerFormat.invalidMessage = validationMessage
+
+            /// Applies a regular expression for validation, if defined
+            if let validationRegularExpression = question.validationRegularExpression {
+                answerFormat.validationRegularExpression = validationRegularExpression
+                answerFormat.invalidMessage = question.validationMessage ?? "Invalid input"
+            }
+
             return answerFormat
         case .time:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.dateAndTime)

@@ -1,0 +1,63 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "cardinalkit-text-validation-example",
+  "title": "Text Validation Example",
+  "language": "en-US",
+  "status": "draft",
+  "publisher": "CardinalKit",
+  "url": "http://cardinalkit.org/fhir/questionnaires/text-validation-example",
+  "meta": {
+    "profile": [
+      "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+    ],
+    "tag": [
+      {
+        "system": "urn:ietf:bcp:47",
+        "code": "en-US",
+        "display": "English"
+      }
+    ]
+  },
+  "useContext": [
+    {
+      "code": {
+        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
+        "code": "focus",
+        "display": "Clinical Focus"
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "urn:oid:2.16.578.1.12.4.1.1.8655"
+          }
+        ]
+      }
+    }
+  ],
+  "contact": [
+    {
+      "name": "http://cardinalkit.org"
+    }
+  ],
+  "subjectType": [
+    "Patient"
+  ],
+  "item": [
+    {
+      "linkId": "8ac8496e-1418-4cf1-8e11-57acc114b7de",
+      "type": "string",
+      "text": "Enter your e-mail address:",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/regex",
+          "valueString": "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        },
+        {
+          "url": "http://cardinalkit.org/fhir/StructureDefinition/validationtext",
+          "valueString": "Please enter a valid email address."
+        }
+      ],
+      "required": true
+    }
+  ]
+}

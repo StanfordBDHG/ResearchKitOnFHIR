@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
+		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
+		27EBA79E28C10F20008ADBA0 /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */; };
 		654BD48028BEBA8400B012D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654BD47F28BEBA8400B012D2 /* Assets.xcassets */; };
 		65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0428BEBC57000C70E4 /* ExampleApp.swift */; };
 		65545D0828BEBC58000C70E4 /* ORKOrderedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */; };
 		65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */; };
 		65545D0D28BEBEBB000C70E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65545D0C28BEBEBB000C70E4 /* Localizable.strings */; };
 		6559AE0C28BF9C8D00539B60 /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */; };
-		6559AE0E28BF9C9100539B60 /* FHIRQuestionaires in Frameworks */ = {isa = PBXBuildFile; productRef = 6559AE0D28BF9C9100539B60 /* FHIRQuestionaires */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
+		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
 		654BD47828BEBA8200B012D2 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65545CFE28BEBB54000C70E4 /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
@@ -31,8 +35,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6559AE0E28BF9C9100539B60 /* FHIRQuestionaires in Frameworks */,
 				6559AE0C28BF9C8D00539B60 /* ResearchKitOnFHIR in Frameworks */,
+				27EBA79E28C10F20008ADBA0 /* FHIRQuestionnaires in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +69,8 @@
 				65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */,
 				654BD47F28BEBA8400B012D2 /* Assets.xcassets */,
 				65545D0C28BEBEBB000C70E4 /* Localizable.strings */,
+				27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */,
+				27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */,
 			);
 			path = ExampleApp;
 			sourceTree = "<group>";
@@ -102,7 +108,7 @@
 			name = Example;
 			packageProductDependencies = (
 				6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */,
-				6559AE0D28BF9C9100539B60 /* FHIRQuestionaires */,
+				27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */,
 			);
 			productName = ResearchKitToFHIRExample;
 			productReference = 654BD47828BEBA8200B012D2 /* Example.app */;
@@ -159,7 +165,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */,
 				65545D0828BEBC58000C70E4 /* ORKOrderedTaskView.swift in Sources */,
+				27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */,
 				65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */,
 				65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */,
 			);
@@ -377,13 +385,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FHIRQuestionnaires;
+		};
 		6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchKitOnFHIR;
-		};
-		6559AE0D28BF9C9100539B60 /* FHIRQuestionaires */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FHIRQuestionaires;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
