@@ -79,7 +79,9 @@ extension ORKNavigableOrderedTask {
 
         // Convert each FHIR Questionnaire Item to an ORKStep
         let valueSets = questionnaire.getContainedValueSets()
-        var steps = ORKNavigableOrderedTask.fhirQuestionnaireItemsToORKSteps(items: item, title: (title ?? questionnaire.title?.value?.string) ?? "", valueSets: valueSets)
+        var steps = ORKNavigableOrderedTask.fhirQuestionnaireItemsToORKSteps(items: item,
+                                                                             title: (title ?? questionnaire.title?.value?.string) ?? "",
+                                                                             valueSets: valueSets)
         
         // Add a summary step at the end of the task if defined
         if let summaryStep = summaryStep {
@@ -136,7 +138,9 @@ extension ORKNavigableOrderedTask {
     ///   - question: A FHIR `QuestionnaireItem` object (a single question or a set of questions in a group).
     ///   - title: A `String` that will be displayed above the question when rendered by ResearchKit.
     /// - Returns: An `ORKQuestionStep` object (a ResearchKit question step containing the above question).
-    private static func fhirQuestionnaireItemToORKQuestionStep(question: QuestionnaireItem, title: String, valueSets: [ValueSet]) -> ORKQuestionStep? {
+    private static func fhirQuestionnaireItemToORKQuestionStep(question: QuestionnaireItem,
+                                                               title: String,
+                                                               valueSets: [ValueSet]) -> ORKQuestionStep? {
         guard let questionText = question.text?.value?.string,
               let identifier = question.linkId.value?.string else {
             return nil
