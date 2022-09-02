@@ -16,6 +16,9 @@ extension Questionnaire {
 
     /// A FHIR questionnaire demonstrating the use of a regular expression to validate an email address
     public static var textValidationExample: Questionnaire = loadQuestionnaire(withName: "TextValidationExample")
+
+    /// A FHIR questionnaire demonstrating the use of a contained ValueSet
+    public static var containedValueSetExample: Questionnaire = loadQuestionnaire(withName: "ContainedValueSetExample")
     
     
     private static func loadQuestionnaire(withName name: String) -> Questionnaire {
