@@ -10,21 +10,11 @@ import SwiftUI
 import ResearchKit
 import ModelsR4
 
+
 /// Renders a ResearchKit task from the selected FHIR questionnaire
 struct QuestionnaireView: View {
     @Binding var questionnaire: Questionnaire?
-
-    /// Creates a ResearchKit navigable task from a FHIR questionnaire
-    /// - Parameter questionnaire: a FHIR questionnaire
-    /// - Returns: a ResearchKit navigable task
-    func createTask(questionnaire: Questionnaire) -> ORKNavigableOrderedTask? {
-        do {
-            return try ORKNavigableOrderedTask(questionnaire: questionnaire)
-        } catch {
-            print("Error creating task: \(error)")
-        }
-        return nil
-    }
+    
 
     var body: some View {
         if let activeQuestionnaire = questionnaire,
@@ -33,5 +23,18 @@ struct QuestionnaireView: View {
         } else {
             Text("ERROR_MESSAGE")
         }
+    }
+    
+    
+    /// Creates a ResearchKit navigable task from a FHIR questionnaire
+    /// - Parameter questionnaire: a FHIR questionnaire
+    /// - Returns: a ResearchKit navigable task
+    private func createTask(questionnaire: Questionnaire) -> ORKNavigableOrderedTask? {
+        do {
+            return try ORKNavigableOrderedTask(questionnaire: questionnaire)
+        } catch {
+            print("Error creating task: \(error)")
+        }
+        return nil
     }
 }

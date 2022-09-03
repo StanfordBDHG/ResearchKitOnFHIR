@@ -35,11 +35,11 @@ ResearchKitOnFHIR can be installed into your Xcode project using [Swift Package 
 The `Example` directory contains an Xcode project that demonstrates how to create a ResearchKit task from a FHIR Questionnaire, and extract the results in the form of a FHIR QuestionnaireResponse.
 
 ## License
-This project is licensed under the MIT License. See [Licenses](https://github.com/CardinalKit/ResearchKitOnFHIR/tree/develop/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/CardinalKit/ResearchKitOnFHIR/tree/main/LICENSES) for more information.
 
 ## Contributors
-- Vishnu Ravi (vishnur@stanford.edu)
-- Paul Schmiedmayer (schmiedmayer@stanford.edu)
+This project is developed as part of the CardinalKit project at Stanford.
+See [CONTRIBUTORS.md](https://github.com/CardinalKit/ResearchKitOnFHIR/tree/main/CONTRIBUTORS.md) for a full list of all ResearchKitOnFHIR contributors.
 
 ## Notices
 ResearchKit is a registered trademark of Apple, Inc.
