@@ -65,12 +65,12 @@
 			isa = PBXGroup;
 			children = (
 				65545D0428BEBC57000C70E4 /* ExampleApp.swift */,
+				27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */,
+				27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */,
 				65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */,
 				65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */,
 				654BD47F28BEBA8400B012D2 /* Assets.xcassets */,
 				65545D0C28BEBEBB000C70E4 /* Localizable.strings */,
-				27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */,
-				27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */,
 			);
 			path = ExampleApp;
 			sourceTree = "<group>";

@@ -7,39 +7,34 @@
 //
 
 import SwiftUI
-import ResearchKit
-import ModelsR4
+import FHIRQuestionnaires
+
 
 /// List of example FHIR questionnaires to be rendered as ResearchKit tasks
 struct QuestionnaireListView: View {
     @State private var presentQuestionnaire = false
     @State private var activeQuestionnaire: Questionnaire?
     
-    private let exampleQuestionnaires: [Questionnaire] = [
-        .skipLogicExample,
-        .textValidationExample,
-        .containedValueSetExample
-    ]
     
     var body: some View {
-        VStack {
-            Text("TITLE")
+        NavigationView {
             List {
                 Section {
-                    ForEach(exampleQuestionnaires, id: \.self) { questionnaire in
+                    ForEach(Questionnaire.allQuestionnaires, id: \.self) { questionnaire in
                         Button(questionnaire.title?.value?.string ?? "Untitled Questionnaire") {
                             activeQuestionnaire = questionnaire
                             presentQuestionnaire = true
                         }
                     }
                 } header: {
-                    Text("QUESTIONNAIRE_LIST_HEADER")
+                    Text("QUESTIONNAIRE_LIST_EXAMPLES_HEADER")
                 }
             }
+                .navigationTitle("QUESTIONNAIRE_LIST_TITLE")
         }
-        .sheet(isPresented: $presentQuestionnaire) {
-            QuestionnaireView(questionnaire: self.$activeQuestionnaire)
-        }
+            .sheet(isPresented: $presentQuestionnaire) {
+                QuestionnaireView(questionnaire: self.$activeQuestionnaire)
+            }
     }
 }
 
