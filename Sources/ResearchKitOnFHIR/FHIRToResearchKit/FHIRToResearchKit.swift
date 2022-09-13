@@ -99,7 +99,6 @@ extension Questionnaire {
 }
 
 extension QuestionnaireItem {
-
     /// Converts a FHIR `QuestionnaireItem` to a ResearchKit `ORKQuestionStep`.
     /// - Parameters:
     ///   - title: A `String` that will be displayed above the question when rendered by ResearchKit.
@@ -133,7 +132,7 @@ extension QuestionnaireItem {
         for question in nestedQuestions {
             guard let questionId = question.linkId.value?.string,
                   let questionText = question.text?.value?.string,
-                  let answerFormat = try? fhirQuestionnaireItemToORKAnswerFormat(valueSets: valueSets) else {
+                  let answerFormat = try? question.fhirQuestionnaireItemToORKAnswerFormat(valueSets: valueSets) else {
                 continue
             }
 
