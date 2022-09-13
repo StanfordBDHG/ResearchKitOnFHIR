@@ -87,7 +87,7 @@ extension Array where Element == QuestionnaireItem {
 extension Questionnaire {
     /// Get ValueSets defined as a contained resource within a FHIR `Questionnaire`
     /// - Returns: An array of `ValueSet`
-    func getContainedValueSets() -> [ValueSet] {
+    fileprivate func getContainedValueSets() -> [ValueSet] {
         guard let contained = self.contained else {
             return []
         }
@@ -168,7 +168,7 @@ extension QuestionnaireItem {
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
     // swiftlint:disable:next cyclomatic_complexity
-    fileprivate func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
+    private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
         switch type.value {
         case .boolean:
             return ORKBooleanAnswerFormat.booleanAnswerFormat()
