@@ -167,7 +167,6 @@ extension QuestionnaireItem {
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
-    // swiftlint:disable:next cyclomatic_complexity
     private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
         switch type.value {
         case .boolean:
@@ -180,20 +179,14 @@ extension QuestionnaireItem {
             return ORKTextChoiceAnswerFormat(style: ORKChoiceAnswerStyle.singleChoice, textChoices: answerOptions)
         case .date:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.date)
-        case .decimal:
-            let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: "")
+        case .decimal, .quantity:
+            let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: unit ?? "")
             answerFormat.maximumFractionDigits = maximumDecimalPlaces
             answerFormat.minimum = minValue
             answerFormat.maximum = maxValue
             return answerFormat
         case .integer:
             let answerFormat = ORKNumericAnswerFormat.integerAnswerFormat(withUnit: "")
-            answerFormat.minimum = minValue
-            answerFormat.maximum = maxValue
-            return answerFormat
-        case .quantity: // a numeric answer with an included unit to be displayed
-            let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: unit)
-            answerFormat.maximumFractionDigits = maximumDecimalPlaces
             answerFormat.minimum = minValue
             answerFormat.maximum = maxValue
             return answerFormat
