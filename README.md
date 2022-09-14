@@ -28,7 +28,7 @@ ResearchKitOnFHIR is a framework that allows you to use [FHIR Questionnaires](ht
 ## Installation
 ResearchKitOnFHIR can be installed into your Xcode project using [Swift Package Manager](https://github.com/apple/swift-package-manager).
 
-1. In Xcode 13 and newer, go to “File” » “Add Packages...”
+1. In Xcode 14 and newer (requires Swift 5.7), go to “File” » “Add Packages...”
 2. Enter the URL to this GitHub repository, then select the `ResearchKitOnFhir` package to install.
 
 ## Usage
