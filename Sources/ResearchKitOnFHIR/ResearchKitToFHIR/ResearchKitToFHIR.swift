@@ -69,10 +69,19 @@ extension ORKTaskResult {
     }
 
     private func createNumericResponse(_ result: ORKNumericQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
-        guard let value = result.numericAnswer as? Int32 else {
+        guard let value = result.numericAnswer else {
             return nil
         }
-        return .integer(FHIRPrimitive(FHIRInteger(value)))
+
+        var decimalNumber = value.decimalValue
+        var roundedNumber = decimalNumber
+        NSDecimalRound(&roundedNumber, &decimalNumber, 0, .up)
+
+        if NSDecimalNumber(decimal: roundedNumber) != value {
+            return .decimal(FHIRPrimitive(FHIRDecimal(decimalNumber)))
+        } else {
+            return .integer(FHIRPrimitive(FHIRInteger(value.int32Value)))
+        }
     }
 
     private func createTextResponse(_ result: ORKTextQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
