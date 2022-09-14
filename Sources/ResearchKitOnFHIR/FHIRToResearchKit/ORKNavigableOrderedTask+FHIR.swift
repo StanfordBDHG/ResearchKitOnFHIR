@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable duplicate_imports
 import ModelsR4
 @_exported import class ModelsR4.Questionnaire
 import ResearchKit
