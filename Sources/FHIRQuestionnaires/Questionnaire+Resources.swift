@@ -19,12 +19,16 @@ extension Questionnaire {
 
     /// A FHIR questionnaire demonstrating the use of a contained ValueSet
     public static var containedValueSetExample: Questionnaire = loadQuestionnaire(withName: "ContainedValueSetExample")
+
+    /// A FHIR questionnaire demonstrating integer and decimal inputs
+    public static var numberExample: Questionnaire = loadQuestionnaire(withName: "NumberExample")
     
     /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
     public static var allQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample,
-        .containedValueSetExample
+        .containedValueSetExample,
+        .numberExample
     ]
     
     
