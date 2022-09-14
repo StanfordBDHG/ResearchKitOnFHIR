@@ -32,6 +32,7 @@ extension ORKNavigableOrderedTask {
     }
 }
 
+
 extension QuestionnaireItemEnableWhen {
     fileprivate var predicate: NSPredicate? {
         get throws {

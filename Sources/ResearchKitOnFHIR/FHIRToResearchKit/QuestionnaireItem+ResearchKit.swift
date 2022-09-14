@@ -6,42 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable duplicate_imports
-import Foundation
 import ModelsR4
-@_exported import class ModelsR4.Questionnaire
 import ResearchKit
-@_exported import class ResearchKit.ORKCompletionStep
-@_exported import class ResearchKit.ORKNavigableOrderedTask
 
-
-/// An error that is thrown when translating a FHIR `Questionnaire` to an `ORKNavigableOrderedTask`
-public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
-    case noItems
-    case noURL
-    case unsupportedOperator(QuestionnaireItemOperator)
-    case unsupportedAnswer(QuestionnaireItemEnableWhen.AnswerX)
-    case noOptions
-    case invalidDate(FHIRPrimitive<FHIRDate>)
-    
-    
-    public var description: String {
-        switch self {
-        case .noItems:
-            return "The parsed FHIR Questionnaire didn't contain any items"
-        case .noURL:
-            return "This FHIR Questionnaire does not have a URL"
-        case let .unsupportedOperator(fhirOperator):
-            return "An unsupported operator was used: \(fhirOperator)"
-        case let .unsupportedAnswer(answer):
-            return "An unsupported answer type was used: \(answer)"
-        case .noOptions:
-            return "No Option was provided."
-        case let .invalidDate(date):
-            return "Encountered an invalid date when parsing the questionnaire: \(date)"
-        }
-    }
-}
 
 extension Array where Element == QuestionnaireItem {
     /// Converts FHIR `QuestionnaireItems` (questions) to ResearchKit `ORKSteps`.
@@ -49,7 +16,7 @@ extension Array where Element == QuestionnaireItem {
     ///   - title: A `String` that will be rendered above the questions by ResearchKit.
     ///   - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns:An `Array` of ResearchKit `ORKSteps`.
-    fileprivate func fhirQuestionnaireItemsToORKSteps(title: String, valueSets: [ValueSet]) -> [ORKStep] {
+    func fhirQuestionnaireItemsToORKSteps(title: String, valueSets: [ValueSet]) -> [ORKStep] {
         var surveySteps: [ORKStep] = []
         surveySteps.reserveCapacity(self.count)
 
@@ -84,19 +51,6 @@ extension Array where Element == QuestionnaireItem {
     }
 }
 
-extension Questionnaire {
-    /// Get ValueSets defined as a contained resource within a FHIR `Questionnaire`
-    /// - Returns: An array of `ValueSet`
-    fileprivate func getContainedValueSets() -> [ValueSet] {
-        guard let contained = self.contained else {
-            return []
-        }
-        let valueSets = contained.compactMap { resource in
-            resource.get() as? ValueSet
-        }
-        return valueSets
-    }
-}
 
 extension QuestionnaireItem {
     /// Converts a FHIR `QuestionnaireItem` to a ResearchKit `ORKQuestionStep`.
@@ -255,42 +209,5 @@ extension QuestionnaireItem {
             }
         }
         return choices
-    }
-}
-
-extension ORKNavigableOrderedTask {
-    /// Create a `ORKNavigableOrderedTask` by parsing a FHIR `Questionnaire`. Throws a `FHIRToResearchKitConversionError` if an error happens during the parsing.
-    /// - Parameters:
-    ///  - title: The title of the questionnaire. If you pass in a `String` the translation overrides the title that might be provided in the FHIR `Questionnaire`.
-    ///  - questionnaire: The FHIR `Questionnaire` used to create the `ORKNavigableOrderedTask`.
-    ///  - summaryStep: An optional `ORKCompletionStep` that can be displayed at the end of the ResearchKit survey.
-    public convenience init(
-        title: String? = nil,
-        questionnaire: Questionnaire,
-        summaryStep: ORKCompletionStep? = nil
-    ) throws {
-        guard let item = questionnaire.item else {
-            throw FHIRToResearchKitConversionError.noItems
-        }
-
-        // The task ID is set to the canonical URL of the questionnaire
-        guard let id = questionnaire.url?.value?.url.absoluteString else {
-            throw FHIRToResearchKitConversionError.noURL
-        }
-
-        // Convert each FHIR Questionnaire Item to an ORKStep
-        let valueSets = questionnaire.getContainedValueSets()
-        let title = (title ?? questionnaire.title?.value?.string) ?? ""
-        var steps = item.fhirQuestionnaireItemsToORKSteps(title: title, valueSets: valueSets)
-        
-        // Add a summary step at the end of the task if defined
-        if let summaryStep = summaryStep {
-            steps.append(summaryStep)
-        }
-
-        self.init(identifier: id, steps: steps)
-        
-        // If any questions have defined skip logic, convert to ResearchKit navigation rules
-        try constructNavigationRules(questions: item)
     }
 }
