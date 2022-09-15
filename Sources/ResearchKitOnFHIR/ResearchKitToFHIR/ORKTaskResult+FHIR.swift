@@ -16,7 +16,7 @@ import ResearchKit
 
 extension ORKTaskResult {
     /// Extracts results from a ResearchKit survey task and converts to a FHIR `QuestionnaireResponse`.
-    public var fhirResponses: QuestionnaireResponse {
+    public var fhirResponse: QuestionnaireResponse {
         var questionnaireResponses: [QuestionnaireResponseItem] = []
         let taskResults = self.results as? [ORKStepResult] ?? []
         let questionnaireID = self.identifier // a URL representing the questionnaire answered

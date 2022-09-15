@@ -12,12 +12,14 @@ import FHIRQuestionnaires
 
 /// List of example FHIR questionnaires to be rendered as ResearchKit tasks
 struct QuestionnaireListView: View {
-    @State private var presentQuestionnaire = false
     @State private var activeQuestionnaire: Questionnaire?
+    @State private var presentQuestionnaire = false
+    @State private var presentQuestionnaireJSON = false
+    @State private var presentQuestionnaireResponses = false
     
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section {
                     ForEach(Questionnaire.allQuestionnaires, id: \.self) { questionnaire in
@@ -25,6 +27,21 @@ struct QuestionnaireListView: View {
                             activeQuestionnaire = questionnaire
                             presentQuestionnaire = true
                         }
+                            .contextMenu {
+                                Button {
+                                    activeQuestionnaire = questionnaire
+                                    presentQuestionnaireJSON = true
+                                } label: {
+                                    Label("View JSON", systemImage: "doc.badge.gearshape")
+                                }
+
+                                Button {
+                                    activeQuestionnaire = questionnaire
+                                    presentQuestionnaireResponses = true
+                                } label: {
+                                    Label("View Responses", systemImage: "arrow.right.doc.on.clipboard")
+                                }
+                            }
                     }
                 } header: {
                     Text("QUESTIONNAIRE_LIST_EXAMPLES_HEADER")
@@ -33,10 +50,18 @@ struct QuestionnaireListView: View {
                 .navigationTitle("QUESTIONNAIRE_LIST_TITLE")
         }
             .sheet(isPresented: $presentQuestionnaire) {
-                QuestionnaireView(questionnaire: self.$activeQuestionnaire)
+                QuestionnaireView(questionnaire: $activeQuestionnaire)
+                    .interactiveDismissDisabled(false)
+            }
+            .sheet(isPresented: $presentQuestionnaireJSON) {
+                QuestionnaireJSONView(questionnaire: $activeQuestionnaire)
+            }
+            .sheet(isPresented: $presentQuestionnaireResponses) {
+                QuestionnaireResponsesView(questionnaire: $activeQuestionnaire)
             }
     }
 }
+
 
 struct QuestionnaireListView_Previews: PreviewProvider {
     static var previews: some View {

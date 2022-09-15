@@ -6,20 +6,22 @@
 // SPDX-License-Identifier: MIT
 //
 
+import FHIRQuestionnaires
+import ModelsR4
 import SwiftUI
 import ResearchKit
-import ModelsR4
 
 
 /// Renders a ResearchKit task from the selected FHIR questionnaire
 struct QuestionnaireView: View {
+    @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
     @Binding var questionnaire: Questionnaire?
     
 
     var body: some View {
         if let activeQuestionnaire = questionnaire,
            let task = createTask(questionnaire: activeQuestionnaire) {
-            ORKOrderedTaskView(tasks: task)
+            ORKOrderedTaskView(tasks: task, delegate: ORKTaskFHIRDelegate(responseStorage))
         } else {
             Text("ERROR_MESSAGE")
         }
@@ -36,5 +38,15 @@ struct QuestionnaireView: View {
             print("Error creating task: \(error)")
         }
         return nil
+    }
+}
+
+
+struct QuestionnaireView_Previews: PreviewProvider {
+    @State private static var questionnaire: Questionnaire? = .textValidationExample
+    
+    
+    static var previews: some View {
+        QuestionnaireView(questionnaire: $questionnaire)
     }
 }
