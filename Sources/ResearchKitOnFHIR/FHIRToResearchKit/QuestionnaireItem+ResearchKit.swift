@@ -75,12 +75,14 @@ extension QuestionnaireItem {
     /// - Returns: An ORKFormStep object (a ResearchKit form step containing all of the nested questions).
     fileprivate func groupToORKFormStep(title: String, valueSets: [ValueSet]) -> ORKFormStep? {
         guard let id = linkId.value?.string,
-              let nestedQuestions = item else {
+              let nestedQuestions = item,
+              let text = text?.value?.string else {
             return nil
         }
 
         let formStep = ORKFormStep(identifier: id)
         formStep.title = title
+        formStep.text = text
         var formItems = [ORKFormItem]()
 
         for question in nestedQuestions {
