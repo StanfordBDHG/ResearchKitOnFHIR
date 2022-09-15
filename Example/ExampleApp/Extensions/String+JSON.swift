@@ -12,7 +12,7 @@ import Foundation
 extension String {
     init?<T: Encodable>(jsonFrom element: T) {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
 
         guard let data = try? encoder.encode(element) else {
             return nil
