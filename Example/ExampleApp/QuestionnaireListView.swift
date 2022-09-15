@@ -23,7 +23,7 @@ struct QuestionnaireListView: View {
             List {
                 Section {
                     ForEach(Questionnaire.allQuestionnaires, id: \.self) { questionnaire in
-                        Button(questionnaire.title?.value?.string ?? "Untitled Questionnaire") {
+                        Button(questionnaire.title?.value?.string ?? String(localized: "QUESTIONNAIRE_DEFAULT_TITLE")) {
                             activeQuestionnaire = questionnaire
                             presentQuestionnaire = true
                         }
@@ -51,7 +51,7 @@ struct QuestionnaireListView: View {
         }
             .sheet(isPresented: $presentQuestionnaire) {
                 QuestionnaireView(questionnaire: $activeQuestionnaire)
-                    .interactiveDismissDisabled(false)
+                    .interactiveDismissDisabled(true)
             }
             .sheet(isPresented: $presentQuestionnaireJSON) {
                 QuestionnaireJSONView(questionnaire: $activeQuestionnaire)
