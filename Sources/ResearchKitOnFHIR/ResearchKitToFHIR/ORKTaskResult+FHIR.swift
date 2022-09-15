@@ -111,11 +111,15 @@ extension ORKTaskResult {
         guard let dateAnswer = result.dateAnswer else {
             return nil
         }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YY/MM/dd"
-        let dateString = dateFormatter.string(from: dateAnswer)
-        let answer = FHIRPrimitive(try? FHIRDate(dateString))
-        return .date(answer)
+
+        if(result.questionType == .date){
+            let fhirDate = try? FHIRDate(date: dateAnswer)
+            let answer = FHIRPrimitive(fhirDate)
+            return .date(answer)
+        } else {
+            let fhirDateTime = try? DateTime(date: dateAnswer)
+            let answer = FHIRPrimitive(fhirDateTime)
+            return .dateTime(answer)
+        }
     }
 }
