@@ -112,7 +112,7 @@ extension ORKTaskResult {
             return nil
         }
 
-        if(result.questionType == .date){
+        if result.questionType == .date {
             let fhirDate = try? FHIRDate(date: dateAnswer)
             let answer = FHIRPrimitive(fhirDate)
             return .date(answer)
