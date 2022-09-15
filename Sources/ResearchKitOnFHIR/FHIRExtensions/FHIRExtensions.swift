@@ -12,7 +12,7 @@ import ModelsR4
 extension QuestionnaireItem {
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
-        static let questionaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
+        static let questionnaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
         static let regex = "http://hl7.org/fhir/StructureDefinition/regex"
         static let validationMessage = "http://cardinalkit.org/fhir/StructureDefinition/validationtext"
         static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
@@ -64,7 +64,7 @@ extension QuestionnaireItem {
     /// The unit of a quantity answer type.
     /// - Returns: An optional `String` containing the unit (i.e. cm) if it was provided.
     var unit: String? {
-        guard let unitExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.questionaireUnit),
+        guard let unitExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.questionnaireUnit),
               case let .coding(coding) = unitExtension.value else {
             return nil
         }

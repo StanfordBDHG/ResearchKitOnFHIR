@@ -13,20 +13,25 @@ import ResearchKitOnFHIR
 
 
 class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableObject {
+    private var responseStorage: QuestionnaireResponseStorage
+    
+    
+    init(_ responseStorage: QuestionnaireResponseStorage) {
+        self.responseStorage = responseStorage
+    }
+    
+    
     func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
         switch reason {
         case .completed:
-            let fhirResponses = taskViewController.result.fhirResponses
-            fhirResponses.subject = Reference(reference: FHIRPrimitive(FHIRString("My Patient")))
-
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-
-            guard let data = try? encoder.encode(fhirResponses) else {
+            let fhirResponse = taskViewController.result.fhirResponse
+            fhirResponse.subject = Reference(reference: FHIRPrimitive(FHIRString("My Patient")))
+            
+            guard let questionnaireIdentifier = fhirResponse.questionnaire?.value?.url else {
                 return
             }
             
-            print(String(decoding: data, as: UTF8.self))
+            responseStorage.append(fhirResponse, for: questionnaireIdentifier)
         default:
             break
         }

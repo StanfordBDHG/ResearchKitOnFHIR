@@ -19,7 +19,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     /// - Parameters:
     ///   - tasks: The `ORKOrderedTask` that should be displayed by the `ORKTaskViewController`
     ///   - delegate: An `ORKTaskViewControllerDelegate` that handles delegate calls from the `ORKTaskViewController`. If no  view controller delegate is provided the view uses an instance of `CKUploadFHIRTaskViewControllerDelegate`.
-    init(tasks: ORKOrderedTask, delegate: ORKTaskViewControllerDelegate = ORKTaskFHIRDelegate()) {
+    init(tasks: ORKOrderedTask, delegate: ORKTaskViewControllerDelegate) {
         self.tasks = tasks
         self.delegate = delegate
     }

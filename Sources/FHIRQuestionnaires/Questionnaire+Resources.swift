@@ -11,7 +11,7 @@ import Foundation
 
 
 extension Questionnaire {
-    /// A FHIR questionaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
+    /// A FHIR questionnaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
     public static var skipLogicExample: Questionnaire = loadQuestionnaire(withName: "SkipLogicExample")
 
     /// A FHIR questionnaire demonstrating the use of a regular expression to validate an email address
