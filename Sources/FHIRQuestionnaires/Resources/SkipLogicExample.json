@@ -1,11 +1,10 @@
 {
   "resourceType": "Questionnaire",
+  "language": "en-US",
   "id": "cardinalkit-skip-logic-example",
   "title": "Skip Logic Example",
-  "language": "en-US",
   "status": "draft",
   "publisher": "CardinalKit",
-  "url": "http://cardinalkit.org/questionnaires/skiplogicexample",
   "meta": {
     "profile": [
       "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
@@ -42,6 +41,7 @@
   "subjectType": [
     "Patient"
   ],
+  "url": "http://cardinalkit.org/questionnaires/skiplogicexample",
   "item": [
     {
       "linkId": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
@@ -52,7 +52,15 @@
     {
       "linkId": "169e7113-1e8f-4858-fc97-5703ba865703",
       "type": "group",
-      "text": "What is your favorite type?",
+      "text": "Tell us more about your interest in ice cream.",
+      "required": false,
+      "enableWhen": [
+        {
+          "question": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
+          "operator": "=",
+          "answerBoolean": true
+        }
+      ],
       "item": [
         {
           "linkId": "59e7a3f7-4108-47a7-8fae-0fb892574a63",
@@ -93,16 +101,15 @@
               }
             }
           ]
-        }
-      ],
-      "required": false,
-      "enableWhen": [
+        },
         {
-          "question": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
-          "operator": "=",
-          "answerBoolean": true
+          "linkId": "7d7695e1-741b-4a4b-b479-a9908f86cf55",
+          "type": "date",
+          "text": "When did you last have it?",
+          "required": false
         }
       ]
-    },
+    }
   ]
 }
+
