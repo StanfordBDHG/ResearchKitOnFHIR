@@ -94,10 +94,16 @@ extension ORKTaskResult {
     private func createChoiceResponse(_ result: ORKChoiceQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
         guard let answerArray = result.answer as? NSArray,
               answerArray.count > 0, // swiftlint:disable:this empty_count
-              let answerString = answerArray[0] as? String else {
+              let answerDictionary = answerArray[0] as? NSDictionary else {
             return nil
         }
-        return .string(FHIRPrimitive(FHIRString(answerString)))
+
+        let coding = Coding(
+            code: FHIRPrimitive(FHIRString(answerDictionary["code"] as? String ?? "")),
+            display: FHIRPrimitive(FHIRString(answerDictionary["display"] as? String ?? "")),
+            id: FHIRPrimitive(FHIRString(answerDictionary["id"] as? String ?? ""))
+        )
+        return .coding(coding)
     }
 
     private func createBooleanResponse(_ result: ORKBooleanQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
