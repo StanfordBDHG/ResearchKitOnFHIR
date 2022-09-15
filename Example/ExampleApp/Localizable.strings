@@ -11,8 +11,7 @@
 "ERROR_MESSAGE" = "Could not load the FHIR-based questionnaire. Please check your JSON file or any errors thrown during the decoding.";
 "QUESTIONNAIRES_VIEW_JSON" = "View JSON";
 "QUESTIONNAIRES_VIEW_RESPONSES" = "View Responses";
-"QUESTIONNAIRE_JSON_DEFAULT_TITLE" = "Questionnaire";
-"QUESTIONNAIRE_JSON_DEFAULT_TITLE" = "Questionnaire";
+"QUESTIONNAIRE_DEFAULT_TITLE" = "Untiteled Questionnaire";
 "JSON_ERROR_MESSAGE" = "Could not load JSON.";
 "RESPONSE_DATE_ERROR_MESSAGE" = "Response";
 "RESPONSES_LIST_NO_SELECTION" = "Please select a response";

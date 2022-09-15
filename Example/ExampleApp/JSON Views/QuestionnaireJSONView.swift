@@ -17,7 +17,7 @@ struct QuestionnaireJSONView: View {
     var body: some View {
         NavigationStack {
             JSONView(json: questionnaire.flatMap { String(jsonFrom: $0) })
-                .navigationTitle(questionnaire?.name?.primitiveDescription ?? String(localized: "QUESTIONNAIRE_JSON_DEFAULT_TITLE"))
+                .navigationTitle(questionnaire?.title?.value?.string ?? String(localized: "QUESTIONNAIRE_DEFAULT_TITLE"))
         }.navigationBarTitleDisplayMode(.inline)
     }
 }
