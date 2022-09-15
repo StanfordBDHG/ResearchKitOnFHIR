@@ -98,10 +98,10 @@ extension ORKTaskResult {
             return nil
         }
 
-        var fhirCode: FHIRPrimitive<FHIRString>? = nil,
-            fhirDisplay: FHIRPrimitive<FHIRString>? = nil,
-            fhirId: FHIRPrimitive<FHIRString>? = nil,
-            fhirSystem: FHIRPrimitive<FHIRURI>? = nil
+        var fhirCode: FHIRPrimitive<FHIRString>?,
+            fhirDisplay: FHIRPrimitive<FHIRString>?,
+            fhirId: FHIRPrimitive<FHIRString>?,
+            fhirSystem: FHIRPrimitive<FHIRURI>?
 
         if let code = answerDictionary["code"] as? String {
             fhirCode = FHIRPrimitive(FHIRString(code))

@@ -191,7 +191,8 @@ extension QuestionnaireItem {
                 let resultFormat: NSDictionary = [
                     "id": option.id?.value?.string,
                     "display": display,
-                    "code": code
+                    "code": code,
+                    "system": valueSet?.compose?.include.first?.system?.value?.url
                 ]
                 let choice = ORKTextChoice(text: display, value: resultFormat as NSCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
