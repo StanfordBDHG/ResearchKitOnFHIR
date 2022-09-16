@@ -98,32 +98,32 @@ extension ORKTaskResult {
             return nil
         }
 
-        var fhirCode: FHIRPrimitive<FHIRString>?,
-            fhirDisplay: FHIRPrimitive<FHIRString>?,
-            fhirId: FHIRPrimitive<FHIRString>?,
-            fhirSystem: FHIRPrimitive<FHIRURI>?
+        var codingCode: FHIRPrimitive<FHIRString>?,
+            codingDisplay: FHIRPrimitive<FHIRString>?,
+            codingId: FHIRPrimitive<FHIRString>?,
+            codingSystem: FHIRPrimitive<FHIRURI>?
 
         if let code = answerDictionary["code"] as? String {
-            fhirCode = FHIRPrimitive(FHIRString(code))
+            codingCode = FHIRPrimitive(FHIRString(code))
         }
 
         if let display = answerDictionary["display"] as? String {
-            fhirDisplay = FHIRPrimitive(FHIRString(display))
+            codingDisplay = FHIRPrimitive(FHIRString(display))
         }
 
         if let id = answerDictionary["id"] as? String {
-            fhirId = FHIRPrimitive(FHIRString(id))
+            codingId = FHIRPrimitive(FHIRString(id))
         }
 
         if let system = answerDictionary["system"] as? URL {
-            fhirSystem = FHIRPrimitive(FHIRURI(system))
+            codingSystem = FHIRPrimitive(FHIRURI(system))
         }
 
         let coding = Coding(
-            code: fhirCode,
-            display: fhirDisplay,
-            id: fhirId,
-            system: fhirSystem
+            code: codingCode,
+            display: codingDisplay,
+            id: codingId,
+            system: codingSystem
         )
         return .coding(coding)
     }

@@ -188,13 +188,13 @@ extension QuestionnaireItem {
                       let code = option.code.value?.string else {
                     continue
                 }
-                let resultFormat: NSDictionary = [
+                let valueCoding: NSDictionary = [
                     "id": option.id?.value?.string,
                     "display": display,
                     "code": code,
                     "system": valueSet?.compose?.include.first?.system?.value?.url
                 ]
-                let choice = ORKTextChoice(text: display, value: resultFormat as NSCoding & NSCopying & NSObjectProtocol)
+                let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
         } else {
@@ -210,13 +210,13 @@ extension QuestionnaireItem {
                       let code = coding.code?.value?.string else {
                     continue
                 }
-                let resultFormat: NSDictionary = [
+                let valueCoding: NSDictionary = [
                     "id": coding.id?.value?.string,
                     "display": display,
                     "code": code,
                     "system": coding.system?.value?.url
                 ]
-                let choice = ORKTextChoice(text: display, value: resultFormat as NSCoding & NSCopying & NSObjectProtocol)
+                let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
         }
