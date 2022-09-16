@@ -23,6 +23,7 @@ extension Questionnaire {
     /// A FHIR questionnaire demonstrating integer and decimal inputs
     public static var numberExample: Questionnaire = loadQuestionnaire(withName: "NumberExample")
 
+    /// The PHQ-9 validated clinical questionnaire
     public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
     
     /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
