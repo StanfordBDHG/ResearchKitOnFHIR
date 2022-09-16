@@ -81,6 +81,7 @@ extension QuestionnaireItem {
 
         let formStep = ORKFormStep(identifier: id)
         formStep.title = title
+        formStep.text = text?.value?.string ?? ""
         var formItems = [ORKFormItem]()
 
         for question in nestedQuestions {
