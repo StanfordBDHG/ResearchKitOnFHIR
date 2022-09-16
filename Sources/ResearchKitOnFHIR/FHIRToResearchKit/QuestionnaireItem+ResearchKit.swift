@@ -21,7 +21,8 @@ extension Array where Element == QuestionnaireItem {
         surveySteps.reserveCapacity(self.count)
 
         for question in self {
-            guard let questionType = question.type.value else {
+            guard let questionType = question.type.value,
+                  !question.hidden else {
                 continue
             }
 
@@ -214,6 +215,7 @@ extension QuestionnaireItem {
                 let valueCoding: NSDictionary = [
                     "id": coding.id?.value?.string,
                     "display": display,
+                    "code": code,
                     "code": code,
                     "system": coding.system?.value?.url
                 ]
