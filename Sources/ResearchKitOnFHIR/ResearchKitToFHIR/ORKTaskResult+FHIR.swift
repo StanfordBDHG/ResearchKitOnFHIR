@@ -73,14 +73,17 @@ extension ORKTaskResult {
             return nil
         }
 
-        var decimalNumber = value.decimalValue
-        var roundedNumber = decimalNumber
-        NSDecimalRound(&roundedNumber, &decimalNumber, 0, .up)
+        // If a unit is defined, then the result is a Quantity
+        if let unit = result.unit {
+            return .quantity(Quantity(unit: FHIRPrimitive(FHIRString(unit)),
+                                      value: FHIRPrimitive(FHIRDecimal(value.decimalValue)))
+                            )
+        }
 
-        if NSDecimalNumber(decimal: roundedNumber) != value {
-            return .decimal(FHIRPrimitive(FHIRDecimal(decimalNumber)))
-        } else {
+        if result.questionType == ORKQuestionType.integer {
             return .integer(FHIRPrimitive(FHIRInteger(value.int32Value)))
+        } else {
+            return .decimal(FHIRPrimitive(FHIRDecimal(value.decimalValue)))
         }
     }
 
