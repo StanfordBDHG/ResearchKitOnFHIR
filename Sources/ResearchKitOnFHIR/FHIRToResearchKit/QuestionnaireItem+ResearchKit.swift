@@ -216,7 +216,6 @@ extension QuestionnaireItem {
                     "id": coding.id?.value?.string,
                     "display": display,
                     "code": code,
-                    "code": code,
                     "system": coding.system?.value?.url
                 ]
                 let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
