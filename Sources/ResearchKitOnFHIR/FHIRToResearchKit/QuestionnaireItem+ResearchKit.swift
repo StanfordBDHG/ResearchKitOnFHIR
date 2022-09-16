@@ -21,7 +21,8 @@ extension Array where Element == QuestionnaireItem {
         surveySteps.reserveCapacity(self.count)
 
         for question in self {
-            guard let questionType = question.type.value else {
+            guard let questionType = question.type.value,
+                  !question.hidden else {
                 continue
             }
 

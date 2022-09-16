@@ -18,6 +18,7 @@ extension QuestionnaireItem {
         static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
         static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
         static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"
+        static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
     }
 
     /// Checks this QuestionnaireItem for an extension matching the given URL and then return it if it exists.
@@ -26,6 +27,17 @@ extension QuestionnaireItem {
     /// - Returns: an optional Extension if it was found.
     private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
         self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
+    }
+
+    /// Is the question hidden
+    /// - Returns: A boolean representing whether the question should be shown to the user
+    var hidden: Bool {
+        guard let hiddenExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.hidden),
+              case let .boolean(booleanValue) = hiddenExtension.value,
+              let isHidden = booleanValue.value?.bool as? Bool else {
+            return false
+        }
+        return isHidden
     }
 
     /// The minimum value for a numerical answer.
