@@ -60,11 +60,11 @@ extension QuestionnaireItem {
     ///   - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An `ORKQuestionStep` object (a ResearchKit question step containing the above question).
     fileprivate func toORKQuestionStep(title: String, valueSets: [ValueSet]) -> ORKQuestionStep? {
-        guard let questionText = text?.value?.string,
-              let identifier = linkId.value?.string else {
+        guard let identifier = linkId.value?.string else {
             return nil
         }
 
+        let questionText = text?.value?.string ?? ""
         let answer = try? self.toORKAnswerFormat(valueSets: valueSets)
         return ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
     }
