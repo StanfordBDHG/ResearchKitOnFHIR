@@ -25,6 +25,9 @@ extension Questionnaire {
 
     /// The PHQ-9 validated clinical questionnaire
     public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
+
+    /// The Glasgow Coma Scale
+    public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
     
     /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
     public static var allQuestionnaires: [Questionnaire] = [
@@ -32,7 +35,8 @@ extension Questionnaire {
         .textValidationExample,
         .containedValueSetExample,
         .numberExample,
-        .phq9
+        .phq9,
+        .gcs
     ]
     
     
