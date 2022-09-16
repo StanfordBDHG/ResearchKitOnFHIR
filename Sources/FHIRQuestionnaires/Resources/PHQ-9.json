@@ -179,29 +179,6 @@
           "text" : "Thoughts that you would be better off dead, or thoughts of hurting yourself in some way?",
           "type" : "choice",
           "answerValueSet" : "#VSPHQ9"
-        },
-        {
-          "extension" : [
-            {
-              "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-              "valueExpression" : {
-                "description" : "Score (0-4: None-minimal; 5-9: Mild; 19-14: Moderate; 15-19: Moderately severe; 20-27: Severe)",
-                "name" : "score",
-                "language" : "text/fhirpath",
-                "expression" : "%resource.answers().value.ordinal().sum()"
-              }
-            }
-          ],
-          "linkId" : "H1/TS",
-          "code" : [
-            {
-              "system" : "http://loinc.org",
-              "code" : "44261-6",
-              "display" : "Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]"
-            }
-          ],
-          "text" : "Patient health questionnaire 9 item total score",
-          "type" : "quantity"
         }
       ]
     }
