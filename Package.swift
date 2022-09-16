@@ -41,7 +41,8 @@ let package = Package(
                 .copy("Resources/SkipLogicExample.json"),
                 .copy("Resources/TextValidationExample.json"),
                 .copy("Resources/ContainedValueSetExample.json"),
-                .copy("Resources/NumberExample.json")
+                .copy("Resources/NumberExample.json"),
+                .copy("Resources/PHQ-9.json")
             ]
         ),
         .testTarget(
