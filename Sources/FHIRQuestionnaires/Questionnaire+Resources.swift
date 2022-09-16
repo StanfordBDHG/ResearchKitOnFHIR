@@ -25,6 +25,9 @@ extension Questionnaire {
 
     /// The PHQ-9 validated clinical questionnaire
     public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
+
+    /// Hunger Vital Sign validated screening questionnaire
+    public static var hvs: Questionnaire = loadQuestionnaire(withName: "HungerVitalSign")
     
     /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
     public static var allQuestionnaires: [Questionnaire] = [
@@ -32,7 +35,8 @@ extension Questionnaire {
         .textValidationExample,
         .containedValueSetExample,
         .numberExample,
-        .phq9
+        .phq9,
+        .hvs
     ]
     
     

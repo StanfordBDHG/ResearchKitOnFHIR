@@ -42,7 +42,8 @@ let package = Package(
                 .copy("Resources/TextValidationExample.json"),
                 .copy("Resources/ContainedValueSetExample.json"),
                 .copy("Resources/NumberExample.json"),
-                .copy("Resources/PHQ-9.json")
+                .copy("Resources/PHQ-9.json"),
+                .copy("Resources/HungerVitalSign.json")
             ]
         ),
         .testTarget(
