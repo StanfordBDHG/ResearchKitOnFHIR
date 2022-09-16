@@ -73,14 +73,17 @@ extension ORKTaskResult {
             return nil
         }
 
-        var decimalNumber = value.decimalValue
-        var roundedNumber = decimalNumber
-        NSDecimalRound(&roundedNumber, &decimalNumber, 0, .up)
+        // If a unit is defined, then the result is a Quantity
+        if let unit = result.unit {
+            return .quantity(Quantity(unit: FHIRPrimitive(FHIRString(unit)),
+                                      value: FHIRPrimitive(FHIRDecimal(value.decimalValue)))
+                            )
+        }
 
-        if NSDecimalNumber(decimal: roundedNumber) != value {
-            return .decimal(FHIRPrimitive(FHIRDecimal(decimalNumber)))
-        } else {
+        if result.questionType == ORKQuestionType.integer {
             return .integer(FHIRPrimitive(FHIRInteger(value.int32Value)))
+        } else {
+            return .decimal(FHIRPrimitive(FHIRDecimal(value.decimalValue)))
         }
     }
 
@@ -111,11 +114,15 @@ extension ORKTaskResult {
         guard let dateAnswer = result.dateAnswer else {
             return nil
         }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YY/MM/dd"
-        let dateString = dateFormatter.string(from: dateAnswer)
-        let answer = FHIRPrimitive(try? FHIRDate(dateString))
-        return .date(answer)
+
+        if result.questionType == .date {
+            let fhirDate = try? FHIRDate(date: dateAnswer)
+            let answer = FHIRPrimitive(fhirDate)
+            return .date(answer)
+        } else {
+            let fhirDateTime = try? DateTime(date: dateAnswer)
+            let answer = FHIRPrimitive(fhirDateTime)
+            return .dateTime(answer)
+        }
     }
 }
