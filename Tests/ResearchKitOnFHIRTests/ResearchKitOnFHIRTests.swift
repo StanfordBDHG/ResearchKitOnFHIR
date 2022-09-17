@@ -36,4 +36,21 @@ final class ResearchKitOnFHIRTests: XCTestCase {
         XCTAssertEqual(valueSets.count, 1)
     }
 
+    func testRegexExtension() throws {
+        let testRegex = Questionnaire.textValidationExample.item?.first?.validationRegularExpression
+        let regex = try NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+        XCTAssertEqual(regex, testRegex)
+    }
+
+    func testValidationMessageExtension() throws {
+        let testValidationMessage = Questionnaire.textValidationExample.item?.first?.validationMessage
+        let validationMessage = "Please enter a valid email address."
+        XCTAssertEqual(validationMessage, testValidationMessage)
+    }
+
+    func testUnitExtension() throws {
+        let unit = Questionnaire.numberExample.item?[2].unit
+        let unwrappedUnit = try XCTUnwrap(unit)
+        XCTAssertEqual(unwrappedUnit, "g")
+    }
 }
