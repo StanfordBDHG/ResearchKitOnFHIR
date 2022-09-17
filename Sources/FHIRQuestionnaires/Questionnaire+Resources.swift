@@ -37,7 +37,7 @@ extension Questionnaire {
         .numberExample
     ]
 
-    /// A collection of research`Questionnaire`s provided by the FHIRQuestionnaires target
+    /// A collection of clinical research `Questionnaire`s provided by the FHIRQuestionnaires target
     public static var researchQuestionnaires: [Questionnaire] = [
         .phq9,
         .gcs
