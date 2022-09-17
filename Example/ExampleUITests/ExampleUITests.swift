@@ -122,7 +122,7 @@ final class ExampleUITests: XCTestCase {
         quantityField.tap()
         quantityField.typeText("2.5")
 
-        // Finish survey
+        // Finish questionnaire
         let doneButton = app.buttons.matching(identifier: "Done").element(boundBy: 1)
         doneButton.tap()
 
@@ -194,6 +194,39 @@ final class ExampleUITests: XCTestCase {
 
         // Open context menu and view results
         phq9ExampleButton.press(forDuration: 1.0)
+        app.collectionViews.buttons["View Responses"].tap()
+
+        // Check results
+        let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
+        XCTAssertEqual(buttonsInResultView.count, 1)
+        buttonsInResultView.allElementsBoundByIndex[0].tap()
+        app.navigationBars.buttons["Back"].tap()
+
+        // Dismiss results view
+        app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
+
+    func testGCSExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let gcsExampleButton = app.collectionViews.buttons["Glasgow Coma Score"]
+
+        // Open questionnaire
+        gcsExampleButton.tap()
+
+        // Answer questions
+        app.tables.staticTexts["Oriented"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["Obeys commands"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["Eyes open spontaneously"].tap()
+        app.buttons["Done"].tap()
+
+        // Open context menu and view results
+        gcsExampleButton.press(forDuration: 1.0)
         app.collectionViews.buttons["View Responses"].tap()
 
         // Check results
