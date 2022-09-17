@@ -184,8 +184,8 @@ final class ExampleUITests: XCTestCase {
         // Answer all 9 questions
         let options = ["Not at all", "Several days", "More than half the days", "Nearly every day"]
 
-        for i in 0...8 {
-            let buttonQuery = app.tables.staticTexts.matching(identifier: options.randomElement()!).element(boundBy: i)
+        for question in 0...8 {
+            let buttonQuery = app.tables.staticTexts.matching(identifier: options.randomElement() ?? options[0]).element(boundBy: question)
             buttonQuery.tap()
         }
 
