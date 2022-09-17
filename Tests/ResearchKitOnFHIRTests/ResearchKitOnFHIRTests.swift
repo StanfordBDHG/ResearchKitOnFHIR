@@ -53,4 +53,22 @@ final class ResearchKitOnFHIRTests: XCTestCase {
         let unwrappedUnit = try XCTUnwrap(unit)
         XCTAssertEqual(unwrappedUnit, "g")
     }
+
+    func testMinValueExtension() throws {
+        let minValue = Questionnaire.numberExample.item?.first?.minValue
+        let unwrappedMinValue = try XCTUnwrap(minValue)
+        XCTAssertEqual(unwrappedMinValue, 1)
+    }
+
+    func testMaxValueExtension() throws {
+        let maxValue = Questionnaire.numberExample.item?.first?.maxValue
+        let unwrappedMaxValue = try XCTUnwrap(maxValue)
+        XCTAssertEqual(unwrappedMaxValue, 1000)
+    }
+
+    func testMaxDecimalExtension() throws {
+        let maxDecimals = Questionnaire.numberExample.item?[1].maximumDecimalPlaces
+        let unwrappedMaxDecimals = try XCTUnwrap(maxDecimals)
+        XCTAssertEqual(unwrappedMaxDecimals, 3)
+    }
 }
