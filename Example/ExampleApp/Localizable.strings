@@ -7,7 +7,8 @@
 */
 
 "QUESTIONNAIRE_LIST_TITLE" = "Questionnaires";
-"QUESTIONNAIRE_LIST_EXAMPLES_HEADER" = "ResearchKit On FHIR Examples";
+"QUESTIONNAIRE_LIST_EXAMPLES_HEADER" = "ResearchKit-On-FHIR Feature Examples";
+"QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER" = "Clinical Research Questionnaire Examples";
 "ERROR_MESSAGE" = "Could not load the FHIR-based questionnaire. Please check your JSON file or any errors thrown during the decoding.";
 "QUESTIONNAIRES_VIEW_JSON" = "View JSON";
 "QUESTIONNAIRES_VIEW_RESPONSES" = "View Responses";

@@ -29,12 +29,16 @@ extension Questionnaire {
     /// The Glasgow Coma Scale
     public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
     
-    /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
-    public static var allQuestionnaires: [Questionnaire] = [
+    /// A collection of example `Questionnaire`s provided by the FHIRQuestionnaires target to demonstrate functionality
+    public static var exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample,
         .containedValueSetExample,
-        .numberExample,
+        .numberExample
+    ]
+
+    /// A collection of clinical research `Questionnaire`s provided by the FHIRQuestionnaires target
+    public static var researchQuestionnaires: [Questionnaire] = [
         .phq9,
         .gcs
     ]

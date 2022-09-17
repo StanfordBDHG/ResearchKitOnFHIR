@@ -110,22 +110,20 @@
             "code": "other"
           }
         }
-      ],
-      "enableBehavior": "all"
+      ]
     },
     {
       "linkId": "5699c117-70e4-4849-f89f-c3591c090381",
       "type": "date",
-      "text": "When did you last have this flavor?",
+      "text": "When was the last time you had ice cream?",
       "required": false,
       "enableWhen": [
         {
-          "question": "59e7a3f7-4108-47a7-8fae-0fb892574a63",
-          "operator": "exists",
+          "question": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
+          "operator": "=",
           "answerBoolean": true
         }
-      ],
-      "enableBehavior": "all"
+      ]
     }
   ]
 }
