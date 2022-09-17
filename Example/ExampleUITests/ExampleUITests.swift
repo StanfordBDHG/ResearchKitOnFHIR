@@ -171,4 +171,38 @@ final class ExampleUITests: XCTestCase {
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
+
+    func testPHQ9Example() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let phq9ExampleButton = app.collectionViews.buttons["Patient Health Questionnaire - 9 Item"]
+
+        // Open questionnaire
+        phq9ExampleButton.tap()
+
+        // Answer all 9 questions
+        let options = ["Not at all", "Several days", "More than half the days", "Nearly every day"]
+
+        for i in 0...8 {
+            let buttonQuery = app.tables.staticTexts.matching(identifier: options.randomElement()!).element(boundBy: i)
+            buttonQuery.tap()
+        }
+
+        // Finish survey
+        app.buttons["Done"].tap()
+
+        // Open context menu and view results
+        phq9ExampleButton.press(forDuration: 1.0)
+        app.collectionViews.buttons["View Responses"].tap()
+
+        // Check results
+        let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
+        XCTAssertEqual(buttonsInResultView.count, 1)
+        buttonsInResultView.allElementsBoundByIndex[0].tap()
+        app.navigationBars.buttons["Back"].tap()
+
+        // Dismiss results view
+        app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
 }
