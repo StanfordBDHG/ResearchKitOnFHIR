@@ -138,7 +138,6 @@ final class ExampleUITests: XCTestCase {
 
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
-
     }
 
     func textValidationExample() throws {
@@ -171,6 +170,5 @@ final class ExampleUITests: XCTestCase {
 
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
-
     }
 }
