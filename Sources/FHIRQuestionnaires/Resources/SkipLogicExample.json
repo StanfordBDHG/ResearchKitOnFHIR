@@ -87,12 +87,19 @@
             "display": "Other"
           }
         }
+      ],
+      "enableWhen": [
+        {
+          "question": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
+          "operator": "=",
+          "answerBoolean": true
+        }
       ]
     },
     {
-      "linkId": "7d7695e1-741b-4a4b-b479-a9908f86cf55",
-      "type": "date",
-      "text": "When did you last have chocolate ice cream?",
+      "linkId": "b950aeb7-a7cd-4472-901b-210c0296492b",
+      "type": "string",
+      "text": "Enter in your favorite flavor",
       "required": false,
       "enableWhen": [
         {
@@ -100,8 +107,22 @@
           "operator": "=",
           "answerCoding": {
             "system": "urn:uuid:ea53f9f1-4c06-4953-83b6-c944bccdeae3",
-            "code": "chocolate"
+            "code": "other"
           }
+        }
+      ],
+      "enableBehavior": "all"
+    },
+    {
+      "linkId": "5699c117-70e4-4849-f89f-c3591c090381",
+      "type": "date",
+      "text": "When did you last have this flavor?",
+      "required": false,
+      "enableWhen": [
+        {
+          "question": "59e7a3f7-4108-47a7-8fae-0fb892574a63",
+          "operator": "exists",
+          "answerBoolean": true
         }
       ],
       "enableBehavior": "all"

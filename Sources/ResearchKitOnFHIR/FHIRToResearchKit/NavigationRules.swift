@@ -80,11 +80,13 @@ extension Coding {
         
         switch fhirOperator {
         case .equal:
-            let expectedAnswerValue: NSDictionary = [
+            let expectedAnswer: NSDictionary = [
                 "code": code,
-                "system": system,
+                "system": system
             ]
-            let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector, expectedAnswerValue: expectedAnswerValue as NSCoding & NSCopying & NSObjectProtocol)
+            let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector,
+                                                                                expectedAnswerValue: expectedAnswer
+                                                                                    as NSCoding & NSCopying & NSObjectProtocol)
             return NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
         default:
             throw FHIRToResearchKitConversionError.unsupportedOperator(fhirOperator)
