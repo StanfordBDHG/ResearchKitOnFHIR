@@ -40,12 +40,17 @@ final class ExampleUITests: XCTestCase {
         app.tables.staticTexts["Yes"].tap()
         app.tables.buttons["Next"].tap()
         app.tables.staticTexts["Chocolate"].tap()
-        app.tables.staticTexts["Done"].tap()
+        app.tables.staticTexts["Next"].tap()
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "31")
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2021")
+        app.buttons["Done"].tap()
+
         
         // Second run through questionnaire
         skipLogicExampleButton.tap()
         app.tables.staticTexts["No"].tap()
-        app.tables.buttons["Done"].tap()
+        app.buttons["Done"].tap()
         
         // Open context menu and view results
         skipLogicExampleButton.press(forDuration: 1.0)

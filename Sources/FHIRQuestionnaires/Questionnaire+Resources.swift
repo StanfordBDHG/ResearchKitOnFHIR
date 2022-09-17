@@ -30,11 +30,14 @@ extension Questionnaire {
     public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
     
     /// A collection of all `Questionnaire`s provided by the FHIRQuestionnaires target.
-    public static var allQuestionnaires: [Questionnaire] = [
+    public static var exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample,
         .containedValueSetExample,
-        .numberExample,
+        .numberExample
+    ]
+
+    public static var clinicalQuestionnaires: [Questionnaire] = [
         .phq9,
         .gcs
     ]
