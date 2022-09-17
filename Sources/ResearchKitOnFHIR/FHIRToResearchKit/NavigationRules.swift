@@ -25,7 +25,7 @@ extension ORKNavigableOrderedTask {
                 guard let predicate = try fhirPredicate.predicate else {
                     continue
                 }
-                
+
                 self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
             }
         }
@@ -73,14 +73,19 @@ extension Decimal {
 
 extension Coding {
     fileprivate func predicate(with resultSelector: ORKResultSelector, operator fhirOperator: QuestionnaireItemOperator) throws -> NSPredicate? {
-        guard let matchValue = code?.value?.string else {
+        guard let code = code?.value?.string,
+              let system = system?.value?.url else {
             return nil
         }
         
         switch fhirOperator {
         case .equal:
-            let matchingPattern = "^(?!\(matchValue)).*$"
-            return ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector, matchingPattern: matchingPattern)
+            let expectedAnswerValue: NSDictionary = [
+                "code": code,
+                "system": system,
+            ]
+            let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector, expectedAnswerValue: expectedAnswerValue as NSCoding & NSCopying & NSObjectProtocol)
+            return NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
         default:
             throw FHIRToResearchKitConversionError.unsupportedOperator(fhirOperator)
         }

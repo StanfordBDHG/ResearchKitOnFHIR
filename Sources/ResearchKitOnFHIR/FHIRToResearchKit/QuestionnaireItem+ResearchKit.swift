@@ -191,8 +191,6 @@ extension QuestionnaireItem {
                     continue
                 }
                 let valueCoding: NSDictionary = [
-                    "id": option.id?.value?.string,
-                    "display": display,
                     "code": code,
                     "system": valueSet?.compose?.include.first?.system?.value?.url
                 ]
@@ -213,8 +211,6 @@ extension QuestionnaireItem {
                     continue
                 }
                 let valueCoding: NSDictionary = [
-                    "id": coding.id?.value?.string,
-                    "display": display,
                     "code": code,
                     "system": coding.system?.value?.url
                 ]
