@@ -23,9 +23,9 @@ struct QuestionnaireListView: View {
 
     private var questionnaireSections: [QuestionnaireSection] = [
         QuestionnaireSection(questionnaires: Questionnaire.exampleQuestionnaires,
-                             header: NSLocalizedString("QUESTIONNAIRE_LIST_EXAMPLES_HEADER", comment: "")),
-        QuestionnaireSection(questionnaires: Questionnaire.clinicalQuestionnaires,
-                             header: NSLocalizedString("QUESTIONNAIRE_LIST_CLINICAL_EXAMPLES_HEADER", comment: ""))
+                             header: String(localized: "QUESTIONNAIRE_LIST_EXAMPLES_HEADER")),
+        QuestionnaireSection(questionnaires: Questionnaire.researchQuestionnaires,
+                             header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER"))
     ]
 
     var body: some View {
@@ -43,14 +43,16 @@ struct QuestionnaireListView: View {
                                     activeQuestionnaire = questionnaire
                                     presentQuestionnaireJSON = true
                                 } label: {
-                                    Label(NSLocalizedString("QUESTIONNAIRES_VIEW_JSON", comment: ""), systemImage: "doc.badge.gearshape")
+                                    Label(
+                                        String(localized: "QUESTIONNAIRES_VIEW_JSON"), systemImage: "doc.badge.gearshape")
                                 }
 
                                 Button {
                                     activeQuestionnaire = questionnaire
                                     presentQuestionnaireResponses = true
                                 } label: {
-                                    Label(NSLocalizedString("QUESTIONNAIRES_VIEW_RESPONSES", comment: ""), systemImage: "arrow.right.doc.on.clipboard")
+                                    Label(
+                                        String(localized: "QUESTIONNAIRES_VIEW_RESPONSES"), systemImage: "arrow.right.doc.on.clipboard")
                                 }
                             }
                         }
