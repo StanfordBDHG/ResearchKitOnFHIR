@@ -38,6 +38,7 @@ final class ResearchKitOnFHIRTests: XCTestCase {
 
     func testRegexExtension() throws {
         let testRegex = Questionnaire.textValidationExample.item?.first?.validationRegularExpression
+        // swiftlint:disable:next line_length
         let regex = try NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
         XCTAssertEqual(regex, testRegex)
     }
