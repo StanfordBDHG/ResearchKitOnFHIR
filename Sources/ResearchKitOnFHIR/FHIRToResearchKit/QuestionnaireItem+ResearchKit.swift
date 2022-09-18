@@ -193,9 +193,9 @@ extension QuestionnaireItem {
                       let code = option.code.value?.string else {
                     continue
                 }
-                let valueCoding: NSDictionary = [
+                let valueCoding = [
                     "code": code,
-                    "system": valueSet?.compose?.include.first?.system?.value?.url
+                    "system": valueSet?.compose?.include.first?.system?.value?.url.absoluteString
                 ]
                 let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
@@ -213,9 +213,9 @@ extension QuestionnaireItem {
                       let code = coding.code?.value?.string else {
                     continue
                 }
-                let valueCoding: NSDictionary = [
+                let valueCoding = [
                     "code": code,
-                    "system": coding.system?.value?.url
+                    "system": coding.system?.value?.url.absoluteString
                 ]
                 let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)

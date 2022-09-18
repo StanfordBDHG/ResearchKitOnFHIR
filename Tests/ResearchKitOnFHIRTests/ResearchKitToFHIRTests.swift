@@ -130,4 +130,28 @@ final class ResearchKitToFHIRTests: XCTestCase {
         }
         XCTAssertEqual(testValue, responseValue)
     }
+
+    func testChoiceResponse() {
+        let testValue = ["code": "testCode", "system": "testSystem"]
+        var responseValue = [String: String]()
+
+        let choiceResult = ORKChoiceQuestionResult()
+        choiceResult.choiceAnswers = [testValue as NSCoding & NSCopying & NSObjectProtocol]
+
+        let stepResult = ORKStepResult()
+        stepResult.results = [choiceResult]
+
+        let taskResult = ORKTaskResult()
+        taskResult.results = [stepResult]
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        if case let .coding(value) = answer,
+           let code = value.code?.value?.string,
+           let system = value.system?.value?.url.absoluteString {
+            responseValue = ["code": code, "system": system]
+        }
+        XCTAssertEqual(testValue, responseValue)
+    }
 }

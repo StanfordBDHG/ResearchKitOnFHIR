@@ -74,13 +74,13 @@ extension Decimal {
 extension Coding {
     fileprivate func predicate(with resultSelector: ORKResultSelector, operator fhirOperator: QuestionnaireItemOperator) throws -> NSPredicate? {
         guard let code = code?.value?.string,
-              let system = system?.value?.url else {
+              let system = system?.value?.url.absoluteString else {
             return nil
         }
         
         switch fhirOperator {
         case .equal:
-            let expectedAnswer: NSDictionary = [
+            let expectedAnswer = [
                 "code": code,
                 "system": system
             ]
