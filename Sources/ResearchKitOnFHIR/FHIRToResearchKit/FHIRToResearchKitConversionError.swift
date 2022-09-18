@@ -10,7 +10,7 @@ import ModelsR4
 
 
 /// An error that is thrown when translating a FHIR `Questionnaire` to an `ORKNavigableOrderedTask`
-public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible {
+public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible, Equatable {
     case noItems
     case noURL
     case unsupportedOperator(QuestionnaireItemOperator)
