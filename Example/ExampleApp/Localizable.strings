@@ -18,3 +18,4 @@
 "RESPONSES_LIST_NO_SELECTION" = "Please select a response";
 "RESPONSES_LIST_TITLE" = "Responses";
 "RESPONSES_LIST_NO_RESPONSES" = "No responses";
+"COMPLETION_STEP_MESSAGE" = "Thank you for completing this Questionnaire. Long press on the Questionnaire's button on the main screen to see your results.";

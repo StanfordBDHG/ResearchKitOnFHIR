@@ -19,11 +19,11 @@ extension ORKNavigableOrderedTask {
     /// - Parameters:
     ///  - title: The title of the questionnaire. If you pass in a `String` the translation overrides the title that might be provided in the FHIR `Questionnaire`.
     ///  - questionnaire: The FHIR `Questionnaire` used to create the `ORKNavigableOrderedTask`.
-    ///  - summaryStep: An optional `ORKCompletionStep` that can be displayed at the end of the ResearchKit survey.
+    ///  - completionStep: An optional `ORKCompletionStep` that can be displayed at the end of the ResearchKit survey.
     public convenience init(
         title: String? = nil,
         questionnaire: Questionnaire,
-        summaryStep: ORKCompletionStep? = nil
+        completionStep: ORKCompletionStep? = nil
     ) throws {
         guard let item = questionnaire.item else {
             throw FHIRToResearchKitConversionError.noItems
@@ -39,9 +39,9 @@ extension ORKNavigableOrderedTask {
         let title = (title ?? questionnaire.title?.value?.string) ?? ""
         var steps = item.fhirQuestionnaireItemsToORKSteps(title: title, valueSets: valueSets)
         
-        // Add a summary step at the end of the task if defined
-        if let summaryStep = summaryStep {
-            steps.append(summaryStep)
+        // Add a completion step at the end of the task if defined
+        if let completionStep = completionStep {
+            steps.append(completionStep)
         }
 
         self.init(identifier: id, steps: steps)

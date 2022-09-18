@@ -45,12 +45,17 @@ final class ExampleUITests: XCTestCase {
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "31")
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2021")
-        app.buttons["Done"].tap()
+        app.buttons["Next"].tap()
 
+        // Close the completion step
+        app.buttons["Done"].tap()
         
         // Second run through questionnaire
         skipLogicExampleButton.tap()
         app.tables.staticTexts["No"].tap()
+        app.buttons["Next"].tap()
+
+        // Close the completion step
         app.buttons["Done"].tap()
         
         // Open context menu and view results
@@ -81,6 +86,9 @@ final class ExampleUITests: XCTestCase {
         // Complete questionnaire
         containedValueSetExampleButton.tap()
         app.tables.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+
+        // Close the completion step
         app.buttons["Done"].tap()
 
         // Open context menu and view results
@@ -124,8 +132,10 @@ final class ExampleUITests: XCTestCase {
         quantityField.typeText("2.5")
 
         // Finish questionnaire
-        let doneButton = app.buttons.matching(identifier: "Done").element(boundBy: 1)
-        doneButton.tap()
+        app.buttons["Next"].tap()
+
+        // Close the completion step
+        app.buttons["Done"].tap()
 
         // Open context menu and view results
         numberExampleButton.press(forDuration: 1.0)
@@ -156,8 +166,10 @@ final class ExampleUITests: XCTestCase {
         emailField.typeText("vishnu@cardinalkit.org")
 
         // Finish survey
-        let doneButton = app.buttons.matching(identifier: "Done").element(boundBy: 1)
-        doneButton.tap()
+        app.buttons["Next"].tap()
+
+        // Close the completion step
+        app.buttons["Done"].tap()
 
         // Open context menu and view results
         textValidationExampleButton.press(forDuration: 1.0)
@@ -199,6 +211,9 @@ final class ExampleUITests: XCTestCase {
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "8")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "45")
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "PM")
+        app.buttons["Next"].tap()
+
+        // Close the completion step
         app.buttons["Done"].tap()
 
         // Open context menu and view results
@@ -235,6 +250,9 @@ final class ExampleUITests: XCTestCase {
         }
 
         // Finish survey
+        app.buttons["Next"].tap()
+
+        // Close the completion step
         app.buttons["Done"].tap()
 
         // Open context menu and view results
@@ -268,6 +286,9 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         app.tables.staticTexts["Eyes open spontaneously"].tap()
+        app.buttons["Next"].tap()
+
+        // Close the completion step
         app.buttons["Done"].tap()
 
         // Open context menu and view results

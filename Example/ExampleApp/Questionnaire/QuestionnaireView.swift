@@ -33,8 +33,13 @@ struct QuestionnaireView: View {
     /// - Parameter questionnaire: a FHIR questionnaire
     /// - Returns: a ResearchKit navigable task
     private func createTask(questionnaire: Questionnaire) -> ORKNavigableOrderedTask? {
+        // Create a completion step to add to the end of the Questionnaire (optional)
+        let completionStep = ORKCompletionStep(identifier: "completion-step")
+        completionStep.text = String(localized: "COMPLETION_STEP_MESSAGE")
+
+        // Create a navigable task from the Questionnaire
         do {
-            return try ORKNavigableOrderedTask(questionnaire: questionnaire)
+            return try ORKNavigableOrderedTask(questionnaire: questionnaire, completionStep: completionStep)
         } catch {
             print("Error creating task: \(error)")
         }
