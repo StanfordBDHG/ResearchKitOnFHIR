@@ -137,6 +137,8 @@ extension QuestionnaireItem {
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.date)
         case .dateTime:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.dateAndTime)
+        case .time:
+            return ORKTimeOfDayAnswerFormat()
         case .decimal, .quantity:
             let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: unit)
             answerFormat.maximumFractionDigits = maximumDecimalPlaces
