@@ -44,7 +44,8 @@ let package = Package(
                 .copy("Resources/NumberExample.json"),
                 .copy("Resources/DateTimeExample.json"),
                 .copy("Resources/PHQ-9.json"),
-                .copy("Resources/GCS.json")
+                .copy("Resources/GCS.json"),
+                .copy("Resources/FormExample.json")
             ]
         ),
         .testTarget(
