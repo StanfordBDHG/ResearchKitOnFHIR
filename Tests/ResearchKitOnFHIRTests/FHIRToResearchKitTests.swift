@@ -12,14 +12,6 @@ import ModelsR4
 @testable import ResearchKitOnFHIR
 
 final class FHIRToResearchKitTests: XCTestCase {
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testCreateNavigationRule() throws {
         // The skip logic questionnaire has a skip navigation rule on the second step
         let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
@@ -78,8 +70,13 @@ final class FHIRToResearchKitTests: XCTestCase {
 
     func testNoItemsException() throws {
         var thrownError: Error?
+
+        // Creates a questionnaire and set a URL, but does not add items
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
-        questionnaire.url?.value = FHIRURI(URL(string: "http://cardinalkit.org/fhir/questionnaire/test")!)
+        if let url = URL(string: "http://cardinalkit.org/fhir/questionnaire/test") {
+            questionnaire.url?.value = FHIRURI(url)
+        }
+
         XCTAssertThrowsError(try ORKNavigableOrderedTask(questionnaire: questionnaire)) {
             thrownError = $0
         }
@@ -94,10 +91,13 @@ final class FHIRToResearchKitTests: XCTestCase {
 
     func testNoURLException() throws {
         var thrownError: Error?
-        let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
 
-        // Adds an item
-        questionnaire.item = [QuestionnaireItem(linkId: FHIRPrimitive(FHIRString(UUID().uuidString)), type: FHIRPrimitive(QuestionnaireItemType.display))]
+        // Creates a questionnaire and adds an item but does not set a URL
+        let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
+        questionnaire.item = [
+            QuestionnaireItem(linkId: FHIRPrimitive(FHIRString(UUID().uuidString)),
+                              type: FHIRPrimitive(QuestionnaireItemType.display))
+        ]
 
         XCTAssertThrowsError(try ORKNavigableOrderedTask(questionnaire: questionnaire)) {
             thrownError = $0
