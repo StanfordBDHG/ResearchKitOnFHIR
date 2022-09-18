@@ -104,8 +104,6 @@ extension ORKTaskResult {
         }
 
         var codingCode: FHIRPrimitive<FHIRString>?,
-            codingDisplay: FHIRPrimitive<FHIRString>?,
-            codingId: FHIRPrimitive<FHIRString>?,
             codingSystem: FHIRPrimitive<FHIRURI>?
 
         if let code = answerDictionary["code"] {
@@ -118,8 +116,6 @@ extension ORKTaskResult {
 
         let coding = Coding(
             code: codingCode,
-            display: codingDisplay,
-            id: codingId,
             system: codingSystem
         )
         return .coding(coding)

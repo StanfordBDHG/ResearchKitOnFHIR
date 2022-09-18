@@ -12,18 +12,26 @@ import ResearchKit
 import XCTest
 
 final class ResearchKitToFHIRTests: XCTestCase {
+    private func createStepResult(_ result: ORKResult) -> ORKStepResult {
+        let stepResult = ORKStepResult()
+        stepResult.results = [result]
+        return stepResult
+    }
+
+    private func createTaskResult(_ result: ORKResult) -> ORKTaskResult {
+        let stepResult = createStepResult(result)
+        let taskResult = ORKTaskResult()
+        taskResult.results = [stepResult]
+        return taskResult
+    }
+
     func testTextResponse() {
         let testValue = "test answer"
         var responseValue: String?
 
         let textResult = ORKTextQuestionResult()
         textResult.textAnswer = testValue
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [textResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(textResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
@@ -41,12 +49,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         let booleanResult = ORKBooleanQuestionResult()
         booleanResult.booleanAnswer = NSNumber(true)
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [booleanResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(booleanResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
@@ -58,18 +61,13 @@ final class ResearchKitToFHIRTests: XCTestCase {
         XCTAssertEqual(testValue, responseValue)
     }
 
-    func testNumericResponse() {
+    func testDecimalResponse() {
         let testValue: Decimal = 1.5
         var responseValue: Decimal?
 
         let numericResult = ORKNumericQuestionResult()
         numericResult.numericAnswer = testValue as NSNumber
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [numericResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(numericResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
@@ -81,18 +79,57 @@ final class ResearchKitToFHIRTests: XCTestCase {
         XCTAssertEqual(testValue, responseValue)
     }
 
+    func testIntegerResponse() {
+        let testValue = 1
+        var responseValue: Int?
+
+        let numericResult = ORKNumericQuestionResult()
+        numericResult.numericAnswer = testValue as NSNumber
+        numericResult.questionType = ORKQuestionType.integer
+        let taskResult = createTaskResult(numericResult)
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        if case let .integer(value) = answer,
+           let unwrappedValue = value.value?.integer {
+            responseValue = Int(unwrappedValue)
+        }
+        XCTAssertEqual(testValue, responseValue)
+    }
+
+    func testQuantityResponse() {
+        let testValue: Decimal = 1.5
+        let testUnit = "g"
+        var responseValue: Decimal?
+        var responseUnit = ""
+
+        let numericResult = ORKNumericQuestionResult()
+        numericResult.numericAnswer = testValue as NSNumber
+        numericResult.unit = testUnit
+        numericResult.questionType = ORKQuestionType.decimal
+        let taskResult = createTaskResult(numericResult)
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        if case let .quantity(value) = answer,
+           let unwrappedValue = value.value?.value?.decimal,
+           let unit = value.unit?.value?.string {
+            responseValue = unwrappedValue
+            responseUnit = unit
+        }
+        XCTAssertEqual(testValue, responseValue)
+        XCTAssertEqual(testUnit, responseUnit)
+    }
+
     func testDateTimeResponse() {
         let testValue = Date()
         var responseValue: Date?
 
         let dateResult = ORKDateQuestionResult()
         dateResult.dateAnswer = testValue
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [dateResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(dateResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
@@ -108,17 +145,12 @@ final class ResearchKitToFHIRTests: XCTestCase {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: Date())
         let minute = calendar.component(.minute, from: Date())
-        var testValue = DateComponents(hour: hour, minute: minute)
+        let testValue = DateComponents(hour: hour, minute: minute)
         var responseValue = DateComponents()
 
         let timeResult = ORKTimeOfDayQuestionResult()
         timeResult.dateComponentsAnswer = testValue
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [timeResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(timeResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
@@ -137,12 +169,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         let choiceResult = ORKChoiceQuestionResult()
         choiceResult.choiceAnswers = [testValue as NSCoding & NSCopying & NSObjectProtocol]
-
-        let stepResult = ORKStepResult()
-        stepResult.results = [choiceResult]
-
-        let taskResult = ORKTaskResult()
-        taskResult.results = [stepResult]
+        let taskResult = createTaskResult(choiceResult)
 
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
