@@ -12,6 +12,11 @@ import ModelsR4
 @testable import ResearchKitOnFHIR
 
 final class FHIRToResearchKitTests: XCTestCase {
+    func testCreateORKNavigableOrderedTask() throws {
+        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
+        XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
+    }
+
     func testCreateNavigationRule() throws {
         // The skip logic questionnaire has a skip navigation rule on the second step
         let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)

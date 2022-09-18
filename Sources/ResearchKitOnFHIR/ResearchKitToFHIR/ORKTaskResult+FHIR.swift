@@ -99,35 +99,23 @@ extension ORKTaskResult {
     private func createChoiceResponse(_ result: ORKChoiceQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
         guard let answerArray = result.answer as? NSArray,
               answerArray.count > 0, // swiftlint:disable:this empty_count
-              let answerDictionary = answerArray[0] as? NSDictionary else {
+              let answerDictionary = answerArray[0] as? [String: String] else {
             return nil
         }
 
         var codingCode: FHIRPrimitive<FHIRString>?,
-            codingDisplay: FHIRPrimitive<FHIRString>?,
-            codingId: FHIRPrimitive<FHIRString>?,
             codingSystem: FHIRPrimitive<FHIRURI>?
 
-        if let code = answerDictionary["code"] as? String {
+        if let code = answerDictionary["code"] {
             codingCode = FHIRPrimitive(FHIRString(code))
         }
 
-        if let display = answerDictionary["display"] as? String {
-            codingDisplay = FHIRPrimitive(FHIRString(display))
-        }
-
-        if let id = answerDictionary["id"] as? String {
-            codingId = FHIRPrimitive(FHIRString(id))
-        }
-
-        if let system = answerDictionary["system"] as? URL {
-            codingSystem = FHIRPrimitive(FHIRURI(system))
+        if let system = answerDictionary["system"] {
+            codingSystem = FHIRPrimitive(FHIRURI(stringLiteral: system))
         }
 
         let coding = Coding(
             code: codingCode,
-            display: codingDisplay,
-            id: codingId,
             system: codingSystem
         )
         return .coding(coding)
