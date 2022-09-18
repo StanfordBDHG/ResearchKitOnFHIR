@@ -42,6 +42,7 @@ let package = Package(
                 .copy("Resources/TextValidationExample.json"),
                 .copy("Resources/ContainedValueSetExample.json"),
                 .copy("Resources/NumberExample.json"),
+                .copy("Resources/DateTimeExample.json"),
                 .copy("Resources/PHQ-9.json"),
                 .copy("Resources/GCS.json")
             ]

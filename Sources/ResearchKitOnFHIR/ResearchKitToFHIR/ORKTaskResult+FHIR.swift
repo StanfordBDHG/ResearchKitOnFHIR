@@ -57,6 +57,8 @@ extension ORKTaskResult {
             responseAnswer.value = createNumericResponse(result)
         case let result as ORKDateQuestionResult:
             responseAnswer.value = createDateResponse(result)
+        case let result as ORKTimeOfDayQuestionResult:
+            responseAnswer.value = createTimeResponse(result)
         case let result as ORKTextQuestionResult:
             responseAnswer.value = createTextResponse(result)
         default:
@@ -152,5 +154,17 @@ extension ORKTaskResult {
             let answer = FHIRPrimitive(fhirDateTime)
             return .dateTime(answer)
         }
+    }
+
+    private func createTimeResponse(_ result: ORKTimeOfDayQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
+        guard let timeDateComponents = result.dateComponentsAnswer,
+              let hour = UInt8(exactly: timeDateComponents.hour ?? 0),
+              let minute = UInt8(exactly: timeDateComponents.minute ?? 0) else {
+            return nil
+        }
+
+        // Note: ORKTimeOfDayAnswerFormat doesn't support entry of seconds, so it is zero-filled.
+        let fhirTime = FHIRPrimitive(FHIRTime(hour: hour, minute: minute, second: 0))
+        return .time(fhirTime)
     }
 }

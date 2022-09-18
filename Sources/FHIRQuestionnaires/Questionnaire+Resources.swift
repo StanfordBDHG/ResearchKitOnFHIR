@@ -11,6 +11,8 @@ import Foundation
 
 
 extension Questionnaire {
+    // MARK: Example FHIR Questionnaires to demonstrate library functionality
+
     /// A FHIR questionnaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
     public static var skipLogicExample: Questionnaire = loadQuestionnaire(withName: "SkipLogicExample")
 
@@ -23,19 +25,25 @@ extension Questionnaire {
     /// A FHIR questionnaire demonstrating integer and decimal inputs
     public static var numberExample: Questionnaire = loadQuestionnaire(withName: "NumberExample")
 
-    /// The PHQ-9 validated clinical questionnaire
-    public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
+    /// A FHIR questionnaire demonstrating date, dateTime, and time inputs
+    public static var dateTimeExample: Questionnaire = loadQuestionnaire(withName: "DateTimeExample")
 
-    /// The Glasgow Coma Scale
-    public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
-    
     /// A collection of example `Questionnaire`s provided by the FHIRQuestionnaires target to demonstrate functionality
     public static var exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample,
         .containedValueSetExample,
-        .numberExample
+        .numberExample,
+        .dateTimeExample
     ]
+
+    // MARK: Examples of clinical research FHIR Questionnaires
+
+    /// The PHQ-9 validated clinical questionnaire
+    public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
+
+    /// The Glasgow Coma Scale
+    public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
 
     /// A collection of clinical research `Questionnaire`s provided by the FHIRQuestionnaires target
     public static var researchQuestionnaires: [Questionnaire] = [

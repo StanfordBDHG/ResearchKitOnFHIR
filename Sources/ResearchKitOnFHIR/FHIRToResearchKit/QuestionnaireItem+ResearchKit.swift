@@ -123,6 +123,7 @@ extension QuestionnaireItem {
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
+    // swiftlint:disable cyclomatic_complexity
     private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
         switch type.value {
         case .boolean:
@@ -137,6 +138,8 @@ extension QuestionnaireItem {
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.date)
         case .dateTime:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.dateAndTime)
+        case .time:
+            return ORKTimeOfDayAnswerFormat()
         case .decimal, .quantity:
             let answerFormat = ORKNumericAnswerFormat.decimalAnswerFormat(withUnit: unit)
             answerFormat.maximumFractionDigits = maximumDecimalPlaces
