@@ -11,7 +11,6 @@ import Foundation
 
 
 extension Questionnaire {
-
     // MARK: Example FHIR Questionnaires to demonstrate library functionality
 
     /// A FHIR questionnaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
