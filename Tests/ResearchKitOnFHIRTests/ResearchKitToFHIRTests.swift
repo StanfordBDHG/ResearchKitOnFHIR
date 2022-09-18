@@ -37,10 +37,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
     func testBooleanResponse() {
         let testValue = true
-        var responseValue: Bool?
+        var responseValue = false
 
         let booleanResult = ORKBooleanQuestionResult()
-        booleanResult.booleanAnswer = NSNumber(booleanLiteral: true)
+        booleanResult.booleanAnswer = NSNumber(true)
 
         let stepResult = ORKStepResult()
         stepResult.results = [booleanResult]
@@ -100,6 +100,33 @@ final class ResearchKitToFHIRTests: XCTestCase {
         if case let .dateTime(value) = answer,
            let unwrappedValue = try? value.value?.asNSDate() {
             responseValue = unwrappedValue
+        }
+        XCTAssertEqual(testValue, responseValue)
+    }
+
+    func testTimeResponse() {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: Date())
+        let minute = calendar.component(.minute, from: Date())
+        var testValue = DateComponents(hour: hour, minute: minute)
+        var responseValue = DateComponents()
+
+        let timeResult = ORKTimeOfDayQuestionResult()
+        timeResult.dateComponentsAnswer = testValue
+
+        let stepResult = ORKStepResult()
+        stepResult.results = [timeResult]
+
+        let taskResult = ORKTaskResult()
+        taskResult.results = [stepResult]
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        if case let .time(value) = answer,
+           let minuteValue = value.value?.minute,
+           let hourValue = value.value?.hour {
+            responseValue = DateComponents(hour: Int(hourValue), minute: Int(minuteValue))
         }
         XCTAssertEqual(testValue, responseValue)
     }
