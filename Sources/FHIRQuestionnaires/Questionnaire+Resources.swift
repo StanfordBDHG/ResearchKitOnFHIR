@@ -28,13 +28,17 @@ extension Questionnaire {
     /// A FHIR questionnaire demonstrating date, dateTime, and time inputs
     public static var dateTimeExample: Questionnaire = loadQuestionnaire(withName: "DateTimeExample")
 
+    /// A FHIR questionnaire demonstrating a form with nested questions
+    public static var formExample: Questionnaire = loadQuestionnaire(withName: "FormExample")
+
     /// A collection of example `Questionnaire`s provided by the FHIRQuestionnaires target to demonstrate functionality
     public static var exampleQuestionnaires: [Questionnaire] = [
         .skipLogicExample,
         .textValidationExample,
         .containedValueSetExample,
         .numberExample,
-        .dateTimeExample
+        .dateTimeExample,
+        .formExample
     ]
 
     // MARK: Examples of clinical research FHIR Questionnaires

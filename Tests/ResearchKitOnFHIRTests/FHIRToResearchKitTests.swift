@@ -20,10 +20,10 @@ final class FHIRToResearchKitTests: XCTestCase {
     }
 
     func testConvertQuestionnaireItemToORKSteps() throws {
-        let title = Questionnaire.numberExample.title?.value?.string ?? "title"
-        let steps = Questionnaire.numberExample.item?.fhirQuestionnaireItemsToORKSteps(title: title, valueSets: [])
+        let title = Questionnaire.formExample.title?.value?.string ?? "title"
+        let steps = Questionnaire.formExample.item?.fhirQuestionnaireItemsToORKSteps(title: title, valueSets: [])
         let unwrappedSteps = try XCTUnwrap(steps)
-        XCTAssertEqual(unwrappedSteps.count, 3)
+        XCTAssertEqual(unwrappedSteps.count, 2)
     }
 
     func testGetContainedValueSets() throws {
