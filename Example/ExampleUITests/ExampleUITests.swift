@@ -269,6 +269,43 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    func testGAD7Example() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let gad7ExampleButton = app.collectionViews.buttons["Generalized Anxiety Disorder - 7"]
+
+        // Open questionnaire
+        gad7ExampleButton.tap()
+
+        // Answer all 7 questions
+        let options = ["Not at all", "Several days", "More than half the days", "Nearly every day"]
+
+        for question in 0...6 {
+            let buttonQuery = app.tables.staticTexts.matching(identifier: options.randomElement() ?? options[0]).element(boundBy: question)
+            buttonQuery.tap()
+        }
+
+        // Finish survey
+        app.buttons["Next"].tap()
+
+        // Close the completion step
+        app.buttons["Done"].tap()
+
+        // Open context menu and view results
+        gad7ExampleButton.press(forDuration: 1.0)
+        app.collectionViews.buttons["View Responses"].tap()
+
+        // Check results
+        let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
+        XCTAssertEqual(buttonsInResultView.count, 1)
+        buttonsInResultView.allElementsBoundByIndex[0].tap()
+        app.navigationBars.buttons["Back"].tap()
+
+        // Dismiss results view
+        app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
+
     func testGCSExample() throws {
         let app = XCUIApplication()
         app.launch()
