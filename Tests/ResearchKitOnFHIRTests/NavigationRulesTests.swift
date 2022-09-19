@@ -13,15 +13,17 @@ import ModelsR4
 
 final class NavigationRulesTests: XCTestCase {
     private func createORKNavigableOrderedTask(firstItemID: String,
+                                               firstItemType: QuestionnaireItemType,
                                                secondItemID: String,
+                                               secondItemType: QuestionnaireItemType,
                                                enableWhen: QuestionnaireItemEnableWhen) throws -> ORKNavigableOrderedTask {
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         questionnaire.url = FHIRPrimitive(FHIRURI(stringLiteral: "http://cardinalkit.org/fhir/questionnaire/navigation-rule-test"))
         let questionnaireItemFirst = QuestionnaireItem(linkId: FHIRPrimitive(FHIRString(firstItemID)),
-                                                       type: FHIRPrimitive(QuestionnaireItemType.integer))
+                                                       type: FHIRPrimitive(firstItemType))
         let questionnaireItemSecond = QuestionnaireItem(enableWhen: [enableWhen],
                                                         linkId: FHIRPrimitive(FHIRString(secondItemID)),
-                                                        type: FHIRPrimitive(QuestionnaireItemType.integer))
+                                                        type: FHIRPrimitive(secondItemType))
         questionnaire.item = [questionnaireItemFirst, questionnaireItemSecond]
         let orkNavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: questionnaire)
         return orkNavigableOrderedTask
@@ -34,7 +36,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .integer,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .integer,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -46,7 +50,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .integer,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .integer,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -58,7 +64,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .integer,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .integer,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -70,7 +78,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .integer,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .integer,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -82,7 +92,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .decimal,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .decimal,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -94,7 +106,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .decimal,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .decimal,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -106,7 +120,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .decimal,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .decimal,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -118,7 +134,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .decimal,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .decimal,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -130,7 +148,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .date,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .date,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -142,7 +162,9 @@ final class NavigationRulesTests: XCTestCase {
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
 
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .date,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .date,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
@@ -155,7 +177,24 @@ final class NavigationRulesTests: XCTestCase {
                                                      operator: FHIRPrimitive(QuestionnaireItemOperator.equal),
                                                      question: FHIRPrimitive(FHIRString(firstItemID)))
         let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .choice,
                                                      secondItemID: secondItemID,
+                                                     secondItemType: .choice,
+                                                     enableWhen: enableWhen)
+        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+    }
+
+    func testCodingNotEqual() throws {
+        let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
+        let coding = Coding(code: FHIRPrimitive(FHIRString("testCode")),
+                            system: FHIRPrimitive(FHIRURI("http://cardinalkit.org/fhir/system/testSystem")))
+        let enableWhen = QuestionnaireItemEnableWhen(answer: .coding(coding),
+                                                     operator: FHIRPrimitive(QuestionnaireItemOperator.notEqual),
+                                                     question: FHIRPrimitive(FHIRString(firstItemID)))
+        let task = try createORKNavigableOrderedTask(firstItemID: firstItemID,
+                                                     firstItemType: .choice,
+                                                     secondItemID: secondItemID,
+                                                     secondItemType: .choice,
                                                      enableWhen: enableWhen)
         XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
     }
