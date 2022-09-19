@@ -46,12 +46,16 @@ extension Questionnaire {
     /// The PHQ-9 validated clinical questionnaire
     public static var phq9: Questionnaire = loadQuestionnaire(withName: "PHQ-9")
 
+    /// Generalized Anxiety Disorder-7
+    public static var gad7: Questionnaire = loadQuestionnaire(withName: "GAD-7")
+
     /// The Glasgow Coma Scale
     public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
 
     /// A collection of clinical research `Questionnaire`s provided by the FHIRQuestionnaires target
     public static var researchQuestionnaires: [Questionnaire] = [
         .phq9,
+        .gad7,
         .gcs
     ]
     
