@@ -25,28 +25,28 @@ ResearchKitOnFHIR is a framework that allows you to use [FHIR Questionnaires](ht
 - Supports answer validation during entry
 - Supports contained [FHIR ValueSets](https://www.hl7.org/fhir/valueset.html) as answer options
 
-### FHIR <-> ResearchKit Conversion
+### FHIR<-> ResearchKit Conversion
 
-| FHIR [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | ResearchKit Type | FHIR Response Type | Description |
-|------------------------------|-----------------------------|--------------------------|-----------------------|
-| [display](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-display) | [ORKInstructionStep](http://researchkit.org/docs/Classes/ORKInstructionStep.html) | *none* | Text displayed without an answer field
-| [group](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-group) | [ORKFormStep](http://researchkit.org/docs/Classes/ORKFormStep.html) | *none* | A group of questions
-| [boolean](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-boolean) | [ORKBooleanAnswerFormat](http://researchkit.org/docs/Classes/ORKBooleanAnswerFormat.html) | valueBoolean  | *Yes* or *No* answer
-| [choice](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-choice) | [ORKTextChoice](http://researchkit.org/docs/Classes/ORKTextChoice.html) | valueCoding | A list of options
-| [date](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-date) | [ORKDateAnswerFormat](http://researchkit.org/docs/Classes/ORKDateAnswerFormat.html)(style: [ORKDateAnswerStyle.date](http://researchkit.org/docs/Constants/ORKDateAnswerStyle.html) | valueDate | Date answer
-| [dateTime](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-dateTime) | [ORKDateAnswerFormat](http://researchkit.org/docs/Classes/ORKDateAnswerFormat.html)(style: [ORKDateAnswerStyle.dateAndTime](http://researchkit.org/docs/Constants/ORKDateAnswerStyle.html) | valueDateTime | Date and time answer
-| [time](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-time) | [ORKTimeOfDayAnswerFormat](http://researchkit.org/docs/Classes/ORKTimeOfDayAnswerFormat.html) | valueTime | Time only answer
-| [decimal](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-decimal) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).decimalAnswerFormat | valueDecimal | Real number answer
-| [quantity](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-quantity) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).decimalAnswerFormat(withUnit: quantityUnit) | valueQuantity | Combination of decimal value and unit
-| [integer](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-integer) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).integerAnswerFormat | valueInteger | Integer answer
-| [text](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-text) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString | Longer free-text answer
-| [string](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-string) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString | Shorter free-text answer
+| FHIR R4 [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | ResearchKit Type | FHIR Response Type
+|------------------------------|-----------------------------|--------------------------|
+| [display](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-display) | [ORKInstructionStep](http://researchkit.org/docs/Classes/ORKInstructionStep.html) | *none*
+| [group](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-group) | [ORKFormStep](http://researchkit.org/docs/Classes/ORKFormStep.html) | *none*
+| [boolean](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-boolean) | [ORKBooleanAnswerFormat](http://researchkit.org/docs/Classes/ORKBooleanAnswerFormat.html) | valueBoolean
+| [choice](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-choice) | [ORKTextChoice](http://researchkit.org/docs/Classes/ORKTextChoice.html) | valueCoding  
+| [date](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-date) | [ORKDateAnswerFormat](http://researchkit.org/docs/Classes/ORKDateAnswerFormat.html)(style: [ORKDateAnswerStyle.date](http://researchkit.org/docs/Constants/ORKDateAnswerStyle.html) | valueDate 
+| [dateTime](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-dateTime) | [ORKDateAnswerFormat](http://researchkit.org/docs/Classes/ORKDateAnswerFormat.html)(style: [ORKDateAnswerStyle.dateAndTime](http://researchkit.org/docs/Constants/ORKDateAnswerStyle.html) | valueDateTime 
+| [time](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-time) | [ORKTimeOfDayAnswerFormat](http://researchkit.org/docs/Classes/ORKTimeOfDayAnswerFormat.html) | valueTime 
+| [decimal](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-decimal) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).decimalAnswerFormat | valueDecimal 
+| [quantity](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-quantity) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).decimalAnswerFormat(withUnit: quantityUnit) | valueQuantity 
+| [integer](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-integer) | [ORKNumericAnswerFormat](http://researchkit.org/docs/Classes/ORKNumericAnswerFormat.html).integerAnswerFormat | valueInteger 
+| [text](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-text) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString 
+| [string](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-string) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString 
 
 ### Navigation Rules
 
 The following table describes how the FHIR [enableWhen](https://www.hl7.org/fhir/questionnaire-definitions.html#Questionnaire.item.enableWhen) is converted to a ResearchKit [ORKSkipStepNavigationRule](http://researchkit.org/docs/Classes/ORKSkipStepNavigationRule.html) for each supported type and operator. (The conversion is performed by constructing an ORKResultPredicate from the enableWhen expression and negating it.)
 
-| FHIR [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | Supported [QuestionnaireItemOperators](https://www.hl7.org/fhir/valueset-questionnaire-enable-operator.html) | ResearchKit [ORKResultPredicate](http://researchkit.org/docs/Classes/ORKResultPredicate.html) |
+| FHIR R4 [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | Supported [QuestionnaireItemOperators](https://www.hl7.org/fhir/valueset-questionnaire-enable-operator.html) | ResearchKit [ORKResultPredicate](http://researchkit.org/docs/Classes/ORKResultPredicate.html) |
 | ---------------------------- | ------------------- | ------------------------------ |
 | boolean | =, != | .predicateForBooleanQuestionResult
 | integer | =, !=, <=, >= | .predicateForNumericQuestionResult
@@ -63,6 +63,49 @@ ResearchKitOnFHIR can be installed into your Xcode project using [Swift Package 
 
 ## Usage
 The `Example` directory contains an Xcode project that demonstrates how to create a ResearchKit task from a FHIR Questionnaire, and extract the results in the form of a FHIR QuestionnaireResponse.
+
+### Converting from FHIR to ResearchKit
+
+#### 1. Instantiate a FHIR Questionnaire from JSON
+
+```swift
+let data = <FHIR JSON data>
+var questionnaire: Questionnaire?
+do {
+  questionnaire = try JSONDecoder().decode(Questionnaire.self, from: data)
+} catch {
+  print("Could not decode the FHIR questionnaire": \(error)")
+}
+```
+
+#### 2. Create a ResearchKit Navigable Task from the FHIR Questionnaire
+
+```swift
+var task: ORKNavigableOrderedTask?
+do {
+  task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
+} catch {
+  print("Error creating task: \(error)")
+}
+```
+
+Now you can present the task as described in the [ResearchKit documentation](https://github.com/cardinalkit/researchkit#4-present-the-task).
+
+### Converting ResearchKit Task Results to FHIR QuestionnaireResponse
+
+In your class that implements the `ORKTaskViewControllerDelegateProtocol`, you can extract a FHIR [QuestionnaireResponse](https://www.hl7.org/FHIR/questionnaireresponse.html) from the task's results as shown below.
+
+```swift
+func taskViewController(_ taskViewController: ORKTaskViewController, 
+                        didFinishWith reason: ORKTaskViewControllerFinishReason, 
+                        error: Error?) {
+        switch reason {
+        case .completed:
+            let fhirResponse = taskViewController.result.fhirResponse
+  
+        // ...
+    }
+```
 
 ## License
 This project is licensed under the MIT License. See [Licenses](https://github.com/CardinalKit/ResearchKitOnFHIR/tree/main/LICENSES) for more information.
