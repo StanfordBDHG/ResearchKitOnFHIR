@@ -230,6 +230,39 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    func testFormExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let formExampleButton = app.collectionViews.buttons["Form Example"]
+
+        // Open questionnaire and start
+        formExampleButton.tap()
+        app.buttons["Get Started"].tap()
+
+        // Answer the three questions
+        app.tables.staticTexts["Yes"].tap()
+        app.tables.staticTexts["Chocolate"].tap()
+        app.tables.staticTexts["Sprinkles"].tap()
+        app.buttons["Next"].tap()
+
+        // Finish survey
+        app.buttons["Done"].tap()
+
+        // Open context menu and view results
+        formExampleButton.press(forDuration: 1.0)
+        app.collectionViews.buttons["View Responses"].tap()
+
+        // Check results
+        let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
+        XCTAssertEqual(buttonsInResultView.count, 1)
+        buttonsInResultView.allElementsBoundByIndex[0].tap()
+        app.navigationBars.buttons["Back"].tap()
+
+        // Dismiss results view
+        app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
+
     // MARK: UI Tests for Clinical Questionnaires
 
     func testPHQ9Example() throws {
