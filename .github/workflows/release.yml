@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  macos:
+  generate_docs:
     name: Generate Docs
     runs-on: macos-12
     steps:
