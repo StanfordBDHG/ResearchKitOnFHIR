@@ -1,8 +1,9 @@
 //
-//  NavigationRulesTests.swift
-//  
+// This source file is part of the ResearchKitOnFHIR open source project
 //
-//  Created by Vishnu Ravi on 9/18/22.
+// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
 //
 
 import XCTest
