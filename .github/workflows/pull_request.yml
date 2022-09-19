@@ -25,8 +25,24 @@ jobs:
       run: |
           xcodebuild -version
           swift --version
-    - name: Build and test
-      run: xcodebuild test -scheme ResearchKitOnFHIR-Package -sdk iphonesimulator -destination "name=iPhone 13 Pro" CODE_SIGNING_ALLOWED="NO" -enableCodeCoverage YES -resultBundlePath ResearchKitOnFHIR.xcresult
+    - name: Build and test ResearchKitOnFHIR
+      run: |
+          xcodebuild test \
+            -scheme ResearchKitOnFHIR-Package \
+            -sdk iphonesimulator \
+            -destination "name=iPhone 14 Pro" \
+            -enableCodeCoverage YES \
+            -resultBundlePath ResearchKitOnFHIR.xcresult \
+            CODE_SIGNING_ALLOWED="NO"
+    - name: Build and test Example App
+      run: |
+          xcodebuild test \
+            -project Example/Example.xcodeproj \
+            -scheme Example \
+            -destination 'name=iPhone 14 Pro' \
+            -resultBundlePath ExampleApp.xcresult \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
