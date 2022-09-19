@@ -17,13 +17,6 @@ final class FHIRToResearchKitTests: XCTestCase {
         XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
     }
 
-    func testCreateNavigationRule() throws {
-        // The skip logic questionnaire has a skip navigation rule on the second step
-        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
-        let secondStepId = try XCTUnwrap(Questionnaire.skipLogicExample.item?[1].linkId.value?.string)
-        XCTAssertNotNil(orknavigableOrderedTask.skipNavigationRule(forStepIdentifier: secondStepId))
-    }
-
     func testConvertQuestionnaireItemToORKSteps() throws {
         // Test the number validation example
         let numberExampleTitle = Questionnaire.numberExample.title?.value?.string ?? "title"
