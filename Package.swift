@@ -46,6 +46,7 @@ let package = Package(
                 .copy("Resources/PHQ-9.json"),
                 .copy("Resources/GAD-7.json"),
                 .copy("Resources/GCS.json"),
+                .copy("Resources/IPSS.json"),
                 .copy("Resources/FormExample.json")
             ]
         ),

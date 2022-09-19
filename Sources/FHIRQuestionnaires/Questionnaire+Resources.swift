@@ -49,6 +49,9 @@ extension Questionnaire {
     /// Generalized Anxiety Disorder-7
     public static var gad7: Questionnaire = loadQuestionnaire(withName: "GAD-7")
 
+    /// International Prostatism Symptom Score (IPSS)
+    public static var ipss: Questionnaire = loadQuestionnaire(withName: "IPSS")
+
     /// The Glasgow Coma Scale
     public static var gcs: Questionnaire = loadQuestionnaire(withName: "GCS")
 
@@ -56,6 +59,7 @@ extension Questionnaire {
     public static var researchQuestionnaires: [Questionnaire] = [
         .phq9,
         .gad7,
+        .ipss,
         .gcs
     ]
     
