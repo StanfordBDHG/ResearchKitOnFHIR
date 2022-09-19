@@ -77,17 +77,21 @@ extension Coding {
               let system = system?.value?.url.absoluteString else {
             return nil
         }
-        
+
+        let expectedAnswer = [
+            "code": code,
+            "system": system
+        ]
+
+        let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector,
+                                                                            expectedAnswerValue: expectedAnswer
+                                                                                as NSCoding & NSCopying & NSObjectProtocol)
+
         switch fhirOperator {
         case .equal:
-            let expectedAnswer = [
-                "code": code,
-                "system": system
-            ]
-            let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(with: resultSelector,
-                                                                                expectedAnswerValue: expectedAnswer
-                                                                                    as NSCoding & NSCopying & NSObjectProtocol)
             return NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
+        case .notEqual:
+            return predicate
         default:
             throw FHIRToResearchKitConversionError.unsupportedOperator(fhirOperator)
         }
