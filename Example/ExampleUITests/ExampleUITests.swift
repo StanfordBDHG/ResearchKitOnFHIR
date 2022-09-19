@@ -109,7 +109,7 @@ final class ExampleUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let numberExampleButton = app.collectionViews.buttons["Number Example"]
+        let numberExampleButton = app.collectionViews.buttons["Number Validation Example"]
 
         // Open questionnaire
         numberExampleButton.tap()
