@@ -25,10 +25,23 @@ final class FHIRToResearchKitTests: XCTestCase {
     }
 
     func testConvertQuestionnaireItemToORKSteps() throws {
-        let title = Questionnaire.formExample.title?.value?.string ?? "title"
-        let steps = Questionnaire.formExample.item?.fhirQuestionnaireItemsToORKSteps(title: title, valueSets: [])
-        let unwrappedSteps = try XCTUnwrap(steps)
-        XCTAssertEqual(unwrappedSteps.count, 2)
+        // Test the number validation example
+        let numberExampleTitle = Questionnaire.numberExample.title?.value?.string ?? "title"
+        let numberExampleSteps = Questionnaire.numberExample.item?.fhirQuestionnaireItemsToORKSteps(title: numberExampleTitle, valueSets: [])
+        let unwrappedNumberExampleSteps = try XCTUnwrap(numberExampleSteps)
+        XCTAssertEqual(unwrappedNumberExampleSteps.count, 3)
+
+        // Tests the form example
+        let formExampleTitle = Questionnaire.formExample.title?.value?.string ?? "title"
+        let formExampleSteps = Questionnaire.formExample.item?.fhirQuestionnaireItemsToORKSteps(title: formExampleTitle, valueSets: [])
+        let unwrappedFormExampleSteps = try XCTUnwrap(formExampleSteps)
+        XCTAssertEqual(unwrappedFormExampleSteps.count, 2)
+
+        // Tests the skip logic example
+        let skipLogicExampleTitle = Questionnaire.skipLogicExample.title?.value?.string ?? "title"
+        let skipLogicExampleSteps = Questionnaire.skipLogicExample.item?.fhirQuestionnaireItemsToORKSteps(title: skipLogicExampleTitle, valueSets: [])
+        let unwrappedSkipLogicExampleSteps = try XCTUnwrap(skipLogicExampleSteps)
+        XCTAssertEqual(unwrappedSkipLogicExampleSteps.count, 4)
     }
 
     func testGetContainedValueSets() throws {
@@ -64,7 +77,7 @@ final class FHIRToResearchKitTests: XCTestCase {
     func testMaxValueExtension() throws {
         let maxValue = Questionnaire.numberExample.item?.first?.maxValue
         let unwrappedMaxValue = try XCTUnwrap(maxValue)
-        XCTAssertEqual(unwrappedMaxValue, 1000)
+        XCTAssertEqual(unwrappedMaxValue, 100)
     }
 
     func testMaxDecimalExtension() throws {
