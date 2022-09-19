@@ -72,9 +72,9 @@ The `Example` directory contains an Xcode project that demonstrates how to creat
 let data = <FHIR JSON data>
 var questionnaire: Questionnaire?
 do {
-  questionnaire = try JSONDecoder().decode(Questionnaire.self, from: data)
+    questionnaire = try JSONDecoder().decode(Questionnaire.self, from: data)
 } catch {
-  print("Could not decode the FHIR questionnaire": \(error)")
+    print("Could not decode the FHIR questionnaire": \(error)")
 }
 ```
 
@@ -83,9 +83,9 @@ do {
 ```swift
 var task: ORKNavigableOrderedTask?
 do {
-  task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
+    task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
 } catch {
-  print("Error creating task: \(error)")
+    print("Error creating task: \(error)")
 }
 ```
 
@@ -96,15 +96,17 @@ Now you can present the task as described in the [ResearchKit documentation](htt
 In your class that implements the `ORKTaskViewControllerDelegateProtocol`, you can extract a FHIR [QuestionnaireResponse](https://www.hl7.org/FHIR/questionnaireresponse.html) from the task's results as shown below.
 
 ```swift
-func taskViewController(_ taskViewController: ORKTaskViewController, 
-                        didFinishWith reason: ORKTaskViewControllerFinishReason, 
-                        error: Error?) {
-        switch reason {
-        case .completed:
-            let fhirResponse = taskViewController.result.fhirResponse
-  
+func taskViewController(
+    _ taskViewController: ORKTaskViewController, 
+    didFinishWith reason: ORKTaskViewControllerFinishReason, 
+    error: Error?
+) {
+    switch reason {
+    case .completed:
+        let fhirResponse = taskViewController.result.fhirResponse
         // ...
     }
+}
 ```
 
 ## License
