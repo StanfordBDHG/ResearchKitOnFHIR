@@ -27,8 +27,8 @@ jobs:
     with:
       xcodeprojname: Example/Example.xcodeproj
       scheme: Example
-  build_and_test-example-app:
+  create-and-upload-coverage-report:
     name: Create and Upload Coverage Report
-    uses: CardinalKit/.github/.github/workflows/create-coverage-report@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report@updateGitHubActions
     with:
       coveragereports: ResearchKitOnFHIR.xcresult ExampleApp.xcresult
