@@ -33,3 +33,5 @@ jobs:
     uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report.yml@updateGitHubActions
     with:
       coveragereports: ResearchKitOnFHIR.xcresult Example.xcresult
+    secrets:
+      token: ${{ secrets.CODECOV_TOKEN }}
