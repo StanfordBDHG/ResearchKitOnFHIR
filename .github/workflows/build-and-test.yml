@@ -32,4 +32,4 @@ jobs:
     needs: [build_and_test-spm, build_and_test-example-app]
     uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report.yml@updateGitHubActions
     with:
-      coveragereports: ResearchKitOnFHIR.xcresult ExampleApp.xcresult
+      coveragereports: ResearchKitOnFHIR.xcresult Example.xcresult
