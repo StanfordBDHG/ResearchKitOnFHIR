@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-name: Build and test
+name: Build and Test
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   build_and_test:
-    name: Build and test
+    name: Build and Test
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
       run: |
           xcodebuild -version
           swift --version
-    - name: Build and test
+    - name: Build and Test
       run: |
           xcodebuild test \
             -scheme ResearchKitOnFHIR-Package \
@@ -43,7 +43,7 @@ jobs:
         xcode: true
         xcode_archive_path: ResearchKitOnFHIR.xcresult
   build_and_test_example_app:
-    name: Build and test example app
+    name: Build and Test Example App
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
       run: |
           xcodebuild -version
           swift --version
-    - name: Build and test example app
+    - name: Build and Test Example App
       run: |
           xcodebuild test \
             -project Example/Example.xcodeproj \
