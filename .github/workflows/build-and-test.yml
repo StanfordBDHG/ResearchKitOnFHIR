@@ -18,17 +18,17 @@ on:
 jobs:
   build_and_test-spm:
     name: Build and Test Swift Package
-    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild-spm@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild-spm.yml@updateGitHubActions
     with:
       packagename: ResearchKitOnFHIR
   build_and_test-example-app:
     name: Build and Test Example App
-    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild.yml@updateGitHubActions
     with:
       xcodeprojname: Example/Example.xcodeproj
       scheme: Example
   create-and-upload-coverage-report:
     name: Create and Upload Coverage Report
-    uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report.yml@updateGitHubActions
     with:
       coveragereports: ResearchKitOnFHIR.xcresult ExampleApp.xcresult
