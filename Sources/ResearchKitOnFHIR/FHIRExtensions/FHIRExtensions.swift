@@ -20,15 +20,8 @@ extension QuestionnaireItem {
         static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
     }
-
-    /// Checks this QuestionnaireItem for an extension matching the given URL and then return it if it exists.
-    /// - Parameters:
-    ///   - url: A `String` identifying the extension.
-    /// - Returns: an optional Extension if it was found.
-    private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
-        self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
-    }
-
+    
+    
     /// Is the question hidden
     /// - Returns: A boolean representing whether the question should be shown to the user
     var hidden: Bool {
@@ -103,5 +96,14 @@ extension QuestionnaireItem {
             return nil
         }
         return stringMessage
+    }
+    
+    
+    /// Checks this QuestionnaireItem for an extension matching the given URL and then return it if it exists.
+    /// - Parameters:
+    ///   - url: A `String` identifying the extension.
+    /// - Returns: an optional Extension if it was found.
+    private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
+        self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
     }
 }

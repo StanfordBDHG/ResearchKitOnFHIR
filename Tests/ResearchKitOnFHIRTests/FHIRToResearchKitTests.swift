@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 //
 
-import XCTest
 import FHIRQuestionnaires
 import ModelsR4
 @testable import ResearchKitOnFHIR
+import XCTest
 
 final class FHIRToResearchKitTests: XCTestCase {
     func testCreateORKNavigableOrderedTask() throws {
@@ -106,8 +106,10 @@ final class FHIRToResearchKitTests: XCTestCase {
         // Creates a questionnaire and adds an item but does not set a URL
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         questionnaire.item = [
-            QuestionnaireItem(linkId: FHIRPrimitive(FHIRString(UUID().uuidString)),
-                              type: FHIRPrimitive(QuestionnaireItemType.display))
+            QuestionnaireItem(
+                linkId: FHIRPrimitive(FHIRString(UUID().uuidString)),
+                type: FHIRPrimitive(QuestionnaireItemType.display)
+            )
         ]
 
         XCTAssertThrowsError(try ORKNavigableOrderedTask(questionnaire: questionnaire)) {

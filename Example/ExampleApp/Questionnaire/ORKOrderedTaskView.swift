@@ -6,14 +6,14 @@
 // SPDX-License-Identifier: MIT
 //
 
-import UIKit
-import SwiftUI
 import ResearchKit
+import SwiftUI
+import UIKit
 
 
 struct ORKOrderedTaskView: UIViewControllerRepresentable {
     private let tasks: ORKOrderedTask
-    private let delegate: ORKTaskViewControllerDelegate
+    private weak var delegate: ORKTaskViewControllerDelegate
     
     
     /// - Parameters:

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SwiftUI
 import FHIRQuestionnaires
+import SwiftUI
 
 struct QuestionnaireSection: Hashable {
     var questionnaires: [Questionnaire]
@@ -22,10 +22,14 @@ struct QuestionnaireListView: View {
     @State private var presentQuestionnaireResponses = false
 
     private var questionnaireSections: [QuestionnaireSection] = [
-        QuestionnaireSection(questionnaires: Questionnaire.exampleQuestionnaires,
-                             header: String(localized: "QUESTIONNAIRE_LIST_EXAMPLES_HEADER")),
-        QuestionnaireSection(questionnaires: Questionnaire.researchQuestionnaires,
-                             header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER"))
+        QuestionnaireSection(
+            questionnaires: Questionnaire.exampleQuestionnaires,
+            header: String(localized: "QUESTIONNAIRE_LIST_EXAMPLES_HEADER")
+        ),
+        QuestionnaireSection(
+            questionnaires: Questionnaire.researchQuestionnaires,
+            header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER")
+        )
     ]
 
     var body: some View {
@@ -44,7 +48,9 @@ struct QuestionnaireListView: View {
                                     presentQuestionnaireJSON = true
                                 } label: {
                                     Label(
-                                        String(localized: "QUESTIONNAIRES_VIEW_JSON"), systemImage: "doc.badge.gearshape")
+                                        String(localized: "QUESTIONNAIRES_VIEW_JSON"),
+                                        systemImage: "doc.badge.gearshape"
+                                    )
                                 }
 
                                 Button {
@@ -52,7 +58,9 @@ struct QuestionnaireListView: View {
                                     presentQuestionnaireResponses = true
                                 } label: {
                                     Label(
-                                        String(localized: "QUESTIONNAIRES_VIEW_RESPONSES"), systemImage: "arrow.right.doc.on.clipboard")
+                                        String(localized: "QUESTIONNAIRES_VIEW_RESPONSES"),
+                                        systemImage: "arrow.right.doc.on.clipboard"
+                                    )
                                 }
                             }
                         }

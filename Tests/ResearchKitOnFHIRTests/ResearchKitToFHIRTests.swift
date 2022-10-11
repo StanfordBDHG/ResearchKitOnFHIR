@@ -7,8 +7,8 @@
 //
 
 import FHIRQuestionnaires
-@testable import ResearchKitOnFHIR
 import ResearchKit
+@testable import ResearchKitOnFHIR
 import XCTest
 
 final class ResearchKitToFHIRTests: XCTestCase {
