@@ -16,6 +16,6 @@ on:
 jobs:
   docs:
     name: Generate Docs
-    uses: CardinalKit/.github/.github/workflows/docs.yml@main
+    uses: CardinalKit/.github/.github/workflows/docs.yml@improveGitHubActions
     with:
       targetname: ResearchKitOnFHIR

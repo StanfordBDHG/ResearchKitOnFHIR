@@ -16,6 +16,6 @@ on:
 jobs:
   spm_update:
     name: Swift Package Update
-    uses: CardinalKit/.github/.github/workflows/spm-update.yml@main
+    uses: CardinalKit/.github/.github/workflows/spm-update.yml@improveGitHubActions
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
