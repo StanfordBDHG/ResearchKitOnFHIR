@@ -8,12 +8,13 @@
 
 ignore:
 - "Tests"
+- "Example"
 
 codecov:
   require_ci_to_pass: yes
 
 coverage:
-  range: "80...98"
+  range: "80...100"
   precision: 2
   round: up
   status:
