@@ -77,9 +77,12 @@ extension ORKTaskResult {
 
         // If a unit is defined, then the result is a Quantity
         if let unit = result.unit {
-            return .quantity(Quantity(unit: FHIRPrimitive(FHIRString(unit)),
-                                      value: FHIRPrimitive(FHIRDecimal(value.decimalValue)))
-                            )
+            return .quantity(
+                Quantity(
+                    unit: FHIRPrimitive(FHIRString(unit)),
+                    value: FHIRPrimitive(FHIRDecimal(value.decimalValue))
+                )
+            )
         }
 
         if result.questionType == ORKQuestionType.integer {

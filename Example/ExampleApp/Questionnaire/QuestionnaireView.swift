@@ -8,8 +8,8 @@
 
 import FHIRQuestionnaires
 import ModelsR4
-import SwiftUI
 import ResearchKit
+import SwiftUI
 
 
 /// Renders a ResearchKit task from the selected FHIR questionnaire

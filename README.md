@@ -13,7 +13,7 @@ SPDX-License-Identifier: MIT
 
 # ResearchKitOnFHIR
 
-[![Build](https://github.com/CardinalKit/ResearchKitOnFHIR/actions/workflows/build.yml/badge.svg)](https://github.com/CardinalKit/ResearchKitOnFHIR/actions/workflows/build.yml)
+[![Build and Test](https://github.com/CardinalKit/ResearchKitOnFHIR/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/CardinalKit/ResearchKitOnFHIR/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/CardinalKit/ResearchKitOnFHIR/branch/main/graph/badge.svg?token=A9IUX2PFCL)](https://codecov.io/gh/CardinalKit/ResearchKitOnFHIR)
 
 ResearchKitOnFHIR is a framework that allows you to use [FHIR Questionnaires](https://www.hl7.org/fhir/questionnaire.html) with ResearchKit to create healthcare surveys on iOS based on the [HL7 Structured Data Capture Implementation Guide](http://build.fhir.org/ig/HL7/sdc/)
