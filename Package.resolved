@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "fhirmodels",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/FHIRModels.git",
+      "state" : {
+        "revision" : "e115442fb3c5d44ffb1dc9b4e039b77fd143ad96",
+        "version" : "0.4.0"
+      }
+    },
+    {
+      "identity" : "researchkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CardinalKit/ResearchKit.git",
+      "state" : {
+        "revision" : "37e6b65fbdb6031dd5b9b1d4e8dc40292cf726f1",
+        "version" : "2.1.2"
+      }
+    }
+  ],
+  "version" : 2
+}
