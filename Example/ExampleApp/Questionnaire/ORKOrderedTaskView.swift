@@ -13,7 +13,7 @@ import UIKit
 
 struct ORKOrderedTaskView: UIViewControllerRepresentable {
     private let tasks: ORKOrderedTask
-    private weak var delegate: ORKTaskViewControllerDelegate
+    private weak var delegate: ORKTaskViewControllerDelegate?
     
     
     /// - Parameters:
