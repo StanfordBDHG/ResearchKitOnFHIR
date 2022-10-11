@@ -15,7 +15,7 @@ on:
 jobs:
   reuse_action:
     name: REUSE Compliance Check
-    uses: CardinalKit/.github/.github/workflows/reuse.yml@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/reuse.yml@main
   swiftlint:
     name: SwiftLint
-    uses: CardinalKit/.github/.github/workflows/swiftlint.yml@updateGitHubActions
+    uses: CardinalKit/.github/.github/workflows/swiftlint.yml@main
