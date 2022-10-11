@@ -13,7 +13,7 @@ import UIKit
 
 struct ORKOrderedTaskView: UIViewControllerRepresentable {
     private let tasks: ORKOrderedTask
-    private weak var delegate: ORKTaskViewControllerDelegate?
+    private var delegate: ORKTaskViewControllerDelegate // swiftlint:disable:this weak_delegate
     
     
     /// - Parameters:
