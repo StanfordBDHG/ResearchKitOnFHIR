@@ -1,0 +1,37 @@
+#
+# This source file is part of the ResearchKitOnFHIR open source project
+#
+# SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+#
+# SPDX-License-Identifier: MIT
+#
+
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build_and_test-spm:
+    name: Build and Test Swift Package
+    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild-spm.yml@main
+    with:
+      packagename: ResearchKitOnFHIR
+  build_and_test-example-app:
+    name: Build and Test Example App
+    uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild.yml@main
+    with:
+      xcodeprojname: Example/Example.xcodeproj
+      scheme: Example
+  create-and-upload-coverage-report:
+    name: Create and Upload Coverage Report
+    needs: [build_and_test-spm, build_and_test-example-app]
+    uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report.yml@main
+    with:
+      coveragereports: ResearchKitOnFHIR.xcresult Example.xcresult
+    secrets:
+      token: ${{ secrets.CODECOV_TOKEN }}
