@@ -20,7 +20,7 @@ jobs:
     name: Build and Test Swift Package
     uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild-spm.yml@v1
     with:
-      targetname: ResearchKitOnFHIR
+      scheme: ResearchKitOnFHIR-Package
   build_and_test-example-app:
     name: Build and Test Example App
     uses: CardinalKit/.github/.github/workflows/build-and-test-xcodebuild.yml@v1
@@ -32,6 +32,6 @@ jobs:
     needs: [build_and_test-spm, build_and_test-example-app]
     uses: CardinalKit/.github/.github/workflows/create-and-upload-coverage-report.yml@v1
     with:
-      coveragereports: ResearchKitOnFHIR.xcresult Example.xcresult
+      coveragereports: ResearchKitOnFHIR-Package.xcresult Example.xcresult
     secrets:
       token: ${{ secrets.CODECOV_TOKEN }}
