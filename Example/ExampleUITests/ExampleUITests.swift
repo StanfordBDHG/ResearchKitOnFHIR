@@ -193,24 +193,31 @@ final class ExampleUITests: XCTestCase {
 
         // Open questionnaire
         dateTimeExampleButton.tap()
+        
+        let dateFormatter = DateFormatter()
+        let randomDateInProximity = Date().addingTimeInterval(TimeInterval.random(in: -(60 * 60 * 24 * 7)...(60 * 60 * 24 * 7)))
+        func dateFormatOfRandomDateInProximity(_ dateFormat: String) -> String {
+            dateFormatter.dateFormat = dateFormat
+            return dateFormatter.string(from: randomDateInProximity)
+        }
 
         // Choose a date
-        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
-        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "31")
-        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2021")
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("MMMM"))
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("d"))
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("yyyy"))
         app.buttons["Next"].tap()
 
         // Chose a date and time
-        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "Aug 31")
-        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "8")
-        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "45")
-        app.pickerWheels.element(boundBy: 3).adjust(toPickerWheelValue: "AM")
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("MMM d"))
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("h"))
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("mm"))
+        app.pickerWheels.element(boundBy: 3).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("a"))
         app.buttons["Next"].tap()
 
         // Choose a time
-        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "8")
-        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "45")
-        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "PM")
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("h"))
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("mm"))
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("a"))
         app.buttons["Next"].tap()
 
         // Close the completion step
