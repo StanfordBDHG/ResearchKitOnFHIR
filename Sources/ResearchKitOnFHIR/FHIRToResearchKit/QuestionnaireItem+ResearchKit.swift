@@ -170,6 +170,7 @@ extension QuestionnaireItem {
     /// Converts FHIR text answer choices to ResearchKit `ORKTextChoice`.
     /// - Parameter - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An array of `ORKTextChoice` objects, each representing a textual answer option.
+    // swiftlint:disable:next function_body_length
     private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] {
         var choices: [ORKTextChoice] = []
 
@@ -228,11 +229,13 @@ extension QuestionnaireItem {
                     "code": "other",
                     "system": "other"
                 ]
-                let otherChoice = ORKTextChoiceOther.choice(withText: otherChoiceText,
-                                                       detailText: nil,
-                                                       value: otherChoiceResult as NSCoding & NSCopying & NSObjectProtocol,
-                                                       exclusive: true,
-                                                       textViewPlaceholderText: "")
+                let otherChoice = ORKTextChoiceOther.choice(
+                    withText: otherChoiceText,
+                    detailText: nil,
+                    value: otherChoiceResult as NSCoding & NSCopying & NSObjectProtocol,
+                    exclusive: true,
+                    textViewPlaceholderText: ""
+                )
                 choices.append(otherChoice)
             }
         }
