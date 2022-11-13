@@ -34,7 +34,7 @@ final class FHIRToResearchKitTests: XCTestCase {
         let skipLogicExampleTitle = Questionnaire.skipLogicExample.title?.value?.string ?? "title"
         let skipLogicExampleSteps = Questionnaire.skipLogicExample.item?.fhirQuestionnaireItemsToORKSteps(title: skipLogicExampleTitle, valueSets: [])
         let unwrappedSkipLogicExampleSteps = try XCTUnwrap(skipLogicExampleSteps)
-        XCTAssertEqual(unwrappedSkipLogicExampleSteps.count, 4)
+        XCTAssertEqual(unwrappedSkipLogicExampleSteps.count, 3)
     }
 
     func testGetContainedValueSets() throws {
