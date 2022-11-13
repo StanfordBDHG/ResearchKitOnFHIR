@@ -77,6 +77,34 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    func testOpenChoiceExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let skipLogicExampleButton = app.collectionViews.buttons["Skip Logic Example"]
+
+        // First run through questionnaire
+        skipLogicExampleButton.tap()
+        app.tables.staticTexts["Yes"].tap()
+        app.tables.buttons["Next"].tap()
+
+        // Select the "other" option and fill in a free-text answer
+        app.tables.staticTexts["Other"].tap()
+        let otherField = app.textViews.element(boundBy: 0)
+        otherField.tap()
+        otherField.typeText("Cookie Dough")
+        app.tables.staticTexts["Next"].tap()
+
+        // Enter in a date on the next screen
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "31")
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2021")
+        app.buttons["Next"].tap()
+
+        // Close the completion step
+        app.buttons["Done"].tap()
+    }
+
     func testContainedValueSetExample() throws {
         let app = XCUIApplication()
         app.launch()

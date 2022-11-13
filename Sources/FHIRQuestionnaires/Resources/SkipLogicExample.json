@@ -51,7 +51,7 @@
     },
     {
       "linkId": "59e7a3f7-4108-47a7-8fae-0fb892574a63",
-      "type": "choice",
+      "type": "open-choice",
       "text": "What is your favorite flavor?",
       "required": false,
       "answerOption": [
@@ -79,36 +79,12 @@
             "display": "Strawberry"
           }
         },
-        {
-          "valueCoding": {
-            "id": "d1c27eeb-022a-4ef9-8f70-068d96a26154",
-            "code": "other",
-            "system": "urn:uuid:ea53f9f1-4c06-4953-83b6-c944bccdeae3",
-            "display": "Other"
-          }
-        }
       ],
       "enableWhen": [
         {
           "question": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",
           "operator": "=",
           "answerBoolean": true
-        }
-      ]
-    },
-    {
-      "linkId": "b950aeb7-a7cd-4472-901b-210c0296492b",
-      "type": "string",
-      "text": "Enter in your favorite flavor",
-      "required": false,
-      "enableWhen": [
-        {
-          "question": "59e7a3f7-4108-47a7-8fae-0fb892574a63",
-          "operator": "=",
-          "answerCoding": {
-            "system": "urn:uuid:ea53f9f1-4c06-4953-83b6-c944bccdeae3",
-            "code": "other"
-          }
         }
       ]
     },

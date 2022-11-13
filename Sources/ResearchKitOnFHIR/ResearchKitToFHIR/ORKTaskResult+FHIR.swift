@@ -100,9 +100,15 @@ extension ORKTaskResult {
     }
 
     private func createChoiceResponse(_ result: ORKChoiceQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
-        guard let answerArray = result.answer as? NSArray,
-              answerArray.count > 0, // swiftlint:disable:this empty_count
-              let answerDictionary = answerArray[0] as? [String: String] else {
+        guard let answerArray = result.answer as? NSArray, answerArray.count > 0 else { return nil }
+
+        /// If the result is a string (i.e. the user selected the "other" option and entered a free-text answer), return a String
+        if let answerString = answerArray[0] as? String {
+            return .string(FHIRPrimitive(FHIRString(answerString)))
+        }
+
+        /// If the result is a dictionary containing a code and system, return a Coding
+        guard let answerDictionary = answerArray[0] as? [String: String] else {
             return nil
         }
 
