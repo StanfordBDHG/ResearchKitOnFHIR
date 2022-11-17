@@ -14,7 +14,7 @@ import UIKit
 struct ORKOrderedTaskView: UIViewControllerRepresentable {
     private let tasks: ORKOrderedTask
     // We need to have a non-weak reference here to keep the retain count of the delegate above 0.
-    private var delegate: ORKTaskViewControllerDelegate // swiftlint:disable:this weak_delegate
+    private var delegate: ORKTaskViewControllerDelegate
     
     
     /// - Parameters:
