@@ -3,10 +3,10 @@
   "language": "en-US",
   "title": "Number Validation Example",
   "status": "draft",
-  "publisher": "CardinalKit",
+  "publisher": "Stanford Biodesign for Digital Health",
   "meta": {
     "profile": [
-      "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,13 +35,13 @@
   ],
   "contact": [
     {
-      "name": "http://cardinalkit.org"
+      "name": "http://biodesign.stanford.edu"
     }
   ],
   "subjectType": [
     "Patient"
   ],
-  "url": "http://cardinalkit.org/fhir/questionnaire/4f34fe66-ee0d-4e8d-8a3b-0cf952f4a35d",
+  "url": "http://biodesign.stanford.edu/fhir/questionnaire/4f34fe66-ee0d-4e8d-8a3b-0cf952f4a35d",
   "item": [
     {
       "linkId": "2b441d69-0e29-4cd7-88b7-91ce722d47e1",

@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -17,7 +17,7 @@ struct QuestionnaireView: View {
     @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
     @Binding var questionnaire: Questionnaire?
     
-
+    
     var body: some View {
         if let activeQuestionnaire = questionnaire,
            let task = createTask(questionnaire: activeQuestionnaire) {
@@ -36,7 +36,7 @@ struct QuestionnaireView: View {
         // Create a completion step to add to the end of the Questionnaire (optional)
         let completionStep = ORKCompletionStep(identifier: "completion-step")
         completionStep.text = String(localized: "COMPLETION_STEP_MESSAGE")
-
+        
         // Create a navigable task from the Questionnaire
         do {
             return try ORKNavigableOrderedTask(questionnaire: questionnaire, completionStep: completionStep)

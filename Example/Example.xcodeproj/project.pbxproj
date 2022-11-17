@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
 		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
-		27EBA79E28C10F20008ADBA0 /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */; };
+		2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53129261578008AA30B /* FHIRQuestionnaires */; };
+		2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53329261578008AA30B /* ResearchKitOnFHIR */; };
 		654BD48028BEBA8400B012D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654BD47F28BEBA8400B012D2 /* Assets.xcassets */; };
 		65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0428BEBC57000C70E4 /* ExampleApp.swift */; };
 		65545D0828BEBC58000C70E4 /* ORKOrderedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */; };
 		65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */; };
 		65545D0D28BEBEBB000C70E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65545D0C28BEBEBB000C70E4 /* Localizable.strings */; };
-		6559AE0C28BF9C8D00539B60 /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */; };
 		657CB91828D2952E006B0A3F /* JSONView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657CB91728D2952E006B0A3F /* JSONView.swift */; };
 		657CB91A28D29626006B0A3F /* QuestionnaireResponsesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657CB91928D29626006B0A3F /* QuestionnaireResponsesView.swift */; };
 		657CB91C28D296AE006B0A3F /* QuestionnaireResponseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657CB91B28D296AE006B0A3F /* QuestionnaireResponseStorage.swift */; };
@@ -37,9 +37,9 @@
 /* Begin PBXFileReference section */
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
+		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
 		654BD47828BEBA8200B012D2 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		65545CFE28BEBB54000C70E4 /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
 		65545D0428BEBC57000C70E4 /* ExampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ORKOrderedTaskView.swift; sourceTree = "<group>"; };
 		65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ORKTaskFHIRDelegate.swift; sourceTree = "<group>"; };
@@ -58,8 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6559AE0C28BF9C8D00539B60 /* ResearchKitOnFHIR in Frameworks */,
-				27EBA79E28C10F20008ADBA0 /* FHIRQuestionnaires in Frameworks */,
+				2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */,
+				2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 		654BD46F28BEBA8200B012D2 = {
 			isa = PBXGroup;
 			children = (
-				65545CFD28BEBB54000C70E4 /* Packages */,
+				2F63D53029261568008AA30B /* ResearchKitOnFHIR */,
 				654BD47A28BEBA8200B012D2 /* ExampleApp */,
 				65EB88CE28D3331F003BE06A /* ExampleUITests */,
 				654BD47928BEBA8200B012D2 /* Products */,
@@ -106,14 +106,6 @@
 				65545D0C28BEBEBB000C70E4 /* Localizable.strings */,
 			);
 			path = ExampleApp;
-			sourceTree = "<group>";
-		};
-		65545CFD28BEBB54000C70E4 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				65545CFE28BEBB54000C70E4 /* ResearchKitOnFHIR */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		65545CFF28BEBB87000C70E4 /* Frameworks */ = {
@@ -184,8 +176,8 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */,
-				27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */,
+				2F63D53129261578008AA30B /* FHIRQuestionnaires */,
+				2F63D53329261578008AA30B /* ResearchKitOnFHIR */,
 			);
 			productName = ResearchKitToFHIRExample;
 			productReference = 654BD47828BEBA8200B012D2 /* Example.app */;
@@ -564,11 +556,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		27EBA79D28C10F20008ADBA0 /* FHIRQuestionnaires */ = {
+		2F63D53129261578008AA30B /* FHIRQuestionnaires */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FHIRQuestionnaires;
 		};
-		6559AE0B28BF9C8D00539B60 /* ResearchKitOnFHIR */ = {
+		2F63D53329261578008AA30B /* ResearchKitOnFHIR */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ResearchKitOnFHIR;
 		};

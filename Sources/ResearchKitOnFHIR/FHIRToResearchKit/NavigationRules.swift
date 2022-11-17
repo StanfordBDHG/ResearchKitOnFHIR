@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -78,14 +78,11 @@ extension Coding {
             return nil
         }
 
-        let expectedAnswer = [
-            "code": code,
-            "system": system
-        ]
+        let expectedAnswer = ValueCoding(code: code, system: system)
 
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
-            expectedAnswerValue: expectedAnswer as NSCoding & NSCopying & NSObjectProtocol
+            expectedAnswerValue: expectedAnswer.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol
         )
 
         switch fhirOperator {
