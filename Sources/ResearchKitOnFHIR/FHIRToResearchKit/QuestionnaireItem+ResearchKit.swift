@@ -190,14 +190,12 @@ extension QuestionnaireItem {
 
             for option in answerOptions {
                 guard let display = option.display?.value?.string,
-                      let code = option.code.value?.string else {
+                      let code = option.code.value?.string,
+                      let system = valueSet?.compose?.include.first?.system?.value?.url.absoluteString else {
                     continue
                 }
-                let valueCoding = [
-                    "code": code,
-                    "system": valueSet?.compose?.include.first?.system?.value?.url.absoluteString
-                ]
-                let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
+                let valueCoding = ValueCoding(code: code, system: system)
+                let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
         } else {
@@ -210,14 +208,12 @@ extension QuestionnaireItem {
             for option in answerOptions {
                 guard case let .coding(coding) = option.value,
                       let display = coding.display?.value?.string,
-                      let code = coding.code?.value?.string else {
+                      let code = coding.code?.value?.string,
+                      let system = coding.system?.value?.url.absoluteString else {
                     continue
                 }
-                let valueCoding = [
-                    "code": code,
-                    "system": coding.system?.value?.url.absoluteString
-                ]
-                let choice = ORKTextChoice(text: display, value: valueCoding as NSCoding & NSCopying & NSObjectProtocol)
+                let valueCoding = ValueCoding(code: code, system: system)
+                let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
         }

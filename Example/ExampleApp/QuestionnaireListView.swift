@@ -9,6 +9,7 @@
 import FHIRQuestionnaires
 import SwiftUI
 
+
 struct QuestionnaireSection: Hashable {
     var questionnaires: [Questionnaire]
     var header: String
@@ -20,7 +21,7 @@ struct QuestionnaireListView: View {
     @State private var presentQuestionnaire = false
     @State private var presentQuestionnaireJSON = false
     @State private var presentQuestionnaireResponses = false
-
+    
     private var questionnaireSections: [QuestionnaireSection] = [
         QuestionnaireSection(
             questionnaires: Questionnaire.exampleQuestionnaires,
@@ -31,7 +32,7 @@ struct QuestionnaireListView: View {
             header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER")
         )
     ]
-
+    
     var body: some View {
         NavigationStack {
             List {
@@ -52,7 +53,6 @@ struct QuestionnaireListView: View {
                                         systemImage: "doc.badge.gearshape"
                                     )
                                 }
-
                                 Button {
                                     activeQuestionnaire = questionnaire
                                     presentQuestionnaireResponses = true
@@ -83,6 +83,7 @@ struct QuestionnaireListView: View {
         }
     }
 }
+
 
 struct QuestionnaireListView_Previews: PreviewProvider {
     static var previews: some View {

@@ -9,6 +9,7 @@
 import Foundation
 import ModelsR4
 
+
 extension QuestionnaireItem {
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
@@ -32,7 +33,7 @@ extension QuestionnaireItem {
         }
         return isHidden
     }
-
+    
     /// The minimum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the minimum value allowed.
     var minValue: NSNumber? {
@@ -43,7 +44,7 @@ extension QuestionnaireItem {
         }
         return NSNumber(value: minValue)
     }
-
+    
     /// The maximum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the maximum value allowed.
     var maxValue: NSNumber? {
@@ -54,18 +55,18 @@ extension QuestionnaireItem {
         }
         return NSNumber(value: maxValue)
     }
-
+    
     /// The maximum number of decimal places for a decimal answer.
     /// - Returns: An optional `NSNumber` representing the maximum number of digits to the right of the decimal place.
     var maximumDecimalPlaces: NSNumber? {
         guard let maxDecimalPlacesExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxDecimalPlaces),
               case let .integer(integerValue) = maxDecimalPlacesExtension.value,
               let maxDecimalPlaces = integerValue.value?.integer as? Int32 else {
-                return nil
+            return nil
         }
         return NSNumber(value: maxDecimalPlaces)
     }
-
+    
     /// The unit of a quantity answer type.
     /// - Returns: An optional `String` containing the unit (i.e. cm) if it was provided.
     var unit: String? {
@@ -75,7 +76,7 @@ extension QuestionnaireItem {
         }
         return coding.code?.value?.string
     }
-
+    
     /// The regular expression specified for validating a text input in a question.
     /// - Returns: An optional `String` containing the regular expression, if it exists.
     var validationRegularExpression: NSRegularExpression? {
@@ -86,7 +87,7 @@ extension QuestionnaireItem {
         }
         return try? NSRegularExpression(pattern: stringRegularExpression)
     }
-
+    
     /// The validation message for a question.
     /// - Returns: An optional `String` containing the validation message, if it exists.
     var validationMessage: String? {
