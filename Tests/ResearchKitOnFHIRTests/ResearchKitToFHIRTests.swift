@@ -174,13 +174,13 @@ final class ResearchKitToFHIRTests: XCTestCase {
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
         
-        guard case let .coding(value) = answer,
-              let code = value.code?.value?.string,
-              let system = value.system?.value?.url.absoluteString else {
+        guard case let .string(fhirString) = answer,
+              let rawValue = fhirString.value?.string,
+              let valueCoding = ValueCoding(rawValue: rawValue) else {
             XCTFail("Could not extract the value coding system.")
             return
         }
         
-        XCTAssertEqual(testValue, ValueCoding(code: code, system: system))
+        XCTAssertEqual(testValue, valueCoding)
     }
 }
