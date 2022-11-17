@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -21,7 +21,7 @@ final class NavigationRulesTests: XCTestCase {
         enableWhen: QuestionnaireItemEnableWhen
     ) throws -> ORKNavigableOrderedTask {
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
-        questionnaire.url = FHIRPrimitive(FHIRURI(stringLiteral: "http://cardinalkit.org/fhir/questionnaire/navigation-rule-test"))
+        questionnaire.url = FHIRPrimitive(FHIRURI(stringLiteral: "http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/navigation-rule-test"))
         let questionnaireItemFirst = QuestionnaireItem(
             linkId: FHIRPrimitive(FHIRString(firstItemID)),
             type: FHIRPrimitive(firstItemType)
@@ -220,7 +220,7 @@ final class NavigationRulesTests: XCTestCase {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let coding = Coding(
             code: FHIRPrimitive(FHIRString("testCode")),
-            system: FHIRPrimitive(FHIRURI("http://cardinalkit.org/fhir/system/testSystem"))
+            system: FHIRPrimitive(FHIRURI("http://Stanford Biodesign for Digital Health.org/fhir/system/testSystem"))
         )
         let enableWhen = QuestionnaireItemEnableWhen(
             answer: .coding(coding),
@@ -241,7 +241,7 @@ final class NavigationRulesTests: XCTestCase {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let coding = Coding(
             code: FHIRPrimitive(FHIRString("testCode")),
-            system: FHIRPrimitive(FHIRURI("http://cardinalkit.org/fhir/system/testSystem"))
+            system: FHIRPrimitive(FHIRURI("http://Stanford Biodesign for Digital Health.org/fhir/system/testSystem"))
         )
         let enableWhen = QuestionnaireItemEnableWhen(
             answer: .coding(coding),

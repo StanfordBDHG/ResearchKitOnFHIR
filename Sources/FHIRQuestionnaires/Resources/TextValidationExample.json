@@ -1,14 +1,14 @@
 {
   "resourceType": "Questionnaire",
-  "id": "cardinalkit-text-validation-example",
+  "id": "Stanford Biodesign for Digital Health-text-validation-example",
   "title": "Text Validation Example",
   "language": "en-US",
   "status": "draft",
-  "publisher": "CardinalKit",
-  "url": "http://cardinalkit.org/fhir/questionnaires/text-validation-example",
+  "publisher": "Stanford Biodesign for Digital Health",
+  "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaires/text-validation-example",
   "meta": {
     "profile": [
-      "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -36,7 +36,7 @@
   ],
   "contact": [
     {
-      "name": "http://cardinalkit.org"
+      "name": "http://Stanford Biodesign for Digital Health.org"
     }
   ],
   "subjectType": [
@@ -53,7 +53,7 @@
           "valueString": "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         },
         {
-          "url": "http://cardinalkit.org/fhir/StructureDefinition/validationtext",
+          "url": "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/validationtext",
           "valueString": "Please enter a valid email address."
         }
       ],

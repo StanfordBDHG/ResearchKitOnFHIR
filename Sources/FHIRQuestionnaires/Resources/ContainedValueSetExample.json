@@ -3,11 +3,11 @@
   "language": "en-US",
   "title": "Contained ValueSet Example",
   "status": "draft",
-  "publisher": "CardinalKit",
-  "url": "http://cardinalkit.org/fhir/questionnaires/contained-valueset-example",
+  "publisher": "Stanford Biodesign for Digital Health",
+  "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaires/contained-valueset-example",
   "meta": {
     "profile": [
-      "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,7 +35,7 @@
   ],
   "contact": [
     {
-      "name": "http://cardinalkit.org"
+      "name": "http://Stanford Biodesign for Digital Health.org"
     }
   ],
   "subjectType": [
@@ -43,14 +43,14 @@
   ],
   "contained": [
     {
-      "url": "http://cardinalkit.org/fhir/ValueSet/Predefined",
+      "url": "http://Stanford Biodesign for Digital Health.org/fhir/ValueSet/Predefined",
       "resourceType": "ValueSet",
       "id": "9523",
       "version": "1.0",
       "name": "urn:oid:9523",
       "title": "Yes / No / Unsure",
       "status": "draft",
-      "publisher": "CardinalKit",
+      "publisher": "Stanford Biodesign for Digital Health",
       "compose": {
         "include": [
           {

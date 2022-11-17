@@ -3,10 +3,10 @@
   "resourceType": "Questionnaire",
   "language": "en-US",
   "status": "draft",
-  "publisher": "CardinalKit",
+  "publisher": "Stanford Biodesign for Digital Health",
   "meta": {
     "profile": [
-      "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,13 +35,13 @@
   ],
   "contact": [
     {
-      "name": "http://cardinalkit.org"
+      "name": "http://Stanford Biodesign for Digital Health.org"
     }
   ],
   "subjectType": [
     "Patient"
   ],
-  "url": "http://cardinalkit.org/fhir/questionnaire/date-time-example",
+  "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/date-time-example",
   "item": [
     {
       "linkId": "cc7f8427-15fc-4c52-b6a3-3ba6635b8249",

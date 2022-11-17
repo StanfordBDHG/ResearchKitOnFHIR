@@ -3,10 +3,10 @@
     "resourceType": "Questionnaire",
     "language": "en-US",
     "status": "draft",
-    "publisher": "CardinalKit",
+    "publisher": "Stanford Biodesign for Digital Health",
     "meta": {
         "profile": [
-            "http://cardinalkit.org/fhir/StructureDefinition/sdf-Questionnaire"
+            "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
         ],
         "tag": [
             {
@@ -35,13 +35,13 @@
     ],
     "contact": [
         {
-            "name": "http://cardinalkit.org"
+            "name": "http://Stanford Biodesign for Digital Health.org"
         }
     ],
     "subjectType": [
         "Patient"
     ],
-    "url": "http://cardinalkit.org/fhir/questionnaire/ipss",
+    "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/ipss",
     "contained": [
         {
             "resourceType": "ValueSet",
@@ -51,7 +51,7 @@
                     "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-valueset"
                 ]
             },
-            "url": "http://cardinalkit.org/fhir/uv/sdc/ValueSet/VSGAD7",
+            "url": "http://Stanford Biodesign for Digital Health.org/fhir/uv/sdc/ValueSet/VSGAD7",
             "name": "VSIPSS",
             "status": "draft",
             "description": "The answer list for questions addressing the frequency in which patient reports experiencing behaviors that are assessed in the PHQ-9 Questionnaire.",
@@ -59,7 +59,7 @@
             "compose": {
                 "include": [
                     {
-                        "system": "http://cardinalkit.org/fhir/uv/sdc/CodeSystem/CSIPSS",
+                        "system": "http://Stanford Biodesign for Digital Health.org/fhir/uv/sdc/CodeSystem/CSIPSS",
                         "concept": [
                             {
                                 "extension": [
