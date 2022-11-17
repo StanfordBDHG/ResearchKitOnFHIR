@@ -7,7 +7,7 @@
   "publisher": "Stanford Biodesign for Digital Health",
   "meta": {
     "profile": [
-      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,13 +35,13 @@
   ],
   "contact": [
     {
-      "name": "http://Stanford Biodesign for Digital Health.org"
+      "name": "http://biodesign.stanford.edu"
     }
   ],
   "subjectType": [
     "Patient"
   ],
-  "url": "http://Stanford Biodesign for Digital Health.org/questionnaires/skiplogicexample",
+  "url": "http://biodesign.stanford.edu/questionnaires/skiplogicexample",
   "item": [
     {
       "linkId": "f0f95365-96d2-4892-9ccf-2e2c0c74a87c",

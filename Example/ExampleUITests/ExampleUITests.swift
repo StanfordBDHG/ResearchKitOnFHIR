@@ -163,7 +163,7 @@ final class ExampleUITests: XCTestCase {
         // Fill in email
         let emailField = app.textFields.element
         emailField.tap()
-        emailField.typeText("vishnu@Stanford Biodesign for Digital Health.org")
+        emailField.typeText("vishnu@example.com")
 
         // Finish survey
         app.buttons["Next"].tap()

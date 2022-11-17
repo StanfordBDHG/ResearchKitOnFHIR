@@ -6,7 +6,7 @@
   "publisher": "Stanford Biodesign for Digital Health",
   "meta": {
     "profile": [
-      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,13 +35,13 @@
   ],
   "contact": [
     {
-      "name": "http://Stanford Biodesign for Digital Health.org"
+      "name": "http://biodesign.stanford.edu"
     }
   ],
   "subjectType": [
     "Patient"
   ],
-  "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/71272809-d6e9-4329-880c-efdad485e558",
+  "url": "http://biodesign.stanford.edu/fhir/questionnaire/71272809-d6e9-4329-880c-efdad485e558",
   "item": [
     {
       "linkId": "1f5037a1-7b82-402a-fcbe-e6d977b0418a",

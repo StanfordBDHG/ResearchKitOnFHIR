@@ -6,7 +6,7 @@
    "publisher":"Stanford Biodesign for Digital Health",
    "meta":{
       "profile":[
-         "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
+         "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
       ],
       "tag":[
          {
@@ -35,13 +35,13 @@
    ],
    "contact":[
       {
-         "name":"http://Stanford Biodesign for Digital Health.org"
+         "name":"http://biodesign.stanford.edu"
       }
    ],
    "subjectType":[
       "Patient"
    ],
-   "url":"http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/GAD-7",
+   "url":"http://biodesign.stanford.edu/fhir/questionnaire/GAD-7",
    "contained":[
       {
          "resourceType":"ValueSet",
@@ -51,7 +51,7 @@
                "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-valueset"
             ]
          },
-         "url":"http://Stanford Biodesign for Digital Health.org/fhir/uv/sdc/ValueSet/VSGAD7",
+         "url":"http://biodesign.stanford.edu/fhir/uv/sdc/ValueSet/VSGAD7",
          "name":"VSGAD7",
          "status":"draft",
          "description":"The answer list for questions addressing the frequency in which patient reports experiencing behaviors that are assessed in the PHQ-9 Questionnaire.",
@@ -59,7 +59,7 @@
          "compose":{
             "include":[
                {
-                  "system":"http://Stanford Biodesign for Digital Health.org/fhir/uv/sdc/CodeSystem/CSGAD7",
+                  "system":"http://biodesign.stanford.edu/fhir/uv/sdc/CodeSystem/CSGAD7",
                   "concept":[
                      {
                         "extension":[

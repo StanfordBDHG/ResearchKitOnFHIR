@@ -4,10 +4,10 @@
   "title": "Contained ValueSet Example",
   "status": "draft",
   "publisher": "Stanford Biodesign for Digital Health",
-  "url": "http://Stanford Biodesign for Digital Health.org/fhir/questionnaires/contained-valueset-example",
+  "url": "http://biodesign.stanford.edu/fhir/questionnaires/contained-valueset-example",
   "meta": {
     "profile": [
-      "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/sdf-Questionnaire"
+      "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -35,7 +35,7 @@
   ],
   "contact": [
     {
-      "name": "http://Stanford Biodesign for Digital Health.org"
+      "name": "http://biodesign.stanford.edu"
     }
   ],
   "subjectType": [
@@ -43,7 +43,7 @@
   ],
   "contained": [
     {
-      "url": "http://Stanford Biodesign for Digital Health.org/fhir/ValueSet/Predefined",
+      "url": "http://biodesign.stanford.edu/fhir/ValueSet/Predefined",
       "resourceType": "ValueSet",
       "id": "9523",
       "version": "1.0",

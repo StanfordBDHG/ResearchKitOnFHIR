@@ -15,7 +15,7 @@ extension QuestionnaireItem {
     private enum SupportedExtensions {
         static let questionnaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
         static let regex = "http://hl7.org/fhir/StructureDefinition/regex"
-        static let validationMessage = "http://Stanford Biodesign for Digital Health.org/fhir/StructureDefinition/validationtext"
+        static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
         static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
         static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
         static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"

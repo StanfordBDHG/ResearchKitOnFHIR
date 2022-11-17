@@ -85,7 +85,7 @@ final class FHIRToResearchKitTests: XCTestCase {
         
         // Creates a questionnaire and set a URL, but does not add items
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
-        if let url = URL(string: "http://Stanford Biodesign for Digital Health.org/fhir/questionnaire/test") {
+        if let url = URL(string: "http://biodesign.stanford.edu/fhir/questionnaire/test") {
             questionnaire.url?.value = FHIRURI(url)
         }
         
