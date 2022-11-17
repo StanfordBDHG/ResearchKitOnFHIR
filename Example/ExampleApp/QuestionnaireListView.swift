@@ -15,12 +15,14 @@ struct QuestionnaireSection: Hashable {
     var header: String
 }
 
+
 /// List of example FHIR questionnaires to be rendered as ResearchKit tasks
 struct QuestionnaireListView: View {
     @State private var activeQuestionnaire: Questionnaire?
     @State private var presentQuestionnaire = false
     @State private var presentQuestionnaireJSON = false
     @State private var presentQuestionnaireResponses = false
+    
     
     private var questionnaireSections: [QuestionnaireSection] = [
         QuestionnaireSection(
