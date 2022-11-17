@@ -3,7 +3,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 // 
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 // 
 // SPDX-License-Identifier: MIT
 //
@@ -21,7 +21,7 @@ let package = Package(
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/CardinalKit/ResearchKit.git", from: "2.1.1"),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", from: "2.1.1"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMajor(from: "0.4.0"))
     ],
     targets: [

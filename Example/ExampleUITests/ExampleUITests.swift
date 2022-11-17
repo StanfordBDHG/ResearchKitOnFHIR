@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -163,7 +163,7 @@ final class ExampleUITests: XCTestCase {
         // Fill in email
         let emailField = app.textFields.element
         emailField.tap()
-        emailField.typeText("vishnu@cardinalkit.org")
+        emailField.typeText("vishnu@example.com")
 
         // Finish survey
         app.buttons["Next"].tap()

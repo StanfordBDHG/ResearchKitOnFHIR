@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,10 +9,12 @@
 import FHIRQuestionnaires
 import SwiftUI
 
+
 struct QuestionnaireSection: Hashable {
     var questionnaires: [Questionnaire]
     var header: String
 }
+
 
 /// List of example FHIR questionnaires to be rendered as ResearchKit tasks
 struct QuestionnaireListView: View {
@@ -20,7 +22,8 @@ struct QuestionnaireListView: View {
     @State private var presentQuestionnaire = false
     @State private var presentQuestionnaireJSON = false
     @State private var presentQuestionnaireResponses = false
-
+    
+    
     private var questionnaireSections: [QuestionnaireSection] = [
         QuestionnaireSection(
             questionnaires: Questionnaire.exampleQuestionnaires,
@@ -31,7 +34,7 @@ struct QuestionnaireListView: View {
             header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER")
         )
     ]
-
+    
     var body: some View {
         NavigationStack {
             List {
@@ -52,7 +55,6 @@ struct QuestionnaireListView: View {
                                         systemImage: "doc.badge.gearshape"
                                     )
                                 }
-
                                 Button {
                                     activeQuestionnaire = questionnaire
                                     presentQuestionnaireResponses = true
@@ -83,6 +85,7 @@ struct QuestionnaireListView: View {
         }
     }
 }
+
 
 struct QuestionnaireListView_Previews: PreviewProvider {
     static var previews: some View {

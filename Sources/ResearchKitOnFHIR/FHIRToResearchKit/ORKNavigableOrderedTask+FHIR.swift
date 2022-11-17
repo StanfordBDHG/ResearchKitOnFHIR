@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -28,12 +28,12 @@ extension ORKNavigableOrderedTask {
         guard let item = questionnaire.item else {
             throw FHIRToResearchKitConversionError.noItems
         }
-
+        
         // The task ID is set to the canonical URL of the questionnaire
         guard let id = questionnaire.url?.value?.url.absoluteString else {
             throw FHIRToResearchKitConversionError.noURL
         }
-
+        
         // Convert each FHIR Questionnaire Item to an ORKStep
         let valueSets = questionnaire.getContainedValueSets()
         let title = (title ?? questionnaire.title?.value?.string) ?? ""
@@ -43,7 +43,7 @@ extension ORKNavigableOrderedTask {
         if let completionStep = completionStep {
             steps.append(completionStep)
         }
-
+        
         self.init(identifier: id, steps: steps)
         
         // If any questions have defined skip logic, convert to ResearchKit navigation rules

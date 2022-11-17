@@ -1,7 +1,7 @@
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 //
-// SPDX-FileCopyrightText: 2022 CardinalKit and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -13,6 +13,7 @@ import UIKit
 
 struct ORKOrderedTaskView: UIViewControllerRepresentable {
     private let tasks: ORKOrderedTask
+    // We need to have a non-weak reference here to keep the retain count of the delegate above 0.
     private var delegate: ORKTaskViewControllerDelegate
     
     
