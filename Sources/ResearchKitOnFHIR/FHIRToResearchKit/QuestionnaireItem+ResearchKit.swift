@@ -28,17 +28,17 @@ extension Array where Element == QuestionnaireItem {
 
             switch questionType {
             case QuestionnaireItemType.group:
-                /// Converts multiple questions in a group into a ResearchKit form step
+                // Converts multiple questions in a group into a ResearchKit form step
                 if let groupStep = question.groupToORKFormStep(title: title, valueSets: valueSets) {
                     surveySteps.append(groupStep)
                 }
             case QuestionnaireItemType.display:
-                /// Creates a ResearchKit instruction step with the string to display
+                // Creates a ResearchKit instruction step with the string to display
                 if let instructionStep = question.displayToORKInstructionStep(title: title) {
                     surveySteps.append(instructionStep)
                 }
             default:
-                /// Converts individual questions to ResearchKit Question steps
+                // Converts individual questions to ResearchKit Question steps
                 if let step = question.toORKQuestionStep(title: title, valueSets: valueSets) {
                     if let required = question.required?.value?.bool {
                         step.isOptional = !required
@@ -123,8 +123,9 @@ extension QuestionnaireItem {
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
-    // swiftlint:disable cyclomatic_complexity
     private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
+        // swiftlint:disable:previous cyclomatic_complexity
+        // We have to cover all the switch cases in the following statement driving up the overal comlexity.
         switch type.value {
         case .boolean:
             return ORKBooleanAnswerFormat.booleanAnswerFormat()
@@ -155,7 +156,7 @@ extension QuestionnaireItem {
             let maximumLength = Int(maxLength?.value?.integer ?? 0)
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
 
-            /// Applies a regular expression for validation, if defined
+            // Applies a regular expression for validation, if defined
             if let validationRegularExpression = validationRegularExpression {
                 answerFormat.validationRegularExpression = validationRegularExpression
                 answerFormat.invalidMessage = validationMessage ?? "Invalid input"
@@ -170,12 +171,11 @@ extension QuestionnaireItem {
     /// Converts FHIR text answer choices to ResearchKit `ORKTextChoice`.
     /// - Parameter - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An array of `ORKTextChoice` objects, each representing a textual answer option.
-    // swiftlint:disable:next function_body_length
-    private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] {
+    private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] { // swiftlint:disable:this function_body_length
         var choices: [ORKTextChoice] = []
 
-        /// If the `QuestionnaireItem` has an `answerValueSet` defined which is a reference to a contained `ValueSet`,
-        /// search the available `ValueSets`and, if a match is found, convert the options to `ORKTextChoice`
+        // If the `QuestionnaireItem` has an `answerValueSet` defined which is a reference to a contained `ValueSet`,
+        // search the available `ValueSets`and, if a match is found, convert the options to `ORKTextChoice`
         if let answerValueSetURL = answerValueSet?.value?.url.absoluteString,
            answerValueSetURL.starts(with: "#") {
             let valueSet = valueSets.first { valueSet in
@@ -200,8 +200,8 @@ extension QuestionnaireItem {
                 choices.append(choice)
             }
         } else {
-            /// If the `QuestionnaireItem` has `answerOptions` defined instead, extract these options
-            /// and convert them to `ORKTextChoice`
+            // If the `QuestionnaireItem` has `answerOptions` defined instead, extract these options
+            // and convert them to `ORKTextChoice`
             guard let answerOptions = answerOption else {
                 return choices
             }
@@ -219,7 +219,7 @@ extension QuestionnaireItem {
             }
 
             if openChoice {
-                /// If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
+                // If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
                 let otherChoiceText = NSLocalizedString("Other", comment: "")
                 let otherChoiceResult = ValueCoding(code: "other", system: "other")
                 let otherChoice = ORKTextChoiceOther.choice(
