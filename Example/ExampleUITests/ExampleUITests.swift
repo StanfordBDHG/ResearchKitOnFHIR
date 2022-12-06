@@ -409,4 +409,41 @@ final class ExampleUITests: XCTestCase {
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
+
+    func testMultipleEnableWhenExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        // In this question, the third step depends on the first two steps being answered correctly
+        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Survey"]
+        multipleEnableWhenButton.tap()
+
+        // We will first answer both questions correctly
+        app.tables.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["blue"].tap()
+        app.buttons["Next"].tap()
+
+        // This should bring up the instruction step that explains that we answered correctly.
+        app.buttons["Next"].tap()
+
+        // Now the completion screen will appear with a "Done" button that we can tap
+        app.buttons["Done"].tap()
+
+        // Now we relaunch the survey
+        multipleEnableWhenButton.tap()
+
+        // This time we answer the second question wrong
+        app.tables.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["orange"].tap()
+        app.buttons["Next"].tap()
+
+        // The instruction screen should be skipped and the completion screen should appear with the
+        // "Done" button that we can tap
+        app.buttons["Done"].tap()
+
+    }
 }

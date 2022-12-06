@@ -17,17 +17,22 @@ extension ORKNavigableOrderedTask {
     func constructNavigationRules(questions: [QuestionnaireItem]) throws {
         for question in questions {
             guard let questionId = question.linkId.value?.string,
-                  let enableWhen = question.enableWhen else {
+                  let enableWhen = question.enableWhen,
+                  let enableWhenBehavior = question.enableBehavior?.value else {
                 continue
             }
-            
-            for fhirPredicate in enableWhen {
-                guard let predicate = try fhirPredicate.predicate else {
-                    continue
-                }
 
-                self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
+            let allPredicates = enableWhen.compactMap { try? $0.predicate }
+
+            var compoundPredicate = NSCompoundPredicate()
+            switch(enableWhenBehavior) {
+            case .all:
+                compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
+            case .any:
+                compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
             }
+
+            self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
         }
     }
 }
