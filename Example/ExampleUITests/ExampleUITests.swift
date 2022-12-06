@@ -444,6 +444,5 @@ final class ExampleUITests: XCTestCase {
         // The instruction screen should be skipped and the completion screen should appear with the
         // "Done" button that we can tap
         app.buttons["Done"].tap()
-
     }
 }

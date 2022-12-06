@@ -25,7 +25,7 @@ extension ORKNavigableOrderedTask {
             if enableWhen.count > 1, let enableWhenBehavior = question.enableBehavior?.value {
                 let allPredicates = enableWhen.compactMap { try? $0.predicate }
                 var compoundPredicate = NSCompoundPredicate()
-                switch(enableWhenBehavior) {
+                switch enableWhenBehavior {
                 case .all:
                     compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
                 case .any:
