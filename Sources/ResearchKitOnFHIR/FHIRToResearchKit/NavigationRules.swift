@@ -34,7 +34,7 @@ extension ORKNavigableOrderedTask {
 
                 self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
             } else {
-                guard let predicate = try enableWhen[0].predicate else {
+                guard let predicate = try enableWhen.first?.predicate else {
                     continue
                 }
                 self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
