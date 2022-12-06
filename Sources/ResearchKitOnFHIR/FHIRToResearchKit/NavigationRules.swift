@@ -18,21 +18,27 @@ extension ORKNavigableOrderedTask {
         for question in questions {
             guard let questionId = question.linkId.value?.string,
                   let enableWhen = question.enableWhen,
-                  let enableWhenBehavior = question.enableBehavior?.value else {
+                  !enableWhen.isEmpty else {
                 continue
             }
 
-            let allPredicates = enableWhen.compactMap { try? $0.predicate }
+            if enableWhen.count > 1, let enableWhenBehavior = question.enableBehavior?.value {
+                let allPredicates = enableWhen.compactMap { try? $0.predicate }
+                var compoundPredicate = NSCompoundPredicate()
+                switch(enableWhenBehavior) {
+                case .all:
+                    compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
+                case .any:
+                    compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
+                }
 
-            var compoundPredicate = NSCompoundPredicate()
-            switch(enableWhenBehavior) {
-            case .all:
-                compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
-            case .any:
-                compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
+                self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
+            } else {
+                guard let predicate = try enableWhen[0].predicate else {
+                    continue
+                }
+                self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
             }
-
-            self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
         }
     }
 }
