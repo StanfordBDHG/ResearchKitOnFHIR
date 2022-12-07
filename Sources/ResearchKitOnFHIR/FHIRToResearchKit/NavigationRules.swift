@@ -27,9 +27,9 @@ extension ORKNavigableOrderedTask {
                 var compoundPredicate = NSCompoundPredicate()
                 switch enableWhenBehavior {
                 case .all:
-                    compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
-                case .any:
                     compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
+                case .any:
+                    compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
                 }
 
                 self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
