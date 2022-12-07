@@ -101,7 +101,7 @@
           }
         }
       ],
-      "enableBehavior": "any"
+      "enableBehavior": "all"
     }
   ]
 }
