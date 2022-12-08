@@ -16,6 +16,9 @@ extension Questionnaire {
     /// A FHIR questionnaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
     public static var skipLogicExample: Questionnaire = loadQuestionnaire(withName: "SkipLogicExample")
 
+    /// A FHIR questionnaire demonstrating multiple enableWhen conditions in an AND / OR configuration
+    public static var multipleEnableWhen: Questionnaire = loadQuestionnaire(withName: "MultipleEnableWhen")
+
     /// A FHIR questionnaire demonstrating the use of a regular expression to validate an email address
     public static var textValidationExample: Questionnaire = loadQuestionnaire(withName: "TextValidationExample")
 
@@ -38,7 +41,8 @@ extension Questionnaire {
         .containedValueSetExample,
         .numberExample,
         .dateTimeExample,
-        .formExample
+        .formExample,
+        .multipleEnableWhen
     ]
 
     // MARK: Examples of clinical research FHIR Questionnaires

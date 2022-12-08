@@ -47,7 +47,8 @@ let package = Package(
                 .copy("Resources/GAD-7.json"),
                 .copy("Resources/GCS.json"),
                 .copy("Resources/IPSS.json"),
-                .copy("Resources/FormExample.json")
+                .copy("Resources/FormExample.json"),
+                .copy("Resources/MultipleEnableWhen.json")
             ]
         ),
         .testTarget(

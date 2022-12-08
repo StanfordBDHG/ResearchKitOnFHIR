@@ -8,7 +8,8 @@
 
 import XCTest
 
-
+// We disable type body length rule because this is a test
+// swiftlint:disable:next type_body_length
 final class ExampleUITests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -408,5 +409,54 @@ final class ExampleUITests: XCTestCase {
 
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
+
+    func testMultipleEnableWhenExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Expressions"]
+        multipleEnableWhenButton.tap()
+
+        // We will first answer all questions correctly
+        app.tables.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["green"].tap()
+        app.buttons["Next"].tap()
+
+        let integerField = app.textFields.element(boundBy: 0)
+        integerField.tap()
+        integerField.typeText("12")
+        app.buttons["Next"].tap()
+
+        // First result screen appears if at least one answer is correct.
+        app.buttons["Next"].tap()
+
+        // Second result screen appears if all answers are correct.
+        app.buttons["Next"].tap()
+
+        // Now the completion screen will appear with a "Done" button that we can tap
+        app.buttons["Done"].tap()
+
+        // Now we relaunch the survey
+        multipleEnableWhenButton.tap()
+
+        // This time we answer only one question correctly
+        app.tables.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+
+        app.tables.staticTexts["orange"].tap()
+        app.buttons["Next"].tap()
+
+        integerField.tap()
+        integerField.typeText("2")
+        app.buttons["Next"].tap()
+
+        // Only one result screen should appear.
+        app.buttons["Next"].tap()
+
+        // Now the completion screen should appear.
+        app.buttons["Done"].tap()
     }
 }
