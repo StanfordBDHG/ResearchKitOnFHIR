@@ -413,19 +413,26 @@ final class ExampleUITests: XCTestCase {
     func testMultipleEnableWhenExample() throws {
         let app = XCUIApplication()
         app.launch()
-
-        // In this question, the third step depends on the first two steps being answered correctly
-        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Survey"]
+        
+        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Expressions"]
         multipleEnableWhenButton.tap()
 
-        // We will first answer both questions correctly
+        // We will first answer all questions correctly
         app.tables.staticTexts["Yes"].tap()
         app.buttons["Next"].tap()
 
-        app.tables.staticTexts["blue"].tap()
+        app.tables.staticTexts["green"].tap()
         app.buttons["Next"].tap()
 
-        // This should bring up the instruction step that explains that we answered correctly.
+        let integerField = app.textFields.element(boundBy: 0)
+        integerField.tap()
+        integerField.typeText("12")
+        app.buttons["Next"].tap()
+
+        // First result screen appears if at least one answer is correct.
+        app.buttons["Next"].tap()
+
+        // Second result screen appears if all answers are correct.
         app.buttons["Next"].tap()
 
         // Now the completion screen will appear with a "Done" button that we can tap
@@ -434,15 +441,21 @@ final class ExampleUITests: XCTestCase {
         // Now we relaunch the survey
         multipleEnableWhenButton.tap()
 
-        // This time we answer the second question wrong
+        // This time we answer only one question correctly
         app.tables.staticTexts["Yes"].tap()
         app.buttons["Next"].tap()
 
         app.tables.staticTexts["orange"].tap()
         app.buttons["Next"].tap()
 
-        // The instruction screen should be skipped and the completion screen should appear with the
-        // "Done" button that we can tap
+        integerField.tap()
+        integerField.typeText("2")
+        app.buttons["Next"].tap()
+
+        // Only one result screen should appear.
+        app.buttons["Next"].tap()
+
+        // Now the completion screen should appear.
         app.buttons["Done"].tap()
     }
 }
