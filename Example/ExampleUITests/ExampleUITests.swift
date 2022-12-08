@@ -9,7 +9,7 @@
 import XCTest
 
 // We disable type body length rule because this is a test
-// swiftlint:disable type_body_length:next
+// swiftlint:disable:next type_body_length
 final class ExampleUITests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
