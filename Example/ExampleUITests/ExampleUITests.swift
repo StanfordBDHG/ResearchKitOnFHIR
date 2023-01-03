@@ -146,19 +146,19 @@ final class ExampleUITests: XCTestCase {
         // Fill in integer field
         let integerField = app.textFields.element
         integerField.tap()
-        integerField.typeText("1")
+        integerField.typeText("1\n")
         app.buttons["Next"].tap()
 
         // Fill in decimal field
         let decimalField = app.textFields.element
         decimalField.tap()
-        decimalField.typeText("1.5")
+        decimalField.typeText("1.5\n")
         app.buttons["Next"].tap()
 
         // Fill in quantity field
         let quantityField = app.textFields.element
         quantityField.tap()
-        quantityField.typeText("2.5")
+        quantityField.typeText("2.5\n")
 
         // Finish questionnaire
         app.buttons["Next"].tap()
@@ -427,7 +427,7 @@ final class ExampleUITests: XCTestCase {
 
         let integerField = app.textFields.element(boundBy: 0)
         integerField.tap()
-        integerField.typeText("12")
+        integerField.typeText("12\n")
         app.buttons["Next"].tap()
 
         // First result screen appears if at least one answer is correct.
@@ -450,7 +450,7 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         integerField.tap()
-        integerField.typeText("2")
+        integerField.typeText("2\n")
         app.buttons["Next"].tap()
 
         // Only one result screen should appear.
