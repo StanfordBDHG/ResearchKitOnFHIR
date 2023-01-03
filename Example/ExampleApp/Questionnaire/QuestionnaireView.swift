@@ -23,6 +23,7 @@ struct QuestionnaireView: View {
            let task = createTask(questionnaire: activeQuestionnaire) {
             ORKOrderedTaskView(tasks: task, delegate: ORKTaskFHIRDelegate(responseStorage))
                 .ignoresSafeArea(.container, edges: .bottom)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
         } else {
             Text("ERROR_MESSAGE")
         }
