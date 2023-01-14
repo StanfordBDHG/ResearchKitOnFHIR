@@ -8,9 +8,7 @@
 
 // swiftlint:disable duplicate_imports function_default_parameter_at_end
 import ModelsR4
-@_exported import class ModelsR4.Questionnaire
 import ResearchKit
-@_exported import class ResearchKit.ORKCompletionStep
 @_exported import class ResearchKit.ORKNavigableOrderedTask
 
 
