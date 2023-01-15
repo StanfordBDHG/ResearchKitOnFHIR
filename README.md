@@ -12,15 +12,23 @@ SPDX-License-Identifier: MIT
 
 [![Build and Test](https://github.com/StanfordBDHG/ResearchKitOnFHIR/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/ResearchKitOnFHIR/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/ResearchKitOnFHIR/branch/main/graph/badge.svg?token=A9IUX2PFCL)](https://codecov.io/gh/StanfordBDHG/ResearchKitOnFHIR)
+[![DOI](https://zenodo.org/badge/530673273.svg)](https://zenodo.org/badge/latestdoi/530673273)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordBDHG%2FResearchKitOnFHIR%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/StanfordBDHG/ResearchKitOnFHIR)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordBDHG%2FResearchKitOnFHIR%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/StanfordBDHG/ResearchKitOnFHIR)
 
 ResearchKitOnFHIR is a framework that allows you to use [FHIR Questionnaires](https://www.hl7.org/fhir/questionnaire.html) with ResearchKit to create healthcare surveys on iOS based on the [HL7 Structured Data Capture Implementation Guide](http://build.fhir.org/ig/HL7/sdc/)
 
+For more information, please refer to the [API documentation](https://swiftpackageindex.com/StanfordBDHG/ResearchKitOnFHIR/documentation).
+
+
 ## Features
+
 - Converts [FHIR Questionnaires](https://www.hl7.org/fhir/questionnaire.html) into ResearchKit tasks
 - Serializes results into [FHIR QuestionnaireResponses](https://www.hl7.org/FHIR/questionnaireresponse.html)
 - Supports survey skip-logic by converting FHIR `enableWhen` conditions into ResearchKit navigation rules
 - Supports answer validation during entry
 - Supports contained [FHIR ValueSets](https://www.hl7.org/fhir/valueset.html) as answer options
+
 
 ### FHIR<-> ResearchKit Conversion
 
@@ -39,6 +47,7 @@ ResearchKitOnFHIR is a framework that allows you to use [FHIR Questionnaires](ht
 | [text](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-text) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString 
 | [string](https://www.hl7.org/fhir/codesystem-item-type.html#item-type-string) | [ORKTextAnswerFormat](http://researchkit.org/docs/Classes/ORKTextAnswerFormat.html) | valueString 
 
+
 ### Navigation Rules
 
 The following table describes how the FHIR [enableWhen](https://www.hl7.org/fhir/questionnaire-definitions.html#Questionnaire.item.enableWhen) is converted to a ResearchKit [ORKSkipStepNavigationRule](http://researchkit.org/docs/Classes/ORKSkipStepNavigationRule.html) for each supported type and operator. (The conversion is performed by constructing an ORKResultPredicate from the enableWhen expression and negating it.)
@@ -53,12 +62,15 @@ The following table describes how the FHIR [enableWhen](https://www.hl7.org/fhir
 
 
 ## Installation
+
 ResearchKitOnFHIR can be installed into your Xcode project using [Swift Package Manager](https://github.com/apple/swift-package-manager).
 
 1. In Xcode 14 and newer (requires Swift 5.7), go to “File” » “Add Packages...”
 2. Enter the URL to this GitHub repository, then select the `ResearchKitOnFhir` package to install.
 
+
 ## Usage
+
 The `Example` directory contains an Xcode project that demonstrates how to create a ResearchKit task from a FHIR Questionnaire, and extract the results in the form of a FHIR QuestionnaireResponse.
 
 ### Converting from FHIR to ResearchKit
@@ -106,14 +118,20 @@ func taskViewController(
 }
 ```
 
+
 ## License
+
 This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/ResearchKitOnFHIR/tree/main/LICENSES) for more information.
 
+
 ## Contributors
+
 This project is developed as part of the Stanford Biodesign for Digital Health projects at Stanford.
 See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ResearchKitOnFHIR/tree/main/CONTRIBUTORS.md) for a full list of all ResearchKitOnFHIR contributors.
 
+
 ## Notices
+
 ResearchKit is a registered trademark of Apple, Inc.
 FHIR is a registered trademark of Health Level Seven International.
 
