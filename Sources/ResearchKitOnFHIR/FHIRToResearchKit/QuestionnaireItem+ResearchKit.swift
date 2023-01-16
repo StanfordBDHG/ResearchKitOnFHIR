@@ -19,13 +19,13 @@ extension Array where Element == QuestionnaireItem {
     func fhirQuestionnaireItemsToORKSteps(title: String, valueSets: [ValueSet]) -> [ORKStep] {
         var surveySteps: [ORKStep] = []
         surveySteps.reserveCapacity(self.count)
-
+        
         for question in self {
             guard let questionType = question.type.value,
                   !question.hidden else {
                 continue
             }
-
+            
             switch questionType {
             case QuestionnaireItemType.group:
                 // Converts multiple questions in a group into a ResearchKit form step
@@ -47,7 +47,7 @@ extension Array where Element == QuestionnaireItem {
                 }
             }
         }
-
+        
         return surveySteps
     }
 }
@@ -63,12 +63,12 @@ extension QuestionnaireItem {
         guard let identifier = linkId.value?.string else {
             return nil
         }
-
+        
         let questionText = text?.value?.string ?? ""
         let answer = try? self.toORKAnswerFormat(valueSets: valueSets)
         return ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
     }
-
+    
     /// Converts a FHIR QuestionnaireItem that contains a group of question items into a ResearchKit form (ORKFormStep).
     /// - Parameters:
     ///   - title: A String that will be displayed at the top of the form when rendered by ResearchKit.
@@ -79,31 +79,31 @@ extension QuestionnaireItem {
               let nestedQuestions = item else {
             return nil
         }
-
+        
         let formStep = ORKFormStep(identifier: id)
         formStep.title = title
         formStep.text = text?.value?.string ?? ""
         var formItems = [ORKFormItem]()
-
+        
         for question in nestedQuestions {
             guard let questionId = question.linkId.value?.string,
                   let questionText = question.text?.value?.string,
                   let answerFormat = try? question.toORKAnswerFormat(valueSets: valueSets) else {
                 continue
             }
-
+            
             let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
             if let required = question.required?.value?.bool {
                 formItem.isOptional = required
             }
-
+            
             formItems.append(formItem)
         }
-
+        
         formStep.formItems = formItems
         return formStep
     }
-
+    
     /// Converts FHIR `QuestionnaireItem` display type to `ORKInstructionStep`
     /// - Parameters:
     ///   - title: A `String` to display at the top of the view rendered by ResearchKit.
@@ -113,13 +113,13 @@ extension QuestionnaireItem {
               let text = text?.value?.string else {
             return nil
         }
-
+        
         let instructionStep = ORKInstructionStep(identifier: id)
         instructionStep.title = title
         instructionStep.detailText = text
         return instructionStep
     }
-
+    
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
@@ -155,25 +155,25 @@ extension QuestionnaireItem {
         case .text, .string:
             let maximumLength = Int(maxLength?.value?.integer ?? 0)
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
-
+            
             // Applies a regular expression for validation, if defined
             if let validationRegularExpression = validationRegularExpression {
                 answerFormat.validationRegularExpression = validationRegularExpression
                 answerFormat.invalidMessage = validationMessage ?? "Invalid input"
             }
-
+            
             return answerFormat
         default:
             return ORKTextAnswerFormat()
         }
     }
-
+    
     /// Converts FHIR text answer choices to ResearchKit `ORKTextChoice`.
     /// - Parameter - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An array of `ORKTextChoice` objects, each representing a textual answer option.
     private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] { // swiftlint:disable:this function_body_length
         var choices: [ORKTextChoice] = []
-
+        
         // If the `QuestionnaireItem` has an `answerValueSet` defined which is a reference to a contained `ValueSet`,
         // search the available `ValueSets`and, if a match is found, convert the options to `ORKTextChoice`
         if let answerValueSetURL = answerValueSet?.value?.url.absoluteString,
@@ -184,11 +184,11 @@ extension QuestionnaireItem {
                 }
                 return false
             }
-
+            
             guard let answerOptions = valueSet?.compose?.include.first?.concept else {
                 return choices
             }
-
+            
             for option in answerOptions {
                 guard let display = option.display?.value?.string,
                       let code = option.code.value?.string,
@@ -205,7 +205,7 @@ extension QuestionnaireItem {
             guard let answerOptions = answerOption else {
                 return choices
             }
-
+            
             for option in answerOptions {
                 guard case let .coding(coding) = option.value,
                       let display = coding.display?.value?.string,
@@ -217,7 +217,7 @@ extension QuestionnaireItem {
                 let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
-
+            
             if openChoice {
                 // If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
                 let otherChoiceText = NSLocalizedString("Other", comment: "")

@@ -21,7 +21,7 @@ extension ORKNavigableOrderedTask {
                   !enableWhen.isEmpty else {
                 continue
             }
-
+            
             if enableWhen.count > 1 {
                 let enableBehavior = question.enableBehavior?.value ?? .all
                 let allPredicates = enableWhen.compactMap { try? $0.predicate }
@@ -32,7 +32,7 @@ extension ORKNavigableOrderedTask {
                 case .any:
                     compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
                 }
-
+                
                 self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
             } else {
                 guard let predicate = try enableWhen.first?.predicate else {
@@ -89,14 +89,14 @@ extension Coding {
               let system = system?.value?.url.absoluteString else {
             return nil
         }
-
+        
         let expectedAnswer = ValueCoding(code: code, system: system)
-
+        
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
             expectedAnswerValue: expectedAnswer.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol
         )
-
+        
         switch fhirOperator {
         case .equal:
             return NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
