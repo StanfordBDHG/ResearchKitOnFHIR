@@ -30,7 +30,7 @@ For more information, please refer to the [API documentation](https://swiftpacka
 - Supports contained [FHIR ValueSets](https://www.hl7.org/fhir/valueset.html) as answer options
 
 
-### FHIR<-> ResearchKit Conversion
+### FHIR <-> ResearchKit Conversion
 
 | FHIR R4 [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | ResearchKit Type | FHIR Response Type
 |------------------------------|-----------------------------|--------------------------|
@@ -50,7 +50,9 @@ For more information, please refer to the [API documentation](https://swiftpacka
 
 ### Navigation Rules
 
-The following table describes how the FHIR [enableWhen](https://www.hl7.org/fhir/questionnaire-definitions.html#Questionnaire.item.enableWhen) is converted to a ResearchKit [ORKSkipStepNavigationRule](http://researchkit.org/docs/Classes/ORKSkipStepNavigationRule.html) for each supported type and operator. (The conversion is performed by constructing an ORKResultPredicate from the enableWhen expression and negating it.)
+The following table describes how the FHIR [enableWhen](https://www.hl7.org/fhir/questionnaire-definitions.html#Questionnaire.item.enableWhen) is converted to a ResearchKit [ORKSkipStepNavigationRule](http://researchkit.org/docs/Classes/ORKSkipStepNavigationRule.html) for each supported type and operator. (The conversion is performed by constructing an ORKResultPredicate from the enableWhen expression and negating it.) 
+
+Multiple enableWhen expressions are supported, using the [enableBehavior](https://www.hl7.org/fhir/questionnaire-definitions.html#Questionnaire.item.enableBehavior) element to determine if any or all of the expressions should be applied. If enableBehavior is not defined, all expressions will be applied.
 
 | FHIR R4 [QuestionnaireItemType](https://www.hl7.org/fhir/valueset-item-type.html) | Supported [QuestionnaireItemOperators](https://www.hl7.org/fhir/valueset-questionnaire-enable-operator.html) | ResearchKit [ORKResultPredicate](http://researchkit.org/docs/Classes/ORKResultPredicate.html) |
 | ---------------------------- | ------------------- | ------------------------------ |
