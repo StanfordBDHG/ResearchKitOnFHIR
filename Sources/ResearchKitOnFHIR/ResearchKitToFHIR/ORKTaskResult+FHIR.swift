@@ -102,12 +102,12 @@ extension ORKTaskResult {
         guard let answerArray = result.answer as? NSArray, answerArray.count > 0 else { // swiftlint:disable:this empty_count
             return nil
         }
-
+        
         // If the result is a string (i.e. the user selected the "other" option and entered a free-text answer), return a String
         if let answerString = answerArray[0] as? String {
             return .string(FHIRPrimitive(FHIRString(answerString)))
         }
-
+        
         // If the result is a dictionary containing a code and system, return a Coding
         guard let valueCodingString = answerArray[0] as? String,
               let valueCoding = ValueCoding(rawValue: valueCodingString) else {
