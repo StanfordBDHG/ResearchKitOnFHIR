@@ -12,6 +12,9 @@ import Foundation
 
 extension Questionnaire {
     // MARK: Example FHIR Questionnaires to demonstrate library functionality
+
+    /// Test Ashley's Survey for Class Demo
+    public static var classDemoSurvey: Questionnaire = loadQuestionnaire(withName: "SocialSupport-en-US-v1")
     
     /// A FHIR questionnaire demonstrating enableWhen conditions that are converted to ResearchKit skip logic
     public static var skipLogicExample: Questionnaire = loadQuestionnaire(withName: "SkipLogicExample")
@@ -42,7 +45,8 @@ extension Questionnaire {
         .numberExample,
         .dateTimeExample,
         .formExample,
-        .multipleEnableWhen
+        .multipleEnableWhen,
+        .classDemoSurvey
     ]
     
     // MARK: Examples of clinical research FHIR Questionnaires
