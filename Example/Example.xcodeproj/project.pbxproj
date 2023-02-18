@@ -35,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		273DB38F29A14BBE00630A70 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
 		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
@@ -77,7 +76,6 @@
 		654BD46F28BEBA8200B012D2 = {
 			isa = PBXGroup;
 			children = (
-				273DB38F29A14BBE00630A70 /* Example-Info.plist */,
 				2F63D53029261568008AA30B /* ResearchKitOnFHIR */,
 				654BD47A28BEBA8200B012D2 /* ExampleApp */,
 				65EB88CE28D3331F003BE06A /* ExampleUITests */,
