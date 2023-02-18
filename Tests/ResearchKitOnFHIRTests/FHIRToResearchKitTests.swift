@@ -40,7 +40,10 @@ final class FHIRToResearchKitTests: XCTestCase {
 
     func testImageCaptureStep() throws {
         let imageCaptureExampleTitle = Questionnaire.imageCaptureExample.title?.value?.string ?? "title"
-        let imageCaptureSteps = Questionnaire.imageCaptureExample.item?.fhirQuestionnaireItemsToORKSteps(title: imageCaptureExampleTitle, valueSets: [])
+        let imageCaptureSteps = Questionnaire.imageCaptureExample.item?.fhirQuestionnaireItemsToORKSteps(
+            title: imageCaptureExampleTitle,
+            valueSets: []
+        )
         let unwrappedImageCaptureExampleSteps = try XCTUnwrap(imageCaptureSteps)
         XCTAssertEqual(unwrappedImageCaptureExampleSteps.count, 1)
     }
