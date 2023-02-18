@@ -133,14 +133,10 @@ extension QuestionnaireItem {
     ///   - title: A `String` to display at the top of the view rendered by ResearchKit.
     /// - Returns: A ResearchKit `ORKImageCaptureStep`
     fileprivate func attachmentToORKImageCaptureStep(title: String) -> ORKImageCaptureStep? {
-        guard let id = linkId.value?.string,
-              let text = text?.value?.string else {
+        guard let id = linkId.value?.string else {
             return nil
         }
-        let imageCaptureStep = ORKImageCaptureStep(identifier: id)
-        imageCaptureStep.title = title
-        imageCaptureStep.detailText = text
-        return imageCaptureStep
+        return ORKImageCaptureStep(identifier: id)
     }
     
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
