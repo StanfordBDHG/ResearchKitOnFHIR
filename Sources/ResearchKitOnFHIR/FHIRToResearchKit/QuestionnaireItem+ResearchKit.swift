@@ -17,6 +17,7 @@ extension Array where Element == QuestionnaireItem {
     ///   - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns:An `Array` of ResearchKit `ORKSteps`.
     func fhirQuestionnaireItemsToORKSteps(title: String, valueSets: [ValueSet]) -> [ORKStep] {
+        // swiftlint:disable:previous cyclomatic_complexity
         var surveySteps: [ORKStep] = []
         surveySteps.reserveCapacity(self.count)
         
