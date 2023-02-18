@@ -71,7 +71,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> ORKTaskViewController {
         // Create a new instance of the view controller and pass in the assigned delegate.
         let viewController = ORKTaskViewController(task: tasks, taskRun: nil)
-        viewController.outputDirectory = getTaskOutputDirectory(viewController)
+        viewController.outputDirectory = outputDirectory ?? getTaskOutputDirectory(viewController)
         viewController.view.tintColor = UIColor(tintColor)
         viewController.delegate = delegate
         return viewController
