@@ -422,7 +422,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Example;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses camera to test image capture";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -460,7 +459,6 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Example;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses camera to test image capture";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
