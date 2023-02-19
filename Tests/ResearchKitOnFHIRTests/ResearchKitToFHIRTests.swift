@@ -201,4 +201,15 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         XCTAssertEqual(fhirAttachment.url, urlString.asFHIRURIPrimitive())
     }
+
+    func testORKFileResultWithNoURL() {
+        let fileResult = ORKFileResult(identifier: "File Result")
+        fileResult.fileURL = nil
+
+        let taskResult = createTaskResult(fileResult)
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        XCTAssertNil(answer)
+    }
 }
