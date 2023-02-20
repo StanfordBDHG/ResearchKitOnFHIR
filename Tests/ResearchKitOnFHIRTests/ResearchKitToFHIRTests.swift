@@ -183,4 +183,33 @@ final class ResearchKitToFHIRTests: XCTestCase {
         
         XCTAssertEqual(testValue, valueCoding)
     }
+
+    func testAttachmentResult() {
+        let fileResult = ORKFileResult(identifier: "File Result")
+        let urlString = "file://images/image.jpg"
+        fileResult.fileURL = URL(string: urlString)
+
+        let taskResult = createTaskResult(fileResult)
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        guard case let .attachment(fhirAttachment) = answer else {
+            XCTFail("Could not extract attachment file URL.")
+            return
+        }
+
+        XCTAssertEqual(fhirAttachment.url, urlString.asFHIRURIPrimitive())
+    }
+
+    func testORKFileResultWithNoURL() {
+        let fileResult = ORKFileResult(identifier: "File Result")
+        fileResult.fileURL = nil
+
+        let taskResult = createTaskResult(fileResult)
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        XCTAssertNil(answer)
+    }
 }

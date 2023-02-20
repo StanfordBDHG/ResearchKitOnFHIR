@@ -48,7 +48,8 @@ let package = Package(
                 .copy("Resources/GCS.json"),
                 .copy("Resources/IPSS.json"),
                 .copy("Resources/FormExample.json"),
-                .copy("Resources/MultipleEnableWhen.json")
+                .copy("Resources/MultipleEnableWhen.json"),
+                .copy("Resources/ImageCapture.json")
             ]
         ),
         .testTarget(

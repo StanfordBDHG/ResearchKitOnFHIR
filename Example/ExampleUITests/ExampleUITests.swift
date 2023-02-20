@@ -459,4 +459,20 @@ final class ExampleUITests: XCTestCase {
         // Now the completion screen should appear.
         app.buttons["Done"].tap()
     }
+
+    func testImageCaptureExample() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let imageCaptureButton = app.collectionViews.buttons["Image Capture Example"]
+        imageCaptureButton.tap()
+
+        // This example requires access to a device camera, which can't be simulated,
+        // so we will get an error message.
+        XCTAssert(app.staticTexts["No camera found.  This step cannot be completed."].exists)
+
+        app.buttons["Skip"].tap()
+
+        app.buttons["Done"].tap()
+    }
 }

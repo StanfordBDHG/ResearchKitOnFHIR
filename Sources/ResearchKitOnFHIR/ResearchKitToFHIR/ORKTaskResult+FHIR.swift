@@ -60,6 +60,8 @@ extension ORKTaskResult {
             responseAnswer.value = createTimeResponse(result)
         case let result as ORKTextQuestionResult:
             responseAnswer.value = createTextResponse(result)
+        case let result as ORKFileResult:
+            responseAnswer.value = createAttachmentResponse(result)
         default:
             // Unsupported result type
             responseAnswer.value = nil
@@ -154,5 +156,13 @@ extension ORKTaskResult {
         // Note: ORKTimeOfDayAnswerFormat doesn't support entry of seconds, so it is zero-filled.
         let fhirTime = FHIRPrimitive(FHIRTime(hour: hour, minute: minute, second: 0))
         return .time(fhirTime)
+    }
+
+    private func createAttachmentResponse(_ result: ORKFileResult) -> QuestionnaireResponseItemAnswer.ValueX? {
+        guard let url = result.fileURL else {
+            return nil
+        }
+
+        return .attachment(Attachment(url: url.asFHIRURIPrimitive()))
     }
 }
