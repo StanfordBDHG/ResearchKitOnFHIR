@@ -29,8 +29,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
             // First, we will look for any attachments in the QuestionnaireResponse
             // and move them from their temporary location to a permanent location.
             do {
-                // Get the path to the user's documents directory
-                // where we will store the files.
+                // Get the path to the user's documents directory.
                 let documentDirectory = try FileManager.default.url(
                     for: .documentDirectory,
                     in: .userDomainMask,
@@ -39,9 +38,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                 )
 
                 // Create a directory in the documents directory with the UUID of this task.
-                let outputDirectory = documentDirectory.appendingPathComponent(
-                    taskViewController.taskRunUUID.uuidString
-                )
+                let outputDirectory = documentDirectory.appendingPathComponent(taskViewController.taskRunUUID.uuidString)
                 try FileManager.default.createDirectory(
                     at: outputDirectory,
                     withIntermediateDirectories: true,
@@ -60,17 +57,11 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                             let newPath = outputDirectory.appendingPathComponent(fileName)
 
                             do {
-                                // Move the file.
-                                try FileManager.default.moveItem(
-                                    at: fileURL,
-                                    to: newPath
-                                )
+                                try FileManager.default.moveItem(at: fileURL, to: newPath)
 
                                 // Update the item's answer with the new URL.
                                 item.answer?.first?.value = .attachment(
-                                    Attachment(
-                                        url: newPath.asFHIRURIPrimitive()
-                                    )
+                                    Attachment(url: newPath.asFHIRURIPrimitive())
                                 )
                             } catch {
                                 print("Unable to move file.")
@@ -85,14 +76,12 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                 print(error.localizedDescription)
             }
 
-            // Set the subject of the QuestionnaireResponse to a sample patient.
             fhirResponse.subject = Reference(reference: FHIRPrimitive(FHIRString("My Patient")))
             
             guard let questionnaireIdentifier = fhirResponse.questionnaire?.value?.url else {
                 return
             }
 
-            // Store the QuestionnaireResponse locally.
             responseStorage.append(fhirResponse, for: questionnaireIdentifier)
         default:
             break
