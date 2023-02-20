@@ -36,7 +36,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
         self.outputDirectory = outputDirectory
     }
 
-    func getTaskOutputDirectory() -> URL? {
+    func getTaskOutputDirectory(_ tempDirectoryName: String) -> URL? {
         do {
             let defaultFileManager = FileManager.default
 
@@ -47,7 +47,11 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
                 appropriateFor: nil,
                 create: true
             )
-            return temporaryDirectory
+
+            let outputDirectory = temporaryDirectory.appendingPathComponent(tempDirectoryName)
+            try defaultFileManager.createDirectory(at: outputDirectory, withIntermediateDirectories: true, attributes: nil)
+
+            return outputDirectory
         } catch let error as NSError {
             print("The output directory could not be created. Error: \(error.localizedDescription)")
         }
@@ -62,7 +66,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> ORKTaskViewController {
         // Create a new instance of the view controller and pass in the assigned delegate.
         let viewController = ORKTaskViewController(task: tasks, taskRun: nil)
-        viewController.outputDirectory = outputDirectory ?? getTaskOutputDirectory()
+        viewController.outputDirectory = outputDirectory ?? getTaskOutputDirectory(viewController.taskRunUUID.uuidString)
         viewController.view.tintColor = UIColor(tintColor)
         viewController.delegate = delegate
         return viewController

@@ -64,7 +64,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                                     Attachment(url: newPath.asFHIRURIPrimitive())
                                 )
                             } catch {
-                                print("Unable to move file.")
+                                print(error.localizedDescription)
                                 continue
                             }
                         }
@@ -72,7 +72,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                 }
 
                 try taskViewController.removeTempFiles()
-            } catch let error as NSError {
+            } catch {
                 print(error.localizedDescription)
             }
 
