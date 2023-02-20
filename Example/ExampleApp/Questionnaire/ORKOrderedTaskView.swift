@@ -27,7 +27,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     init(
         tasks: ORKOrderedTask,
         delegate: ORKTaskViewControllerDelegate,
-        tintColor: Color = Color(UIColor(named: "AccentColor") ?? .tintColor),
+        tintColor: Color = Color(UIColor(named: "AccentColor")  ?? .tintColor),
         outputDirectory: URL? = nil
     ) {
         self.tasks = tasks
@@ -36,31 +36,20 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
         self.outputDirectory = outputDirectory
     }
 
-    func getTaskOutputDirectory(_ taskViewController: ORKTaskViewController) -> URL? {
+    func getTaskOutputDirectory() -> URL? {
         do {
             let defaultFileManager = FileManager.default
 
-            // Identify the documents directory.
-            let documentsDirectory = try defaultFileManager.url(
-                for: .documentDirectory,
+            // Create a temporary directory to store files created by the task.
+            let temporaryDirectory = try defaultFileManager.url(
+                for: .cachesDirectory,
                 in: .userDomainMask,
                 appropriateFor: nil,
-                create: false
+                create: true
             )
-
-            // Create a directory based on the `taskRunUUID` to store output from the task.
-            let outputDirectory = documentsDirectory.appendingPathComponent(
-                taskViewController.taskRunUUID.uuidString
-            )
-            try defaultFileManager.createDirectory(
-                at: outputDirectory,
-                withIntermediateDirectories: true,
-                attributes: nil
-            )
-
-            return outputDirectory
+            return temporaryDirectory
         } catch let error as NSError {
-            print("The output directory for the task with UUID: \(taskViewController.taskRunUUID.uuidString) could not be created. Error: \(error.localizedDescription)")
+            print("The output directory could not be created. Error: \(error.localizedDescription)")
         }
 
         return nil
@@ -73,7 +62,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> ORKTaskViewController {
         // Create a new instance of the view controller and pass in the assigned delegate.
         let viewController = ORKTaskViewController(task: tasks, taskRun: nil)
-        viewController.outputDirectory = outputDirectory ?? getTaskOutputDirectory(viewController)
+        viewController.outputDirectory = outputDirectory ?? getTaskOutputDirectory()
         viewController.view.tintColor = UIColor(tintColor)
         viewController.delegate = delegate
         return viewController
