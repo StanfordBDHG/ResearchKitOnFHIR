@@ -11,20 +11,6 @@ import ModelsR4
 import ResearchKit
 import ResearchKitOnFHIR
 
-enum TaskFileError: Error {
-    case noOutputDirectory
-}
-
-extension ORKTaskViewController {
-    /// Removes all files created by the task
-    func removeTempFiles() throws {
-        guard let outputDirectory else {
-            throw TaskFileError.noOutputDirectory
-        }
-        try FileManager.default.removeItem(at: outputDirectory)
-    }
-}
-
 class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableObject {
     private var responseStorage: QuestionnaireResponseStorage
     
@@ -33,7 +19,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
         self.responseStorage = responseStorage
     }
     
-    
+
     func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
         switch reason {
         case .completed:
@@ -52,8 +38,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                     create: false
                 )
 
-                // Create a directory in the documents directory
-                // with the UUID of this task.
+                // Create a directory in the documents directory with the UUID of this task.
                 let outputDirectory = documentDirectory.appendingPathComponent(
                     taskViewController.taskRunUUID.uuidString
                 )
@@ -63,8 +48,7 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                     attributes: nil
                 )
 
-                // Search for attachments in the QuestionnaireResponse
-                // and move them to the newly created directory.
+                // Search for attachments in the QuestionnaireResponse and move them to the newly created directory.
                 if let responseItems = fhirResponse.item {
                     for item in responseItems {
                         if case let .attachment(value) = item.answer?.first?.value {
@@ -75,25 +59,28 @@ class ORKTaskFHIRDelegate: NSObject, ORKTaskViewControllerDelegate, ObservableOb
                             let fileName = fileURL.lastPathComponent
                             let newPath = outputDirectory.appendingPathComponent(fileName)
 
-                            try? FileManager.default.moveItem(
-                                at: fileURL,
-                                to: newPath
-                            )
-
-                            // Update the item's answer with the new URL.
-                            item.answer?.first?.value = .attachment(
-                                Attachment(
-                                    url: newPath.asFHIRURIPrimitive()
+                            do {
+                                // Move the file.
+                                try FileManager.default.moveItem(
+                                    at: fileURL,
+                                    to: newPath
                                 )
-                            )
-                        }
 
+                                // Update the item's answer with the new URL.
+                                item.answer?.first?.value = .attachment(
+                                    Attachment(
+                                        url: newPath.asFHIRURIPrimitive()
+                                    )
+                                )
+                            } catch {
+                                print("Unable to move file.")
+                                continue
+                            }
+                        }
                     }
                 }
 
-                // Clear out temporary files.
                 try taskViewController.removeTempFiles()
-
             } catch let error as NSError {
                 print(error.localizedDescription)
             }

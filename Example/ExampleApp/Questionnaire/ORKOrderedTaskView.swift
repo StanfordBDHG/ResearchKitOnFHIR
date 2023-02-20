@@ -27,7 +27,7 @@ struct ORKOrderedTaskView: UIViewControllerRepresentable {
     init(
         tasks: ORKOrderedTask,
         delegate: ORKTaskViewControllerDelegate,
-        tintColor: Color = Color(UIColor(named: "AccentColor")  ?? .tintColor),
+        tintColor: Color = Color(UIColor(named: "AccentColor") ?? .tintColor),
         outputDirectory: URL? = nil
     ) {
         self.tasks = tasks
