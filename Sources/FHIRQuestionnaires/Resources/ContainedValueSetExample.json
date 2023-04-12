@@ -3,7 +3,7 @@
   "language": "en-US",
   "title": "Contained ValueSet Example",
   "status": "draft",
-  "publisher": "Stanford Biodesign for Digital Health",
+  "publisher": "Stanford University",
   "url": "http://biodesign.stanford.edu/fhir/questionnaires/contained-valueset-example",
   "meta": {
     "profile": [
@@ -50,7 +50,7 @@
       "name": "urn:oid:9523",
       "title": "Yes / No / Unsure",
       "status": "draft",
-      "publisher": "Stanford Biodesign for Digital Health",
+      "publisher": "Stanford University",
       "compose": {
         "include": [
           {

@@ -2,7 +2,7 @@
                   
 This source file is part of the ResearchKitOnFHIR open source project
 
-SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
+SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
 
 SPDX-License-Identifier: MIT
              
@@ -129,7 +129,7 @@ This project is licensed under the MIT License. See [Licenses](https://github.co
 
 ## Contributors
 
-This project is developed as part of the Stanford Biodesign for Digital Health projects at Stanford.
+This project is developed as part of the Stanford University projects at Stanford.
 See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ResearchKitOnFHIR/tree/main/CONTRIBUTORS.md) for a full list of all ResearchKitOnFHIR contributors.
 
 

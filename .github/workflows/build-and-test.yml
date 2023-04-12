@@ -1,7 +1,7 @@
 #
 # This source file is part of the ResearchKitOnFHIR open source project
 #
-# SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
+# SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
 # SPDX-License-Identifier: MIT
 #
@@ -16,22 +16,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_test-spm:
+  buildandtest:
     name: Build and Test Swift Package
-    uses: StanfordBDHG/.github/.github/workflows/build-and-test-xcodebuild-spm.yml@v1
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
+      artifactname: ResearchKitOnFHIR-Package.xcresult
+      runsonlabels: '["macOS", "self-hosted"]'
       scheme: ResearchKitOnFHIR-Package
-  build_and_test-example-app:
-    name: Build and Test Example App
-    uses: StanfordBDHG/.github/.github/workflows/build-and-test-xcodebuild.yml@v1
+  buildandtestuitests:
+    name: Build and Test UI Tests
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      xcodeprojname: Example/Example.xcodeproj
+      artifactname: Example.xcresult
+      runsonlabels: '["macOS", "self-hosted"]'
+      path: 'Example'
       scheme: Example
-  create-and-upload-coverage-report:
-    name: Create and Upload Coverage Report
-    needs: [build_and_test-spm, build_and_test-example-app]
-    uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v1
+  uploadcoveragereport:
+    name: Upload Coverage Report
+    needs: [buildandtest, buildandtestuitests]
+    uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
       coveragereports: ResearchKitOnFHIR-Package.xcresult Example.xcresult
-    secrets:
-      token: ${{ secrets.CODECOV_TOKEN }}

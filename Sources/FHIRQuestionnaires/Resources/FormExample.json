@@ -3,7 +3,7 @@
   "resourceType": "Questionnaire",
   "language": "en-US",
   "status": "draft",
-  "publisher": "Stanford Biodesign for Digital Health",
+  "publisher": "Stanford University",
   "meta": {
     "profile": [
       "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"

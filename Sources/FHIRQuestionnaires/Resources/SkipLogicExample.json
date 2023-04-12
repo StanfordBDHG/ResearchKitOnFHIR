@@ -1,10 +1,10 @@
 {
   "resourceType": "Questionnaire",
   "language": "en-US",
-  "id": "Stanford Biodesign for Digital Health-skip-logic-example",
+  "id": "Stanford University-skip-logic-example",
   "title": "Skip Logic Example",
   "status": "draft",
-  "publisher": "Stanford Biodesign for Digital Health",
+  "publisher": "Stanford University",
   "meta": {
     "profile": [
       "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"
