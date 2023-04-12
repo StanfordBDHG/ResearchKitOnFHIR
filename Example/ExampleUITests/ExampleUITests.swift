@@ -39,10 +39,12 @@ final class ExampleUITests: XCTestCase {
         
         // First run through questionnaire
         skipLogicExampleButton.tap()
-        app.tables.staticTexts["Yes"].tap()
-        app.tables.buttons["Next"].tap()
-        app.tables.staticTexts["Chocolate"].tap()
-        app.tables.staticTexts["Next"].tap()
+        app.staticTexts["Yes"].tap()
+        app.buttons["Next"].tap()
+        
+        app.staticTexts["Chocolate"].tap()
+        app.buttons["Next"].tap()
+        
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "31")
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2021")
@@ -94,7 +96,7 @@ final class ExampleUITests: XCTestCase {
         let otherField = app.textViews.element(boundBy: 0)
         otherField.tap()
         otherField.typeText("Cookie Dough")
-        app.tables.staticTexts["Next"].tap()
+        app.buttons["Next"].tap()
 
         // Enter in a date on the next screen
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "August")
