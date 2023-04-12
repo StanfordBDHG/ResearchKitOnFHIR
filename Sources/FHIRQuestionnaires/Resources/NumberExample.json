@@ -3,7 +3,7 @@
   "language": "en-US",
   "title": "Number Validation Example",
   "status": "draft",
-  "publisher": "Stanford Biodesign for Digital Health",
+  "publisher": "Stanford University",
   "meta": {
     "profile": [
       "http://biodesign.stanford.edu/fhir/StructureDefinition/sdf-Questionnaire"

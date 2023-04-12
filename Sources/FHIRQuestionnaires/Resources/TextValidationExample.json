@@ -1,10 +1,10 @@
 {
   "resourceType": "Questionnaire",
-  "id": "Stanford Biodesign for Digital Health-text-validation-example",
+  "id": "Stanford University-text-validation-example",
   "title": "Text Validation Example",
   "language": "en-US",
   "status": "draft",
-  "publisher": "Stanford Biodesign for Digital Health",
+  "publisher": "Stanford University",
   "url": "http://biodesign.stanford.edu/fhir/questionnaires/text-validation-example",
   "meta": {
     "profile": [

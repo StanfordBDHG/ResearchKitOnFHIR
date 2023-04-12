@@ -2,7 +2,7 @@
                   
 This source file is part of the ResearchKitOnFHIR open source project
 
-SPDX-FileCopyrightText: 2022 Stanford Biodesign for Digital Health and the project authors (see CONTRIBUTORS.md)
+SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
 
 SPDX-License-Identifier: MIT
              
@@ -74,11 +74,11 @@ ResearchKitOnFHIR can be installed into your Xcode project using [Swift Package 
 
 ## Usage
 
-The `Example` directory contains an Xcode project that demonstrates how to create a ResearchKit task from a FHIR Questionnaire, and extract the results in the form of a FHIR QuestionnaireResponse.
+The `Example` directory contains an Xcode project that demonstrates how to create a ResearchKit task from an FHIR Questionnaire and extract the results in the form of an FHIR QuestionnaireResponse.
 
 ### Converting from FHIR to ResearchKit
 
-#### 1. Instantiate a FHIR Questionnaire from JSON
+#### 1. Instantiate an FHIR Questionnaire from JSON
 
 ```swift
 let data = <FHIR JSON data>
@@ -105,7 +105,7 @@ Now you can present the task as described in the [ResearchKit documentation](htt
 
 ### Converting ResearchKit Task Results to FHIR QuestionnaireResponse
 
-In your class that implements the `ORKTaskViewControllerDelegateProtocol`, you can extract a FHIR [QuestionnaireResponse](https://www.hl7.org/FHIR/questionnaireresponse.html) from the task's results as shown below.
+In your class that implements the `ORKTaskViewControllerDelegateProtocol`, you can extract an FHIR [QuestionnaireResponse](https://www.hl7.org/FHIR/questionnaireresponse.html) from the task's results as shown below.
 
 ```swift
 func taskViewController(
@@ -129,7 +129,7 @@ This project is licensed under the MIT License. See [Licenses](https://github.co
 
 ## Contributors
 
-This project is developed as part of the Stanford Biodesign for Digital Health projects at Stanford.
+This project is developed as part of the Stanford University projects at Stanford.
 See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/ResearchKitOnFHIR/tree/main/CONTRIBUTORS.md) for a full list of all ResearchKitOnFHIR contributors.
 
 
