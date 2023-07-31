@@ -13,8 +13,10 @@ import ModelsR4
 extension QuestionnaireItem {
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
+        static let itemControl = "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl"
         static let questionnaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
         static let regex = "http://hl7.org/fhir/StructureDefinition/regex"
+        static let sliderStepValue = "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue"
         static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
         static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
         static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
