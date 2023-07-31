@@ -11,8 +11,7 @@ import SwiftUI
 
 
 class QuestionnaireResponseStorage: ObservableObject {
-    @Published
-    private var responses: [URL: [QuestionnaireResponse]] = [:]
+    @Published private var responses: [URL: [QuestionnaireResponse]] = [:]
     
     
     func append(_ response: QuestionnaireResponse, for identifier: URL) {

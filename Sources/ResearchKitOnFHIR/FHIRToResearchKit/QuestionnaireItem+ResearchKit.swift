@@ -165,12 +165,13 @@ extension QuestionnaireItem {
             answerFormat.maximum = maxValue
             return answerFormat
         case .integer:
-            if self.itemControl == "slider" {
+            if itemControl == "slider" {
                 let answerFormat = ORKScaleAnswerFormat(
                     maximumValue: maxValue?.intValue ?? 0,
                     minimumValue: minValue?.intValue ?? 0,
                     defaultValue: minValue?.intValue ?? 0,
-                    step: Int(truncating: sliderStepValue ?? 1))
+                    step: Int(truncating: sliderStepValue ?? 1)
+                )
                 return answerFormat
             }
 
@@ -178,7 +179,6 @@ extension QuestionnaireItem {
             answerFormat.minimum = minValue
             answerFormat.maximum = maxValue
             return answerFormat
-
         case .text, .string:
             let maximumLength = Int(maxLength?.value?.integer ?? 0)
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
