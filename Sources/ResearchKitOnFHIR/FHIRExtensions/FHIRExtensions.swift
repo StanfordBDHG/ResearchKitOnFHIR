@@ -35,6 +35,17 @@ extension QuestionnaireItem {
         }
         return isHidden
     }
+
+    /// Defines the control type for the answer for a question
+    /// - Returns: A code representing the control type (i.e. slider)
+    var itemControl: String? {
+        guard let itemControlExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.itemControl),
+              case let .codeableConcept(concept) = itemControlExtension.value,
+              let itemControlCode = concept.coding?.first?.code?.value?.string else {
+            return nil
+        }
+        return itemControlCode
+    }
     
     /// The minimum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the minimum value allowed.
@@ -67,6 +78,17 @@ extension QuestionnaireItem {
             return nil
         }
         return NSNumber(value: maxDecimalPlaces)
+    }
+
+    /// The offset between numbers on a numerical slider
+    /// - Returns: An optional `NSNumber` representing the size of each discrete offset on the scale.
+    var sliderStepValue: NSNumber? {
+        guard let sliderStepValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.sliderStepValue),
+              case let .integer(integerValue) = sliderStepValueExtension.value,
+              let sliderStepValue = integerValue.value?.integer as? Int32 else {
+            return nil
+        }
+        return NSNumber(value: sliderStepValue)
     }
     
     /// The unit of a quantity answer type.
