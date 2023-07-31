@@ -9,7 +9,7 @@
   "item": [
     {
       "linkId": "1",
-      "text": "How bad is the pain on a scale of 1-10?",
+      "text": "How bad is the pain on a scale of 0-10?",
       "type": "integer",
       "extension": [
         {
@@ -23,6 +23,10 @@
               }
             ]
           }
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+          "valueInteger": 0
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/maxValue",

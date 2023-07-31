@@ -301,6 +301,32 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    func testSliderExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let sliderExampleButton = app.collectionViews.buttons["Slider Example"]
+
+        // Open questionnaire and start
+        sliderExampleButton.tap()
+
+        // Access the slider
+        let slider = app.sliders.firstMatch
+        XCTAssertTrue(slider.exists, "The slider does not exist")
+
+        // Calculate normalized position for the desired value
+        let desiredValue: CGFloat = 5
+        let sliderRange: CGFloat = 10
+        let normalizedPosition = desiredValue / sliderRange
+
+        // Adjust the slider's value
+        slider.adjust(toNormalizedSliderPosition: normalizedPosition)
+
+        // Check that the slider's value is now equal to the desired value
+        let sliderValue = CGFloat((slider.value as! NSString).doubleValue)
+        XCTAssertEqual(sliderValue, desiredValue, accuracy: 1)
+    }
+
     // MARK: UI Tests for Clinical Questionnaires
 
     func testPHQ9Example() throws {
