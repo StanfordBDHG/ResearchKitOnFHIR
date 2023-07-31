@@ -98,6 +98,24 @@ final class ResearchKitToFHIRTests: XCTestCase {
         }
         XCTAssertEqual(testValue, responseValue)
     }
+
+    func testScaleResponse() {
+        let testValue = 1
+        var responseValue: Int?
+
+        let scaleResult = ORKScaleQuestionResult(identifier: "scaleResult")
+        scaleResult.scaleAnswer = testValue as NSNumber
+        let taskResult = createTaskResult(scaleResult)
+
+        let fhirResponse = taskResult.fhirResponse
+        let answer = fhirResponse.item?.first?.answer?.first?.value
+
+        if case let .integer(value) = answer,
+           let unwrappedValue = value.value?.integer {
+            responseValue = Int(unwrappedValue)
+        }
+        XCTAssertEqual(testValue, responseValue)
+    }
     
     func testQuantityResponse() {
         let testValue: Decimal = 1.5
