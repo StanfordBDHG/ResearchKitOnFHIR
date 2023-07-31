@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+// We disable file length because this is a test
+// swiftlint:disable file_length
 import XCTest
 
 // We disable type body length rule because this is a test
@@ -323,8 +325,12 @@ final class ExampleUITests: XCTestCase {
         slider.adjust(toNormalizedSliderPosition: normalizedPosition)
 
         // Check that the slider's value is now equal to the desired value
-        let sliderValue = CGFloat((slider.value as! NSString).doubleValue)
-        XCTAssertEqual(sliderValue, desiredValue, accuracy: 1)
+        if let valueString = slider.value as? String, let value = Double(valueString) {
+            let sliderValue = CGFloat(value)
+            XCTAssertEqual(sliderValue, desiredValue, accuracy: 1)
+        } else {
+            XCTFail("Slider value is not a readable number.")
+        }
     }
 
     // MARK: UI Tests for Clinical Questionnaires
