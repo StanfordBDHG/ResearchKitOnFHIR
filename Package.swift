@@ -49,7 +49,8 @@ let package = Package(
                 .copy("Resources/IPSS.json"),
                 .copy("Resources/FormExample.json"),
                 .copy("Resources/MultipleEnableWhen.json"),
-                .copy("Resources/ImageCapture.json")
+                .copy("Resources/ImageCapture.json"),
+                .copy("Resources/SliderExample.json")
             ]
         ),
         .testTarget(

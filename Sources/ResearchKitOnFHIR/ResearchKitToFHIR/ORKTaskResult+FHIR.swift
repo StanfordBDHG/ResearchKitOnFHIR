@@ -52,16 +52,18 @@ extension ORKTaskResult {
             responseAnswer.value = createBooleanResponse(result)
         case let result as ORKChoiceQuestionResult:
             responseAnswer.value = createChoiceResponse(result)
+        case let result as ORKFileResult:
+            responseAnswer.value = createAttachmentResponse(result)
         case let result as ORKNumericQuestionResult:
             responseAnswer.value = createNumericResponse(result)
         case let result as ORKDateQuestionResult:
             responseAnswer.value = createDateResponse(result)
-        case let result as ORKTimeOfDayQuestionResult:
-            responseAnswer.value = createTimeResponse(result)
+        case let result as ORKScaleQuestionResult:
+            responseAnswer.value = createScaleResponse(result)
         case let result as ORKTextQuestionResult:
             responseAnswer.value = createTextResponse(result)
-        case let result as ORKFileResult:
-            responseAnswer.value = createAttachmentResponse(result)
+        case let result as ORKTimeOfDayQuestionResult:
+            responseAnswer.value = createTimeResponse(result)
         default:
             // Unsupported result type
             responseAnswer.value = nil
@@ -92,7 +94,15 @@ extension ORKTaskResult {
             return .decimal(FHIRPrimitive(FHIRDecimal(value.decimalValue)))
         }
     }
-    
+
+    private func createScaleResponse(_ result: ORKScaleQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
+        guard let value = result.scaleAnswer else {
+            return nil
+        }
+
+        return .integer(FHIRPrimitive(FHIRInteger(value.int32Value)))
+    }
+
     private func createTextResponse(_ result: ORKTextQuestionResult) -> QuestionnaireResponseItemAnswer.ValueX? {
         guard let text = result.textAnswer else {
             return nil

@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
+// We disable file length because this is a test
+// swiftlint:disable file_length
 import XCTest
 
 // We disable type body length rule because this is a test
@@ -299,6 +301,36 @@ final class ExampleUITests: XCTestCase {
 
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
+    }
+
+    func testSliderExample() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let sliderExampleButton = app.collectionViews.buttons["Slider Example"]
+
+        // Open questionnaire and start
+        sliderExampleButton.tap()
+
+        // Access the slider
+        let slider = app.sliders.firstMatch
+        XCTAssertTrue(slider.exists, "The slider does not exist")
+
+        // Calculate normalized position for the desired value
+        let desiredValue: CGFloat = 5
+        let sliderRange: CGFloat = 10
+        let normalizedPosition = desiredValue / sliderRange
+
+        // Adjust the slider's value
+        slider.adjust(toNormalizedSliderPosition: normalizedPosition)
+
+        // Check that the slider's value is now equal to the desired value
+        if let valueString = slider.value as? String, let value = Double(valueString) {
+            let sliderValue = CGFloat(value)
+            XCTAssertEqual(sliderValue, desiredValue, accuracy: 1)
+        } else {
+            XCTFail("Slider value is not a readable number.")
+        }
     }
 
     // MARK: UI Tests for Clinical Questionnaires

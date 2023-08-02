@@ -142,7 +142,7 @@ extension QuestionnaireItem {
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
     private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
         // swiftlint:disable:previous cyclomatic_complexity
-        // We have to cover all the switch cases in the following statement driving up the overal comlexity.
+        // We have to cover all the switch cases in the following statement driving up the overall complexity.
         switch type.value {
         case .boolean:
             return ORKBooleanAnswerFormat.booleanAnswerFormat()
@@ -165,6 +165,16 @@ extension QuestionnaireItem {
             answerFormat.maximum = maxValue
             return answerFormat
         case .integer:
+            if itemControl == "slider" {
+                let answerFormat = ORKScaleAnswerFormat(
+                    maximumValue: maxValue?.intValue ?? 0,
+                    minimumValue: minValue?.intValue ?? 0,
+                    defaultValue: minValue?.intValue ?? 0,
+                    step: Int(truncating: sliderStepValue ?? 1)
+                )
+                return answerFormat
+            }
+
             let answerFormat = ORKNumericAnswerFormat.integerAnswerFormat(withUnit: nil)
             answerFormat.minimum = minValue
             answerFormat.maximum = maxValue

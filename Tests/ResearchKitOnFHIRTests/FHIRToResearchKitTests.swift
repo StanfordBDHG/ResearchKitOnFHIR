@@ -52,12 +52,24 @@ final class FHIRToResearchKitTests: XCTestCase {
         let valueSets = Questionnaire.containedValueSetExample.getContainedValueSets()
         XCTAssertEqual(valueSets.count, 1)
     }
+
+    func testItemControlExtension() throws {
+        let testItemControl = Questionnaire.sliderExample.item?.first?.itemControl
+        let itemControlValue = try XCTUnwrap(testItemControl)
+        XCTAssertEqual(itemControlValue, "slider")
+    }
     
     func testRegexExtension() throws {
         let testRegex = Questionnaire.textValidationExample.item?.first?.validationRegularExpression
         // swiftlint:disable:next line_length
         let regex = try NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
         XCTAssertEqual(regex, testRegex)
+    }
+
+    func testSliderStepValueExtension() throws {
+        let testSliderStepValue = Questionnaire.sliderExample.item?.first?.sliderStepValue
+        let sliderStepValue = try XCTUnwrap(testSliderStepValue)
+        XCTAssertEqual(sliderStepValue, 1)
     }
     
     func testValidationMessageExtension() throws {

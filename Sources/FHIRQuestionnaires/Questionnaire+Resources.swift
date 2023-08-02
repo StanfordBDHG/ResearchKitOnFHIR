@@ -36,6 +36,9 @@ extension Questionnaire {
 
     /// A FHIR questionnaire demonstrating an image capture step
     public static var imageCaptureExample: Questionnaire = loadQuestionnaire(withName: "ImageCapture")
+
+    /// A FHIR questionnaire demonstrating a slider
+    public static var sliderExample: Questionnaire = loadQuestionnaire(withName: "SliderExample")
     
     /// A collection of example `Questionnaire`s provided by the FHIRQuestionnaires target to demonstrate functionality
     public static var exampleQuestionnaires: [Questionnaire] = [
@@ -46,7 +49,8 @@ extension Questionnaire {
         .dateTimeExample,
         .formExample,
         .multipleEnableWhen,
-        .imageCaptureExample
+        .imageCaptureExample,
+        .sliderExample
     ]
     
     // MARK: Examples of clinical research FHIR Questionnaires
