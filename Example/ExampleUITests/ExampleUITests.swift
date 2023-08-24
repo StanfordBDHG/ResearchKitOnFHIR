@@ -284,6 +284,7 @@ final class ExampleUITests: XCTestCase {
         app.tables.staticTexts["Yes"].tap()
         app.tables.staticTexts["Chocolate"].tap()
         app.tables.staticTexts["Sprinkles"].tap()
+        app.tables.staticTexts["Marshmallows"].tap()
         app.buttons["Next"].tap()
 
         // Finish survey
