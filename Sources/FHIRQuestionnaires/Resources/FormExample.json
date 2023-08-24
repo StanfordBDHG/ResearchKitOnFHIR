@@ -62,7 +62,7 @@
         },
         {
           "linkId": "5ad9456c-1451-4190-fff5-3fd71545a591",
-          "type": "choice",
+          "type": "open-choice",
           "text": "What is your favorite flavor of ice cream?",
           "required": true,
           "answerOption": [

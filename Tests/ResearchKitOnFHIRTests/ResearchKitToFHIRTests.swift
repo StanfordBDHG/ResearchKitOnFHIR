@@ -182,7 +182,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
         XCTAssertEqual(testValue, responseValue)
     }
     
-    func testChoiceResponse() {
+    func testSingleChoiceResponse() {
         let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system")
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
