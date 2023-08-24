@@ -133,6 +133,8 @@ final class ExampleUITests: XCTestCase {
         doneButton.tap()
 
         // Open context menu and view results
+        sleep(1)
+        XCTAssert(containedValueSetExampleButton.waitForExistence(timeout: 2))
         containedValueSetExampleButton.press(forDuration: 1.0)
         app.collectionViews.buttons["View Responses"].tap()
 
