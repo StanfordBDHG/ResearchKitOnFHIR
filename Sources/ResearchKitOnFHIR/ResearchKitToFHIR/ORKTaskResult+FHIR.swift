@@ -51,17 +51,15 @@ extension ORKTaskResult {
 
     private func createResponse(_ result: ORKResult) -> QuestionnaireResponseItem {
         let response = QuestionnaireResponseItem(linkId: FHIRPrimitive(FHIRString(result.identifier)))
-        
         var responseAnswers: [QuestionnaireResponseItemAnswer] = []
         
         switch result {
         case let result as ORKBooleanQuestionResult:
             appendResponseAnswer(createBooleanResponse(result), to: &responseAnswers)
         case let result as ORKChoiceQuestionResult:
-            if let values = createChoiceResponse(result) {
-                for value in values {
-                    appendResponseAnswer(value, to: &responseAnswers)
-                }
+            let values = createChoiceResponse(result)
+            for value in values {
+                appendResponseAnswer(value, to: &responseAnswers)
             }
         case let result as ORKFileResult:
             appendResponseAnswer(createAttachmentResponse(result), to: &responseAnswers)
@@ -121,9 +119,9 @@ extension ORKTaskResult {
         return .string(FHIRPrimitive(FHIRString(text)))
     }
     
-    private func createChoiceResponse(_ result: ORKChoiceQuestionResult) -> [QuestionnaireResponseItemAnswer.ValueX]? {
+    private func createChoiceResponse(_ result: ORKChoiceQuestionResult) -> [QuestionnaireResponseItemAnswer.ValueX] {
         guard let answerArray = result.answer as? NSArray, answerArray.count > 0 else { // swiftlint:disable:this empty_count
-            return nil
+            return []
         }
         
         var responses: [QuestionnaireResponseItemAnswer.ValueX] = []
