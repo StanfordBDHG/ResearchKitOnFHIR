@@ -183,7 +183,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
     }
     
     func testChoiceResponse() {
-        let testValue = ValueCoding(code: "testCode", system: "testSystem")
+        let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system")
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
         choiceResult.choiceAnswers = [testValue.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol]
@@ -200,6 +200,48 @@ final class ResearchKitToFHIRTests: XCTestCase {
         }
         
         XCTAssertEqual(testValue, valueCoding)
+    }
+    
+    func testMultipleChoiceResponse() {
+        let testValues = [
+            ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system"),
+            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system")
+        ]
+        
+        let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
+        choiceResult.choiceAnswers = testValues.map { $0.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol }
+        
+        let taskResult = createTaskResult(choiceResult)
+        
+        let fhirResponse = taskResult.fhirResponse
+
+        guard let firstItem = fhirResponse.item?.first,
+              let answers = firstItem.answer?.compactMap({ $0.value }) else {
+            XCTFail("Invalid FHIR response.")
+            return
+        }
+        
+        guard answers.count == testValues.count else {
+            XCTFail("Number of returned answers (\(answers.count)) does not match expected (\(testValues.count)).")
+            return
+        }
+
+        for (index, answer) in answers.enumerated() {
+            switch answer {
+            case let .coding(coding):
+                guard let code = coding.code?.value?.string,
+                      let system = coding.system?.value?.url.absoluteString else {
+                    XCTFail("Could not extract the code and system from the coding.")
+                    return
+                }
+                
+                let valueCoding = ValueCoding(code: code, system: system)
+                XCTAssertEqual(testValues[index], valueCoding)
+                
+            default:
+                XCTFail("Expected a coding value.")
+            }
+        }
     }
 
     func testAttachmentResult() {

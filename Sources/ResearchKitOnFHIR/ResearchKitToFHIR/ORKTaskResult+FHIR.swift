@@ -127,22 +127,17 @@ extension ORKTaskResult {
         var responses: [QuestionnaireResponseItemAnswer.ValueX] = []
         
         for answer in answerArray {
-            // If the result is a string (i.e. the user selected the "other" option and entered a free-text answer), return a String
-            if let answerString = answer as? String {
+            // Check if answer can be treated as a ValueCoding first
+            if let valueCodingString = answer as? String, let valueCoding = ValueCoding(rawValue: valueCodingString) {
+                let coding = Coding(
+                    code: FHIRPrimitive(FHIRString(valueCoding.code)),
+                    system: FHIRPrimitive(FHIRURI(stringLiteral: valueCoding.system))
+                )
+                responses += [.coding(coding)]
+            } else if let answerString = answer as? String {
+                // If not, fall back to treating it as a regular string
                 responses += [.string(FHIRPrimitive(FHIRString(answerString)))]
             }
-            
-            // If the result is a dictionary containing a code and system, return a Coding
-            guard let valueCodingString = answer as? String,
-                  let valueCoding = ValueCoding(rawValue: valueCodingString) else {
-                continue
-            }
-            
-            let coding = Coding(
-                code: FHIRPrimitive(FHIRString(valueCoding.code)),
-                system: FHIRPrimitive(FHIRURI(stringLiteral: valueCoding.system))
-            )
-            responses += [.coding(coding)]
         }
         
         return responses
