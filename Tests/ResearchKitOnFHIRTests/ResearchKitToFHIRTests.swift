@@ -190,17 +190,27 @@ final class ResearchKitToFHIRTests: XCTestCase {
         let taskResult = createTaskResult(choiceResult)
         
         let fhirResponse = taskResult.fhirResponse
-        let answer = fhirResponse.item?.first?.answer?.first?.value
-        
-        guard case let .string(fhirString) = answer,
-              let rawValue = fhirString.value?.string,
-              let valueCoding = ValueCoding(rawValue: rawValue) else {
-            XCTFail("Could not extract the value coding system.")
+        guard let answer = fhirResponse.item?.first?.answer?.first?.value else {
+            XCTFail("Could not find the answer in the FHIR response.")
             return
         }
         
-        XCTAssertEqual(testValue, valueCoding)
+        switch answer {
+        case let .coding(coding):
+            guard let code = coding.code?.value?.string,
+                  let system = coding.system?.value?.url.absoluteString else {
+                XCTFail("Could not extract the code and system from the coding.")
+                return
+            }
+            
+            let valueCoding = ValueCoding(code: code, system: system)
+            XCTAssertEqual(testValue, valueCoding)
+            
+        default:
+            XCTFail("Expected a coding value.")
+        }
     }
+
     
     func testMultipleChoiceResponse() {
         let testValues = [
