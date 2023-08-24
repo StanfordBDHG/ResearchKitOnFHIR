@@ -112,15 +112,23 @@ final class ExampleUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let containedValueSetExampleButton = app.collectionViews.buttons["Contained ValueSet Example"]
-
         // Complete questionnaire
+        let containedValueSetExampleButton = app.collectionViews.buttons["Contained ValueSet Example"]
+        XCTAssert(containedValueSetExampleButton.waitForExistence(timeout: 2))
         containedValueSetExampleButton.tap()
-        app.tables.staticTexts["Yes"].tap()
-        app.buttons["Next"].tap()
+        
+        let yesButton = app.tables.staticTexts["Yes"]
+        XCTAssert(yesButton.waitForExistence(timeout: 2))
+        yesButton.tap()
+        
+        let nextButton = app.buttons["Next"]
+        XCTAssert(nextButton.waitForExistence(timeout: 2))
+        nextButton.tap()
 
         // Close the completion step
-        app.buttons["Done"].tap()
+        let doneButton = app.buttons["Done"]
+        XCTAssert(doneButton.waitForExistence(timeout: 2))
+        doneButton.tap()
 
         // Open context menu and view results
         containedValueSetExampleButton.press(forDuration: 1.0)
@@ -221,8 +229,7 @@ final class ExampleUITests: XCTestCase {
         app.launch()
 
         let dateTimeExampleButton = app.collectionViews.buttons["Date and Time Example"]
-
-        // Open questionnaire
+        XCTAssert(dateTimeExampleButton.waitForExistence(timeout: 2))
         dateTimeExampleButton.tap()
         
         let dateFormatter = DateFormatter()
@@ -239,6 +246,7 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Chose a date and time
+        sleep(1)
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("MMM d"))
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("h"))
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("mm"))
@@ -246,19 +254,27 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Choose a time
+        sleep(1)
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("h"))
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("mm"))
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: dateFormatOfRandomDateInProximity("a"))
         app.buttons["Next"].tap()
 
         // Close the completion step
-        app.buttons["Done"].tap()
+        let doneButton = app.buttons["Done"]
+        XCTAssert(doneButton.waitForExistence(timeout: 2))
+        doneButton.tap()
 
         // Open context menu and view results
+        XCTAssert(dateTimeExampleButton.waitForExistence(timeout: 2))
         dateTimeExampleButton.press(forDuration: 1.0)
-        app.collectionViews.buttons["View Responses"].tap()
+        
+        let viewReponsesButton = app.collectionViews.buttons["View Responses"]
+        XCTAssert(viewReponsesButton.waitForExistence(timeout: 2))
+        viewReponsesButton.tap()
 
         // Check results
+        sleep(1)
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
         buttonsInResultView.allElementsBoundByIndex[0].tap()
@@ -418,47 +434,67 @@ final class ExampleUITests: XCTestCase {
         app.launch()
         
         let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Expressions"]
+        XCTAssert(multipleEnableWhenButton.waitForExistence(timeout: 2))
         multipleEnableWhenButton.tap()
 
         // We will first answer all questions correctly
+        XCTAssert(app.tables.staticTexts["Yes"].waitForExistence(timeout: 2))
         app.tables.staticTexts["Yes"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
+        XCTAssert(app.tables.staticTexts["green"].waitForExistence(timeout: 2))
         app.tables.staticTexts["green"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
+        
         let integerField = app.textFields.element(boundBy: 0)
+        XCTAssert(integerField.waitForExistence(timeout: 2))
         integerField.tap()
         integerField.typeText("12\n")
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // First result screen appears if at least one answer is correct.
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Second result screen appears if all answers are correct.
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Now the completion screen will appear with a "Done" button that we can tap
+        XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
 
         // Now we relaunch the survey
+        XCTAssert(multipleEnableWhenButton.waitForExistence(timeout: 2))
         multipleEnableWhenButton.tap()
 
         // This time we answer only one question correctly
+        XCTAssert(app.tables.staticTexts["Yes"].waitForExistence(timeout: 2))
         app.tables.staticTexts["Yes"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
+        XCTAssert(app.tables.staticTexts["orange"].waitForExistence(timeout: 2))
         app.tables.staticTexts["orange"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
+        XCTAssert(integerField.waitForExistence(timeout: 2))
         integerField.tap()
         integerField.typeText("2\n")
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Only one result screen should appear.
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Now the completion screen should appear.
+        XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
     }
 
@@ -467,14 +503,19 @@ final class ExampleUITests: XCTestCase {
         app.launch()
 
         let imageCaptureButton = app.collectionViews.buttons["Image Capture Example"]
+        XCTAssert(imageCaptureButton.waitForExistence(timeout: 2))
         imageCaptureButton.tap()
 
         // This example requires access to a device camera, which can't be simulated,
         // so we will get an error message.
-        XCTAssert(app.staticTexts["No camera found.  This step cannot be completed."].exists)
+        XCTAssert(app.staticTexts["No camera found.  This step cannot be completed."].waitForExistence(timeout: 2))
 
-        app.buttons["Skip"].tap()
+        let skipButton = app.buttons["Skip"]
+        XCTAssert(skipButton.waitForExistence(timeout: 2))
+        skipButton.tap()
 
-        app.buttons["Done"].tap()
+        let doneButton = app.buttons["Done"]
+        XCTAssert(doneButton.waitForExistence(timeout: 2))
+        doneButton.tap()
     }
 }
