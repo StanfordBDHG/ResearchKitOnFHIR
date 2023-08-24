@@ -151,6 +151,9 @@ extension QuestionnaireItem {
             guard !answerOptions.isEmpty else {
                 throw FHIRToResearchKitConversionError.noOptions
             }
+            if itemControl == "multi-select" {
+                return ORKTextChoiceAnswerFormat(style: ORKChoiceAnswerStyle.multipleChoice, textChoices: answerOptions)
+            }
             return ORKTextChoiceAnswerFormat(style: ORKChoiceAnswerStyle.singleChoice, textChoices: answerOptions)
         case .date:
             return ORKDateAnswerFormat(style: ORKDateAnswerStyle.date)
