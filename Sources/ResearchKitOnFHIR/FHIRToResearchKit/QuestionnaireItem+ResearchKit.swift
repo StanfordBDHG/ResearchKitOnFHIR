@@ -152,7 +152,7 @@ extension QuestionnaireItem {
                 throw FHIRToResearchKitConversionError.noOptions
             }
             var choiceAnswerStyle = ORKChoiceAnswerStyle.singleChoice
-            if itemControl == "multi-select" {
+            if itemControl == "check-box" {
                 choiceAnswerStyle = .multipleChoice
             }
             return ORKTextChoiceAnswerFormat(style: choiceAnswerStyle, textChoices: answerOptions)

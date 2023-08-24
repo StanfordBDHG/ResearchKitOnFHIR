@@ -112,8 +112,8 @@
                   "coding": [
                     {
                       "system": "http://hl7.org/fhir/questionnaire-item-control",
-                      "code": "multi-select",
-                      "display": "Multi select"
+                      "code": "check-box",
+                      "display": "Checkbox"
                     }
                   ]
                 }
