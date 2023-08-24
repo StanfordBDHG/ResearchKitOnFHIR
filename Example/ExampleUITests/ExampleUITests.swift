@@ -10,6 +10,7 @@
 // swiftlint:disable file_length
 import XCTest
 
+
 // We disable type body length rule because this is a test
 // swiftlint:disable:next type_body_length
 final class ExampleUITests: XCTestCase {
@@ -492,14 +493,17 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // First result screen appears if at least one answer is correct.
+        sleep(1)
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Second result screen appears if all answers are correct.
+        sleep(1)
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Now the completion screen will appear with a "Done" button that we can tap
+        sleep(1)
         XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
 
@@ -525,10 +529,12 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Only one result screen should appear.
+        sleep(1)
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Now the completion screen should appear.
+        sleep(1)
         XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
     }
