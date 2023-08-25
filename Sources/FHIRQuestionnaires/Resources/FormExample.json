@@ -62,7 +62,7 @@
         },
         {
           "linkId": "5ad9456c-1451-4190-fff5-3fd71545a591",
-          "type": "choice",
+          "type": "open-choice",
           "text": "What is your favorite flavor of ice cream?",
           "required": true,
           "answerOption": [
@@ -105,6 +105,20 @@
           "type": "choice",
           "text": "What is your favorite topping on ice cream?",
           "required": false,
+          "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "coding": [
+                    {
+                      "system": "http://hl7.org/fhir/questionnaire-item-control",
+                      "code": "check-box",
+                      "display": "Checkbox"
+                    }
+                  ]
+                }
+              },
+          ],
           "answerOption": [
             {
               "valueCoding": {

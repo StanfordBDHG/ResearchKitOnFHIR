@@ -182,24 +182,76 @@ final class ResearchKitToFHIRTests: XCTestCase {
         XCTAssertEqual(testValue, responseValue)
     }
     
-    func testChoiceResponse() {
-        let testValue = ValueCoding(code: "testCode", system: "testSystem")
+    func testSingleChoiceResponse() {
+        let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system")
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
         choiceResult.choiceAnswers = [testValue.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol]
         let taskResult = createTaskResult(choiceResult)
         
         let fhirResponse = taskResult.fhirResponse
-        let answer = fhirResponse.item?.first?.answer?.first?.value
-        
-        guard case let .string(fhirString) = answer,
-              let rawValue = fhirString.value?.string,
-              let valueCoding = ValueCoding(rawValue: rawValue) else {
-            XCTFail("Could not extract the value coding system.")
+        guard let answer = fhirResponse.item?.first?.answer?.first?.value else {
+            XCTFail("Could not find the answer in the FHIR response.")
             return
         }
         
-        XCTAssertEqual(testValue, valueCoding)
+        switch answer {
+        case let .coding(coding):
+            guard let code = coding.code?.value?.string,
+                  let system = coding.system?.value?.url.absoluteString else {
+                XCTFail("Could not extract the code and system from the coding.")
+                return
+            }
+            
+            let valueCoding = ValueCoding(code: code, system: system)
+            XCTAssertEqual(testValue, valueCoding)
+            
+        default:
+            XCTFail("Expected a coding value.")
+        }
+    }
+
+    
+    func testMultipleChoiceResponse() {
+        let testValues = [
+            ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system"),
+            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system")
+        ]
+        
+        let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
+        choiceResult.choiceAnswers = testValues.map { $0.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol }
+        
+        let taskResult = createTaskResult(choiceResult)
+        
+        let fhirResponse = taskResult.fhirResponse
+
+        guard let firstItem = fhirResponse.item?.first,
+              let answers = firstItem.answer?.compactMap({ $0.value }) else {
+            XCTFail("Invalid FHIR response.")
+            return
+        }
+        
+        guard answers.count == testValues.count else {
+            XCTFail("Number of returned answers (\(answers.count)) does not match expected (\(testValues.count)).")
+            return
+        }
+
+        for (index, answer) in answers.enumerated() {
+            switch answer {
+            case let .coding(coding):
+                guard let code = coding.code?.value?.string,
+                      let system = coding.system?.value?.url.absoluteString else {
+                    XCTFail("Could not extract the code and system from the coding.")
+                    return
+                }
+                
+                let valueCoding = ValueCoding(code: code, system: system)
+                XCTAssertEqual(testValues[index], valueCoding)
+                
+            default:
+                XCTFail("Expected a coding value.")
+            }
+        }
     }
 
     func testAttachmentResult() {
