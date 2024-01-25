@@ -27,6 +27,7 @@ struct JSONView: View {
                 Image(systemName: "x.circle")
                     .font(.system(size: 80))
                     .foregroundColor(.red)
+                    .accessibilityHidden(true)
                 Text("JSON_ERROR_MESSAGE")
             }
         }

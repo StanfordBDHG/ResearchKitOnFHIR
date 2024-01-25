@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 
 //
 // This source file is part of the ResearchKitOnFHIR open source project
@@ -14,14 +14,14 @@ import PackageDescription
 let package = Package(
     name: "ResearchKitOnFHIR",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v12)
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.9")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.21")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
     ],
     targets: [
