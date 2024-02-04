@@ -61,8 +61,10 @@ extension ORKTaskResult {
             for value in values {
                 appendResponseAnswer(value, to: &responseAnswers)
             }
+        #if !os(visionOS)
         case let result as ORKFileResult:
             appendResponseAnswer(createAttachmentResponse(result), to: &responseAnswers)
+        #endif
         case let result as ORKNumericQuestionResult:
             appendResponseAnswer(createNumericResponse(result), to: &responseAnswers)
         case let result as ORKDateQuestionResult:
@@ -178,6 +180,7 @@ extension ORKTaskResult {
         return .time(fhirTime)
     }
 
+    #if !os(visionOS)
     private func createAttachmentResponse(_ result: ORKFileResult) -> QuestionnaireResponseItemAnswer.ValueX? {
         guard let url = result.fileURL else {
             return nil
@@ -185,4 +188,5 @@ extension ORKTaskResult {
 
         return .attachment(Attachment(url: url.asFHIRURIPrimitive()))
     }
+    #endif
 }

@@ -28,6 +28,7 @@ extension Array where Element == QuestionnaireItem {
             }
             
             switch questionType {
+            #if !os(visionOS)
             case QuestionnaireItemType.attachment:
                 // The FHIR Questionnaire attachment type is meant to support binary file upload, including
                 // images. ResearchKit does not support arbitrary binary file upload, but does support image
@@ -35,6 +36,7 @@ extension Array where Element == QuestionnaireItem {
                 if let attachmentStep = question.attachmentToORKImageCaptureStep() {
                     surveySteps.append(attachmentStep)
                 }
+            #endif
             case QuestionnaireItemType.group:
                 // Converts multiple questions in a group into a ResearchKit form step
                 if let groupStep = question.groupToORKFormStep(title: title, valueSets: valueSets) {
@@ -128,6 +130,7 @@ extension QuestionnaireItem {
         return instructionStep
     }
 
+    #if !os(visionOS)
     /// Converts FHIR `QuestionnaireItem` attachment type to `ORKImageCaptureStep`
     /// - Returns: A ResearchKit `ORKImageCaptureStep`
     fileprivate func attachmentToORKImageCaptureStep() -> ORKImageCaptureStep? {
@@ -136,6 +139,7 @@ extension QuestionnaireItem {
         }
         return ORKImageCaptureStep(identifier: id)
     }
+    #endif
     
     /// Converts FHIR QuestionnaireItem answer types to the corresponding ResearchKit answer types (ORKAnswerFormat).
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices

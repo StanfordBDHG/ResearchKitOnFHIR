@@ -14,14 +14,15 @@ import PackageDescription
 let package = Package(
     name: "ResearchKitOnFHIR",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v12),
+        .visionOS(.v1)
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.21")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.22")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
     ],
     targets: [

@@ -254,6 +254,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
         }
     }
 
+    #if !os(visionOS)
     func testAttachmentResult() {
         let fileResult = ORKFileResult(identifier: "File Result")
         let urlString = "file://images/image.jpg"
@@ -282,4 +283,5 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         XCTAssertNil(answer)
     }
+    #endif
 }
