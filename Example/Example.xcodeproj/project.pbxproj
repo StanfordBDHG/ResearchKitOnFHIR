@@ -10,6 +10,8 @@
 		272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */; };
 		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
 		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
+		2F030AB92B7127930063EADC /* QuestionnaireListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F030AB82B7127930063EADC /* QuestionnaireListRow.swift */; };
+		2F030ABB2B7127C00063EADC /* Questionnaire+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F030ABA2B7127C00063EADC /* Questionnaire+Identifiable.swift */; };
 		2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53129261578008AA30B /* FHIRQuestionnaires */; };
 		2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53329261578008AA30B /* ResearchKitOnFHIR */; };
 		654BD48028BEBA8400B012D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654BD47F28BEBA8400B012D2 /* Assets.xcassets */; };
@@ -39,6 +41,8 @@
 		272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskViewController+Files.swift"; sourceTree = "<group>"; };
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
+		2F030AB82B7127930063EADC /* QuestionnaireListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListRow.swift; sourceTree = "<group>"; };
+		2F030ABA2B7127C00063EADC /* Questionnaire+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questionnaire+Identifiable.swift"; sourceTree = "<group>"; };
 		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
 		654BD47828BEBA8200B012D2 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 			children = (
 				65545D0428BEBC57000C70E4 /* ExampleApp.swift */,
 				27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */,
+				2F030AB82B7127930063EADC /* QuestionnaireListRow.swift */,
 				657CB92428D2AD1F006B0A3F /* Questionnaire */,
 				657CB92328D2ACF1006B0A3F /* Responses */,
 				657CB92128D2ACB6006B0A3F /* JSON Views */,
@@ -131,6 +136,7 @@
 			children = (
 				272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */,
 				657CB91D28D29EE7006B0A3F /* String+JSON.swift */,
+				2F030ABA2B7127C00063EADC /* Questionnaire+Identifiable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -275,8 +281,10 @@
 				657CB91A28D29626006B0A3F /* QuestionnaireResponsesView.swift in Sources */,
 				657CB91828D2952E006B0A3F /* JSONView.swift in Sources */,
 				65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */,
+				2F030AB92B7127930063EADC /* QuestionnaireListRow.swift in Sources */,
 				657CB91E28D29EE7006B0A3F /* String+JSON.swift in Sources */,
 				272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */,
+				2F030ABB2B7127C00063EADC /* Questionnaire+Identifiable.swift in Sources */,
 				65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,13 +358,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Debug;
 		};
@@ -404,13 +413,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Release;
 		};
@@ -433,7 +443,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -441,13 +450,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.researchkitonfhirexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,7";
 			};
 			name = Debug;
 		};
@@ -470,7 +479,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,12 +486,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.researchkitonfhirexample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,7";
 			};
 			name = Release;
 		};
@@ -494,16 +502,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,7";
 				TEST_TARGET_NAME = Example;
 			};
 			name = Debug;
@@ -515,16 +522,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,7";
 				TEST_TARGET_NAME = Example;
 			};
 			name = Release;

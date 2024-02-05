@@ -15,12 +15,11 @@ import SwiftUI
 /// Renders a ResearchKit task from the selected FHIR questionnaire
 struct QuestionnaireView: View {
     @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
-    @Binding var questionnaire: Questionnaire?
+    let questionnaire: Questionnaire
     
     
     var body: some View {
-        if let activeQuestionnaire = questionnaire,
-           let task = createTask(questionnaire: activeQuestionnaire) {
+        if let task = createTask(questionnaire: questionnaire) {
             ORKOrderedTaskView(tasks: task, delegate: ORKTaskFHIRDelegate(responseStorage))
                 .ignoresSafeArea(.container, edges: .bottom)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -49,11 +48,8 @@ struct QuestionnaireView: View {
 }
 
 
-struct QuestionnaireView_Previews: PreviewProvider {
-    @State private static var questionnaire: Questionnaire? = .textValidationExample
-    
-    
+struct QuestionnaireView_Previews: PreviewProvider {    
     static var previews: some View {
-        QuestionnaireView(questionnaire: $questionnaire)
+        QuestionnaireView(questionnaire: .textValidationExample)
     }
 }

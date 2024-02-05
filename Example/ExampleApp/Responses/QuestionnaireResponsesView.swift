@@ -13,7 +13,7 @@ import SwiftUI
 
 struct QuestionnaireResponsesView: View {
     @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
-    @Binding var questionnaire: Questionnaire?
+    let questionnaire: Questionnaire
     @State private var selection: QuestionnaireResponse?
     
     
@@ -38,7 +38,7 @@ struct QuestionnaireResponsesView: View {
     
     
     private var responses: [QuestionnaireResponse] {
-        guard let url = questionnaire?.url?.value?.url else {
+        guard let url = questionnaire.url?.value?.url else {
             return []
         }
         
@@ -55,9 +55,7 @@ struct QuestionnaireResponsesView: View {
 
 
 struct QuestionnaireResponsesView_Previews: PreviewProvider {
-    @State private static var questionnaire: Questionnaire? = .textValidationExample
-    
     static var previews: some View {
-        QuestionnaireResponsesView(questionnaire: $questionnaire)
+        QuestionnaireResponsesView(questionnaire: .textValidationExample)
     }
 }

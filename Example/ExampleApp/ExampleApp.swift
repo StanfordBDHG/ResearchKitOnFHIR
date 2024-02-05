@@ -13,10 +13,20 @@ import SwiftUI
 
 @main
 struct ExampleApp: App {
+    @State private var presentQuestionnaire = false
+    
+    
     var body: some Scene {
         WindowGroup {
-            QuestionnaireListView()
-                .environmentObject(QuestionnaireResponseStorage())
+            Button("Test") {
+                presentQuestionnaire.toggle()
+            }
+                .sheet(isPresented: $presentQuestionnaire) {
+                    QuestionnaireView(questionnaire: .textValidationExample)
+                        .environmentObject(QuestionnaireResponseStorage())
+                }
+//            QuestionnaireListView()
+//                .environmentObject(QuestionnaireResponseStorage())
         }
     }
 }

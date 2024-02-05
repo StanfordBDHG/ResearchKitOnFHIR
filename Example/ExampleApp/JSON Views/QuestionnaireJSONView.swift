@@ -11,23 +11,22 @@ import SwiftUI
 
 
 struct QuestionnaireJSONView: View {
-    @Binding var questionnaire: Questionnaire?
+    let questionnaire: Questionnaire
     
     
     var body: some View {
         NavigationStack {
-            JSONView(json: questionnaire.flatMap { String(jsonFrom: $0) })
-                .navigationTitle(questionnaire?.title?.value?.string ?? String(localized: "QUESTIONNAIRE_DEFAULT_TITLE"))
+            JSONView(
+                json: String(jsonFrom: questionnaire)
+            )
+                .navigationTitle(questionnaire.title?.value?.string ?? String(localized: "QUESTIONNAIRE_DEFAULT_TITLE"))
         }.navigationBarTitleDisplayMode(.inline)
     }
 }
 
 
 struct QuestionnaireJSONView_Previews: PreviewProvider {
-    @State private static var questionnaire: Questionnaire? = .textValidationExample
-    
-    
     static var previews: some View {
-        QuestionnaireJSONView(questionnaire: $questionnaire)
+        QuestionnaireJSONView(questionnaire: .textValidationExample)
     }
 }
