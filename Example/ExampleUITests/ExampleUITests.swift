@@ -72,10 +72,12 @@ final class ExampleUITests: XCTestCase {
         XCTAssertEqual(buttonsInResultView.count, 2)
         
         // First result
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
         
         // Second result
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[1].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[1].tap()
         app.navigationBars.buttons["Back"].tap()
         
@@ -95,6 +97,7 @@ final class ExampleUITests: XCTestCase {
         app.tables.buttons["Next"].tap()
 
         // Select the "other" option and fill in a free-text answer
+        #warning("This functionality seems to be broken since the last changes with the open text choices: https://github.com/StanfordBDHG/ResearchKit/commit/54913426d31e6131119318f2568cd937d629b2ae#diff-965a610b20ace92ce0f85d16f2b046520f06041f3929cfedd8d18e671596af15")
         app.tables.staticTexts["Other"].tap()
         let otherField = app.textViews.element(boundBy: 0)
         otherField.tap()
@@ -142,6 +145,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -188,6 +192,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -222,6 +227,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -282,6 +288,7 @@ final class ExampleUITests: XCTestCase {
         sleep(1)
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -316,6 +323,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -385,6 +393,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -422,6 +431,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 
@@ -458,6 +468,7 @@ final class ExampleUITests: XCTestCase {
         // Check results
         let buttonsInResultView = app.collectionViews.allElementsBoundByIndex[1].buttons
         XCTAssertEqual(buttonsInResultView.count, 1)
+        XCTAssert(buttonsInResultView.allElementsBoundByIndex[0].waitForExistence(timeout: 2))
         buttonsInResultView.allElementsBoundByIndex[0].tap()
         app.navigationBars.buttons["Back"].tap()
 

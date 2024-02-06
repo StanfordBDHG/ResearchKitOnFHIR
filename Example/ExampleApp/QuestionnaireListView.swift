@@ -45,7 +45,7 @@ struct QuestionnaireListView: View {
                      } header: {
                         Text(section.header)
                      }
-                }
+                 }
              }
                 .navigationTitle("QUESTIONNAIRE_LIST_TITLE")
         }

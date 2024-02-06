@@ -22,7 +22,7 @@ let package = Package(
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.23")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", exact: "2.2.21"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
     ],
     targets: [
