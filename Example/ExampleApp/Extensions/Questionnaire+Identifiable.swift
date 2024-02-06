@@ -6,7 +6,12 @@
 // SPDX-License-Identifier: MIT
 //
 
+import Foundation
 import ModelsR4
 
 
-extension Questionnaire: Identifiable {}
+extension Questionnaire: Identifiable {
+    var identifier: String {
+        url?.value?.url.formatted() ?? id?.value?.string ?? title?.value?.string ?? ""
+    }
+}

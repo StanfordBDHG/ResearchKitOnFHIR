@@ -37,9 +37,9 @@ struct QuestionnaireListView: View {
     var body: some View {
         NavigationStack {
              List {
-                ForEach(questionnaireSections) { section in
+                 ForEach(questionnaireSections) { section in
                      Section {
-                        ForEach(section.questionnaires) { questionnaire in
+                        ForEach(section.questionnaires, id: \.identifier) { questionnaire in
                             QuestionnaireListRow(questionnaire: questionnaire)
                         }
                      } header: {
