@@ -23,6 +23,15 @@ jobs:
       artifactname: ResearchKitOnFHIR-Package.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
       scheme: ResearchKitOnFHIR-Package
+  buildandtestvisionos:
+    name: Build and Test Swift Package visionOS
+    uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    with:
+      artifactname: ResearchKitOnFHIR-Package-visionOS.xcresult
+      resultBundle: ResearchKitOnFHIR-Package-visionOS.xcresult
+      runsonlabels: '["macOS", "self-hosted"]'
+      scheme: ResearchKitOnFHIR-Package
+      destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
   buildandtestuitests:
     name: Build and Test UI Tests
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
@@ -33,7 +42,7 @@ jobs:
       scheme: Example
   uploadcoveragereport:
     name: Upload Coverage Report
-    needs: [buildandtest, buildandtestuitests]
+    needs: [buildandtest, buildandtestvisionos, buildandtestuitests]
     uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
-      coveragereports: ResearchKitOnFHIR-Package.xcresult Example.xcresult
+      coveragereports: ResearchKitOnFHIR-Package.xcresult ResearchKitOnFHIR-Package-visionOS.xcresult Example.xcresult
