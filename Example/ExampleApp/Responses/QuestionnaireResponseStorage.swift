@@ -6,12 +6,13 @@
 // SPDX-License-Identifier: MIT
 //
 
-import ModelsR4
+import class ModelsR4.QuestionnaireResponse
 import SwiftUI
 
 
-class QuestionnaireResponseStorage: ObservableObject {
-    @Published private var responses: [URL: [QuestionnaireResponse]] = [:]
+@Observable
+class QuestionnaireResponseStorage {
+    private var responses: [URL: [QuestionnaireResponse]] = [:]
     
     
     func append(_ response: QuestionnaireResponse, for identifier: URL) {

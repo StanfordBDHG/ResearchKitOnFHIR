@@ -14,7 +14,7 @@ import SwiftUI
 
 /// Renders a ResearchKit task from the selected FHIR questionnaire
 struct QuestionnaireView: View {
-    @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
+    @Environment(QuestionnaireResponseStorage.self) private var responseStorage
     let questionnaire: Questionnaire
     
     

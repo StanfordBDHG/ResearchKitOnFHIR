@@ -25,19 +25,11 @@ private struct QuestionnaireSection: Hashable, Identifiable {
 struct QuestionnaireListView: View {
     private var questionnaireSections: [QuestionnaireSection] = [
         QuestionnaireSection(
-            questionnaires: [
-                .formExample,
-                .formExample,
-                .formExample
-            ],
+            questionnaires: Questionnaire.exampleQuestionnaires,
             header: String(localized: "QUESTIONNAIRE_LIST_EXAMPLES_HEADER")
         ),
         QuestionnaireSection(
-            questionnaires: [
-                .formExample,
-                .formExample,
-                .formExample
-            ],
+            questionnaires: Questionnaire.researchQuestionnaires,
             header: String(localized: "QUESTIONNAIRE_LIST_RESEARCH_EXAMPLES_HEADER")
         )
     ]

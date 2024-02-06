@@ -18,15 +18,8 @@ struct ExampleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Button("Test") {
-                presentQuestionnaire.toggle()
-            }
-                .sheet(isPresented: $presentQuestionnaire) {
-                    QuestionnaireView(questionnaire: .textValidationExample)
-                        .environmentObject(QuestionnaireResponseStorage())
-                }
-//            QuestionnaireListView()
-//                .environmentObject(QuestionnaireResponseStorage())
+            QuestionnaireListView()
+                .environment(QuestionnaireResponseStorage())
         }
     }
 }
