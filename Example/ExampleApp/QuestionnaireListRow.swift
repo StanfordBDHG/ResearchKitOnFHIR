@@ -50,6 +50,5 @@ struct QuestionnaireListRow: View {
             .sheet(isPresented: $presentQuestionnaireResponses) {
                 QuestionnaireResponsesView(questionnaire: questionnaire)
             }
-        
     }
 }

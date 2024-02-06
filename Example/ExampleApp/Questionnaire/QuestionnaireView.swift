@@ -48,7 +48,7 @@ struct QuestionnaireView: View {
 }
 
 
-struct QuestionnaireView_Previews: PreviewProvider {    
+struct QuestionnaireView_Previews: PreviewProvider {
     static var previews: some View {
         QuestionnaireView(questionnaire: .textValidationExample)
     }
