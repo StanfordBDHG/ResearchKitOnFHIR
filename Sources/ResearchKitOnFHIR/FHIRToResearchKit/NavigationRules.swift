@@ -90,7 +90,7 @@ extension Coding {
             return nil
         }
         
-        let expectedAnswer = ValueCoding(code: code, system: system)
+        let expectedAnswer = ValueCoding(code: code, system: system, display: display?.value?.string)
         
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,

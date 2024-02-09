@@ -226,7 +226,7 @@ extension QuestionnaireItem {
                       let system = valueSet?.compose?.include.first?.system?.value?.url.absoluteString else {
                     continue
                 }
-                let valueCoding = ValueCoding(code: code, system: system)
+                let valueCoding = ValueCoding(code: code, system: system, display: display)
                 let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
@@ -244,7 +244,7 @@ extension QuestionnaireItem {
                       let system = coding.system?.value?.url.absoluteString else {
                     continue
                 }
-                let valueCoding = ValueCoding(code: code, system: system)
+                let valueCoding = ValueCoding(code: code, system: system, display: display)
                 let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
@@ -252,7 +252,7 @@ extension QuestionnaireItem {
             if openChoice {
                 // If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
                 let otherChoiceText = NSLocalizedString("Other", comment: "")
-                let otherChoiceResult = ValueCoding(code: "other", system: "other")
+                let otherChoiceResult = ValueCoding(code: "other", system: "other", display: otherChoiceText)
                 let otherChoice = ORKTextChoiceOther.choice(
                     withText: otherChoiceText,
                     detailText: nil,
