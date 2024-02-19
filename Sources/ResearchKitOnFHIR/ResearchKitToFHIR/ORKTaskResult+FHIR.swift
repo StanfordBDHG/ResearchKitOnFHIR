@@ -129,7 +129,6 @@ extension ORKTaskResult {
         for answer in answerArray {
             // Check if answer can be treated as a ValueCoding first
             if let valueCodingString = answer as? String, let valueCoding = ValueCoding(rawValue: valueCodingString) {
-                
                 let coding = Coding(
                     code: FHIRPrimitive(FHIRString(valueCoding.code)),
                     display: valueCoding.display.map { FHIRPrimitive(FHIRString($0)) },

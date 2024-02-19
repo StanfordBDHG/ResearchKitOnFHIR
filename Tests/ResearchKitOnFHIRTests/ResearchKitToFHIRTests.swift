@@ -216,7 +216,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
     func testMultipleChoiceResponse() {
         let testValues = [
             ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 1"),
-            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 2"),
+            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 2")
         ]
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
