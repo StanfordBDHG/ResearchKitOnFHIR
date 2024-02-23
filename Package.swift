@@ -14,14 +14,17 @@ import PackageDescription
 let package = Package(
     name: "ResearchKitOnFHIR",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v15),
+        .watchOS(.v8),
+        .visionOS(.v1),
+        .macOS(.v12)
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "2.2.21")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit", branch: "feature/swiftui-support"),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
     ],
     targets: [
