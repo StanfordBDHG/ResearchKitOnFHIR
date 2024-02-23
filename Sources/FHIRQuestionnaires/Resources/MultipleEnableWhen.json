@@ -138,7 +138,8 @@
           "operator": "=",
           "answerCoding": {
             "system": "urn:uuid:2dab6b0b-4518-4c39-9f7f-a9da98e7c2f3",
-            "code": "green"
+            "code": "green",
+            "display": "green"
           }
         },
         {
