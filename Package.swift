@@ -32,6 +32,7 @@ let package = Package(
             name: "ResearchKitOnFHIR",
             dependencies: [
                 .product(name: "ResearchKit", package: "ResearchKit"),
+                .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
                 .product(name: "ModelsR4", package: "FHIRModels")
             ]
         ),
