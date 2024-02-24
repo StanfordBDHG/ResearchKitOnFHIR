@@ -301,10 +301,20 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Get Started"].tap()
 
         // Answer the three questions
+
         app.tables.staticTexts["Yes"].tap()
+
+
+        // The first two questions are required ones, the last one is optional.
+        // Tests that the button is disabled just before we answer the last required question.
+        XCTAssert(app.buttons["Next"].exists)
+        XCTAssertFalse(app.buttons["Next"].isEnabled)
+        XCTAssertFalse(app.buttons["Skip"].exists)
+
         app.tables.staticTexts["Chocolate"].tap()
         app.tables.staticTexts["Sprinkles"].tap()
         app.tables.staticTexts["Marshmallows"].tap()
+        XCTAssert(app.buttons["Next"].isEnabled)
         app.buttons["Next"].tap()
 
         // Finish survey
