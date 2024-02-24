@@ -92,7 +92,9 @@ extension QuestionnaireItem {
         formStep.title = title
         formStep.text = text?.value?.string ?? ""
         var formItems = [ORKFormItem]()
-        
+
+        var containsRequiredSteps = false
+
         for question in nestedQuestions {
             guard let questionId = question.linkId.value?.string,
                   let questionText = question.text?.value?.string,
@@ -102,13 +104,20 @@ extension QuestionnaireItem {
             
             let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
             if let required = question.required?.value?.bool {
-                formItem.isOptional = required
+                // if !optional, the `Continue` will stay disabled till the question is answered.
+                formItem.isOptional = !required
+
+                if required {
+                    containsRequiredSteps = true
+                }
             }
             
             formItems.append(formItem)
         }
         
         formStep.formItems = formItems
+        // if optional, the `Next` button will appear
+        formStep.isOptional = !containsRequiredSteps
         return formStep
     }
     
