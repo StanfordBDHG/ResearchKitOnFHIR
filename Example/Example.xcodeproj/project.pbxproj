@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */; };
 		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
 		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
 		2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53129261578008AA30B /* FHIRQuestionnaires */; };
 		2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53329261578008AA30B /* ResearchKitOnFHIR */; };
 		654BD48028BEBA8400B012D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654BD47F28BEBA8400B012D2 /* Assets.xcassets */; };
 		65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0428BEBC57000C70E4 /* ExampleApp.swift */; };
-		65545D0828BEBC58000C70E4 /* ORKOrderedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */; };
-		65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */; };
 		65545D0D28BEBEBB000C70E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65545D0C28BEBEBB000C70E4 /* Localizable.strings */; };
 		657CB91828D2952E006B0A3F /* JSONView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657CB91728D2952E006B0A3F /* JSONView.swift */; };
 		657CB91A28D29626006B0A3F /* QuestionnaireResponsesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657CB91928D29626006B0A3F /* QuestionnaireResponsesView.swift */; };
@@ -36,15 +33,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskViewController+Files.swift"; sourceTree = "<group>"; };
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
 		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
 		654BD47828BEBA8200B012D2 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65545D0428BEBC57000C70E4 /* ExampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
-		65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ORKOrderedTaskView.swift; sourceTree = "<group>"; };
-		65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ORKTaskFHIRDelegate.swift; sourceTree = "<group>"; };
 		65545D0C28BEBEBB000C70E4 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		657CB91728D2952E006B0A3F /* JSONView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONView.swift; sourceTree = "<group>"; };
 		657CB91928D29626006B0A3F /* QuestionnaireResponsesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireResponsesView.swift; sourceTree = "<group>"; };
@@ -129,7 +123,6 @@
 		657CB92228D2ACD0006B0A3F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */,
 				657CB91D28D29EE7006B0A3F /* String+JSON.swift */,
 			);
 			path = Extensions;
@@ -138,7 +131,6 @@
 		657CB92328D2ACF1006B0A3F /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				65545D0628BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift */,
 				657CB91928D29626006B0A3F /* QuestionnaireResponsesView.swift */,
 				657CB91B28D296AE006B0A3F /* QuestionnaireResponseStorage.swift */,
 			);
@@ -149,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */,
-				65545D0528BEBC57000C70E4 /* ORKOrderedTaskView.swift */,
 			);
 			path = Questionnaire;
 			sourceTree = "<group>";
@@ -212,7 +203,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					654BD47728BEBA8200B012D2 = {
 						CreatedOnToolsVersion = 14.0;
@@ -270,14 +261,11 @@
 				657CB91C28D296AE006B0A3F /* QuestionnaireResponseStorage.swift in Sources */,
 				27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */,
 				657CB92028D2A9A9006B0A3F /* QuestionnaireJSONView.swift in Sources */,
-				65545D0828BEBC58000C70E4 /* ORKOrderedTaskView.swift in Sources */,
 				27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */,
 				657CB91A28D29626006B0A3F /* QuestionnaireResponsesView.swift in Sources */,
 				657CB91828D2952E006B0A3F /* JSONView.swift in Sources */,
 				65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */,
 				657CB91E28D29EE7006B0A3F /* String+JSON.swift in Sources */,
-				272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */,
-				65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +338,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -404,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -433,7 +421,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,7 +457,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -494,7 +480,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -515,7 +500,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
