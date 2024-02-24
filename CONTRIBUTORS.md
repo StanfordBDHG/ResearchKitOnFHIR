@@ -15,3 +15,4 @@ ResearchKitOnFHIR contributors
 
 * [Vishnu Ravi](https://github.com/vishnuravi)
 * [Paul Schmiedmayer](https://github.com/PSchmiedmayer)
+* [Andreas Bauer](https://github.com/Supereg)
