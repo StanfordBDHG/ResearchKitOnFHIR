@@ -24,7 +24,7 @@ let package = Package(
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit", branch: "feature/swiftui-support"),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "2.2.25")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
     ],
     targets: [
