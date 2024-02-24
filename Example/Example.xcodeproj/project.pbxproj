@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */; };
 		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
 		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
 		2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53129261578008AA30B /* FHIRQuestionnaires */; };
@@ -35,7 +34,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskViewController+Files.swift"; sourceTree = "<group>"; };
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
 		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 		657CB92228D2ACD0006B0A3F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				272073E929A32CFF0009C421 /* ORKTaskViewController+Files.swift */,
 				657CB91D28D29EE7006B0A3F /* String+JSON.swift */,
 			);
 			path = Extensions;
@@ -272,7 +269,6 @@
 				657CB91828D2952E006B0A3F /* JSONView.swift in Sources */,
 				65545D0728BEBC58000C70E4 /* ExampleApp.swift in Sources */,
 				657CB91E28D29EE7006B0A3F /* String+JSON.swift in Sources */,
-				272073EA29A32CFF0009C421 /* ORKTaskViewController+Files.swift in Sources */,
 				65545D0928BEBC58000C70E4 /* ORKTaskFHIRDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
