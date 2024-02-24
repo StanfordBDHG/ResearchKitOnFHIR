@@ -312,9 +312,10 @@ final class ExampleUITests: XCTestCase {
         XCTAssertFalse(app.buttons["Skip"].exists)
 
         app.tables.staticTexts["Chocolate"].tap()
+        XCTAssert(app.buttons["Next"].isEnabled)
+
         app.tables.staticTexts["Sprinkles"].tap()
         app.tables.staticTexts["Marshmallows"].tap()
-        XCTAssert(app.buttons["Next"].isEnabled)
         app.buttons["Next"].tap()
 
         // Finish survey
