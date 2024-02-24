@@ -16,7 +16,7 @@ struct ExampleApp: App {
     var body: some Scene {
         WindowGroup {
             QuestionnaireListView()
-                .environmentObject(QuestionnaireResponseStorage())
+                .environment(QuestionnaireResponseStorage())
         }
     }
 }

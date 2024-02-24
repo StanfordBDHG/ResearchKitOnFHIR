@@ -12,7 +12,8 @@ import SwiftUI
 
 
 struct QuestionnaireResponsesView: View {
-    @EnvironmentObject private var responseStorage: QuestionnaireResponseStorage
+    @Environment(QuestionnaireResponseStorage.self) private var responseStorage
+    
     @Binding var questionnaire: Questionnaire?
     @State private var selection: QuestionnaireResponse?
     
