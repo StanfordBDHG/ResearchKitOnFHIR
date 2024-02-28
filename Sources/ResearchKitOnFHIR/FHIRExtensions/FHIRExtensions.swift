@@ -46,6 +46,7 @@ extension QuestionnaireItem {
         }
         return itemControlCode
     }
+
     
     /// The minimum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the minimum value allowed.
@@ -58,6 +59,17 @@ extension QuestionnaireItem {
         return NSNumber(value: minValue)
     }
     
+    /// The minimum value for a numerical answer.
+    /// - Returns: An optional `Date` containing the minimum date allowed.
+    var minDateValue: Date? {
+        guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
+              case let .date(dateValue) = minValueExtension.value,
+              let minDateValue = try? dateValue.value?.asNSDate() else {
+            return nil
+        }
+        return minDateValue
+    }
+    
     /// The maximum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the maximum value allowed.
     var maxValue: NSNumber? {
@@ -67,6 +79,17 @@ extension QuestionnaireItem {
             return nil
         }
         return NSNumber(value: maxValue)
+    }
+    
+    /// The maximum value for a numerical answer.
+    /// - Returns: An optional `Date` containing the maximum date allowed.
+    var maxDateValue: Date? {
+        guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
+              case let .date(dateValue) = maxValueExtension.value,
+              let maxDateValue = try? dateValue.value?.asNSDate() else {
+            return nil
+        }
+        return maxDateValue
     }
     
     /// The maximum number of decimal places for a decimal answer.

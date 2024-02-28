@@ -96,6 +96,28 @@ final class FHIRToResearchKitTests: XCTestCase {
         XCTAssertEqual(unwrappedMaxValue, 100)
     }
     
+    func testMinDateValueExtension() throws {
+        let minDateValue = Questionnaire.dateTimeExample.item?.first?.minDateValue
+        let unwrappedMinDateValue = try XCTUnwrap(minDateValue)
+        
+        var utcCalendar = Calendar.current
+        let utcTimeZone = TimeZone(identifier: "UTC")!
+        utcCalendar.timeZone = utcTimeZone
+        
+        XCTAssertEqual(unwrappedMinDateValue, utcCalendar.date(from: DateComponents(year: 2001, month: 1, day: 1)))
+    }
+    
+    func testMaxDateValueExtension() throws {
+        let maxDateValue = Questionnaire.dateTimeExample.item?.first?.maxDateValue
+        let unwrappedMaxDateValue = try XCTUnwrap(maxDateValue)
+        
+        var utcCalendar = Calendar.current
+        let utcTimeZone = TimeZone(identifier: "UTC")!
+        utcCalendar.timeZone = utcTimeZone
+        
+        XCTAssertEqual(unwrappedMaxDateValue, utcCalendar.date(from: DateComponents(year: 2024, month: 1, day: 1)))
+    }
+    
     func testMaxDecimalExtension() throws {
         let maxDecimals = Questionnaire.numberExample.item?[1].maximumDecimalPlaces
         let unwrappedMaxDecimals = try XCTUnwrap(maxDecimals)
