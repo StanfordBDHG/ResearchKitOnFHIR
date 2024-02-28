@@ -59,7 +59,7 @@ extension QuestionnaireItem {
         return NSNumber(value: minValue)
     }
     
-    /// The minimum value for a numerical answer.
+    /// The minimum value for a date answer.
     /// - Returns: An optional `Date` containing the minimum date allowed.
     var minDateValue: Date? {
         guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
@@ -81,7 +81,7 @@ extension QuestionnaireItem {
         return NSNumber(value: maxValue)
     }
     
-    /// The maximum value for a numerical answer.
+    /// The maximum value for a date answer.
     /// - Returns: An optional `Date` containing the maximum date allowed.
     var maxDateValue: Date? {
         guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
