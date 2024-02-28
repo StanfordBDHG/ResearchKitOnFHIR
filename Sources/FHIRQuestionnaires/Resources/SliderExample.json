@@ -1,52 +1,16 @@
 {
-  "title": "Untitled",
   "resourceType": "Questionnaire",
   "language": "en-US",
+  "id": "Stanford University-slider-example",
+  "title": "Slider Example",
   "status": "draft",
-  "publisher": "Stanford Biodesign Digital Health",
-  "meta": {
-    "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
-    ],
-    "tag": [
-      {
-        "system": "urn:ietf:bcp:47",
-        "code": "en-US",
-        "display": "English"
-      }
-    ]
-  },
-  "useContext": [
-    {
-      "code": {
-        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
-        "code": "focus",
-        "display": "Clinical Focus"
-      },
-      "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "urn:oid:2.16.578.1.12.4.1.1.8655",
-            "display": "Untitled"
-          }
-        ]
-      }
-    }
-  ],
-  "contact": [
-    {
-      "name": "http://spezi.health"
-    }
-  ],
-  "subjectType": [
-    "Patient"
-  ],
-  "url": "http://spezi.health/fhir/questionnaire/21360dc2-5eb4-4cc7-cb44-88bee6cdbc7e",
+  "publisher": "Stanford University",
+  "url": "http://biodesign.stanford.edu/questionnaires/sliderexample",
   "item": [
     {
-      "linkId": "291838ca-1c27-4a9a-8cc4-622a38282665",
+      "linkId": "1",
+      "text": "How bad is the pain on a scale of 0-10?",
       "type": "integer",
-      "text": "How bad is your back pain on a scale of 1 to 10?",
       "extension": [
         {
           "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -66,14 +30,13 @@
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 15
+          "valueInteger": 10
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue",
           "valueInteger": 1
         }
-      ],
-      "required": false
+      ]
     }
   ]
 }

@@ -101,7 +101,7 @@ final class FHIRToResearchKitTests: XCTestCase {
         let unwrappedMinDateValue = try XCTUnwrap(minDateValue)
         
         var utcCalendar = Calendar.current
-        let utcTimeZone = TimeZone(identifier: "UTC")!
+        let utcTimeZone = try XCTUnwrap(TimeZone(identifier: "UTC"))
         utcCalendar.timeZone = utcTimeZone
         
         XCTAssertEqual(unwrappedMinDateValue, utcCalendar.date(from: DateComponents(year: 2001, month: 1, day: 1)))
@@ -112,7 +112,7 @@ final class FHIRToResearchKitTests: XCTestCase {
         let unwrappedMaxDateValue = try XCTUnwrap(maxDateValue)
         
         var utcCalendar = Calendar.current
-        let utcTimeZone = TimeZone(identifier: "UTC")!
+        let utcTimeZone = try XCTUnwrap(TimeZone(identifier: "UTC"))
         utcCalendar.timeZone = utcTimeZone
         
         XCTAssertEqual(unwrappedMaxDateValue, utcCalendar.date(from: DateComponents(year: 2024, month: 1, day: 1)))
