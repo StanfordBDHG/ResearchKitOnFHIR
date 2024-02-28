@@ -150,7 +150,7 @@ extension QuestionnaireItem {
     /// - Parameter valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An object of type `ORKAnswerFormat` representing the type of answer this question accepts.
     private func toORKAnswerFormat(valueSets: [ValueSet]) throws -> ORKAnswerFormat {
-        // swiftlint:disable:previous cyclomatic_complexity
+        // swiftlint:disable:previous cyclomatic_complexity function_body_length
         // We have to cover all the switch cases in the following statement driving up the overall complexity.
         switch type.value {
         case .boolean:
@@ -174,13 +174,7 @@ extension QuestionnaireItem {
                 calendar: nil
             )
         case .dateTime:
-            return ORKDateAnswerFormat(
-                style: .dateAndTime,
-                defaultDate: nil,
-                minimumDate: minDateValue,
-                maximumDate: maxDateValue,
-                calendar: nil
-            )
+            return ORKDateAnswerFormat(style: .dateAndTime)
         case .time:
             return ORKTimeOfDayAnswerFormat()
         case .decimal, .quantity:
