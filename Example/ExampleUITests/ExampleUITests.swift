@@ -304,25 +304,49 @@ final class ExampleUITests: XCTestCase {
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "1970")
             
         // Wait for validation to complete and picker to reset
-        sleep(3)
+        sleep(2)
             
         // Extract the date from the picker
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d yyyy"
         dateFormatter.timeZone = TimeZone.current
             
-        let month = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
-        let day = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
-        let year = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
+        let minTestResetMonth = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
+        let minTestResetDay = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
+        let minTestResetYear = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
             
-        let dateStr = "\(month) \(day) \(year)"
-        let resetDate = try XCTUnwrap(dateFormatter.date(from: dateStr))
+        let minTestResetDateStr = "\(minTestResetMonth) \(minTestResetDay) \(minTestResetYear)"
+        let minTestResetDate = try XCTUnwrap(dateFormatter.date(from: minTestResetDateStr))
             
         // Validate that the date has reset
         let minDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2001"))
         XCTAssert(
-            resetDate >= minDate,
+            minTestResetDate >= minDate,
             "The date picker did not reset to a date greater than or equal to January 1, 2001."
+        )
+        
+        // Now, we will set the picker to a date after the maximum date, and expect that it resets to the maximum date
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "January")
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "1")
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2025")
+        
+        // Wait for validation to complete and picker to reset
+        sleep(2)
+        
+        // Extract the date from the picker
+            
+        let maxTestResetMonth = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
+        let maxTestResetDay = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
+        let maxTestResetYear = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
+            
+        let maxTestResetDateStr = "\(maxTestResetMonth) \(maxTestResetDay) \(maxTestResetYear)"
+        let maxTestResetDate = try XCTUnwrap(dateFormatter.date(from: maxTestResetDateStr))
+            
+        // Validate that the date has reset
+        let maxDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2024"))
+        XCTAssert(
+            maxTestResetDate <= maxDate,
+            "The date picker did not reset to January 1, 2024."
         )
     }
 
