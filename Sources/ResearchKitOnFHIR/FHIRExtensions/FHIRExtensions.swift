@@ -24,7 +24,6 @@ extension QuestionnaireItem {
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
     }
     
-    
     /// Is the question hidden
     /// - Returns: A boolean representing whether the question should be shown to the user
     var hidden: Bool {
@@ -46,7 +45,6 @@ extension QuestionnaireItem {
         }
         return itemControlCode
     }
-
     
     /// The minimum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the minimum value allowed.
@@ -161,6 +159,7 @@ extension QuestionnaireItem {
 }
 
 extension FHIRDate {
+    /// Converts to a `Date` with the time set to the start of the given day in the user's current time zone
     var asDateAtStartOfDay: Date? {
         guard let month, let day else {
             return nil
@@ -174,7 +173,6 @@ extension FHIRDate {
         if let date = Calendar.current.date(from: dateComponents) {
             return Calendar.current.startOfDay(for: date)
         }
-        
         return nil
     }
 }
