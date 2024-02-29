@@ -159,20 +159,14 @@ extension QuestionnaireItem {
 }
 
 extension FHIRDate {
-    /// Converts to a `Date` with the time set to the start of the given day in the user's current time zone
+    /// Converts a `FHIRDate` to a `Date` with the time set to the start of day in the user's current time zone
+    /// - Returns: An optional `Date` containing the given date at the start of day in the user's current time zone
     var asDateAtStartOfDay: Date? {
         guard let month, let day else {
             return nil
         }
         
-        var dateComponents = DateComponents()
-        dateComponents.year = year
-        dateComponents.month = Int(month)
-        dateComponents.day = Int(day)
-
-        if let date = Calendar.current.date(from: dateComponents) {
-            return Calendar.current.startOfDay(for: date)
-        }
-        return nil
+        let dateComponents = DateComponents(year: year, month: Int(month), day: Int(day))
+        return Calendar.current.date(from: dateComponents).map { Calendar.current.startOfDay(for: $0) }
     }
 }
