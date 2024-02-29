@@ -318,11 +318,11 @@ final class ExampleUITests: XCTestCase {
         let minTestResetDateStr = "\(minTestResetMonth) \(minTestResetDay) \(minTestResetYear)"
         let minTestResetDate = try XCTUnwrap(dateFormatter.date(from: minTestResetDateStr))
             
-        // Validate that the date has reset
+        // Validate that the date has reset to the minimum date value defined in the `Date and Time Example` questionnaire's first item
         let minDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2001"))
         XCTAssert(
             minTestResetDate >= minDate,
-            "The date picker did not reset to a date greater than or equal to January 1, 2001."
+            "The date picker did not reset to January 1, 2001."
         )
         
         // Now, we will set the picker to a date after the maximum date, and expect that it resets to the maximum date
@@ -341,7 +341,7 @@ final class ExampleUITests: XCTestCase {
         let maxTestResetDateStr = "\(maxTestResetMonth) \(maxTestResetDay) \(maxTestResetYear)"
         let maxTestResetDate = try XCTUnwrap(dateFormatter.date(from: maxTestResetDateStr))
             
-        // Validate that the date has reset
+        // Validate that the date has reset to the maximum date value defined in the `Date and Time Example` questionnaire's first item
         let maxDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2024"))
         XCTAssert(
             maxTestResetDate <= maxDate,
