@@ -334,7 +334,6 @@ final class ExampleUITests: XCTestCase {
         sleep(2)
         
         // Extract the date from the picker
-            
         let maxTestResetMonth = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
         let maxTestResetDay = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
         let maxTestResetYear = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
