@@ -64,9 +64,11 @@ extension QuestionnaireItem {
     var minDateValue: Date? {
         guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
               case let .date(dateValue) = minValueExtension.value,
-              let minDateValue = try? dateValue.value?.asNSDate() else {
+              let minDateValue = dateValue.value?.asNSDateInCurrentTimeZone
+        else {
             return nil
         }
+        
         return minDateValue
     }
     
@@ -86,9 +88,11 @@ extension QuestionnaireItem {
     var maxDateValue: Date? {
         guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
               case let .date(dateValue) = maxValueExtension.value,
-              let maxDateValue = try? dateValue.value?.asNSDate() else {
+              let maxDateValue = dateValue.value?.asNSDateInCurrentTimeZone
+        else {
             return nil
         }
+        
         return maxDateValue
     }
     
@@ -153,5 +157,20 @@ extension QuestionnaireItem {
     /// - Returns: an optional Extension if it was found.
     private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
         self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
+    }
+}
+
+extension FHIRDate {
+    var asNSDateInCurrentTimeZone: Date? {
+        guard let month, let day else {
+            return nil
+        }
+        
+        let dateString = String(format: "%04d-%02d-%02d", year, month, day)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone.current
+        
+        return formatter.date(from: dateString)
     }
 }
