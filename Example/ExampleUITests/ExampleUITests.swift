@@ -537,8 +537,8 @@ final class ExampleUITests: XCTestCase {
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
-
-    func testMultipleEnableWhenExample() throws {
+    
+    func testMultipleEnableWhenExampleWithAllAnswersCorrect() throws {
         let app = XCUIApplication()
         app.launch()
         
@@ -546,7 +546,7 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(multipleEnableWhenButton.waitForExistence(timeout: 2))
         multipleEnableWhenButton.tap()
 
-        // We will first answer all questions correctly
+        // Answer all questions correctly
         XCTAssert(app.tables.staticTexts["Yes"].waitForExistence(timeout: 2))
         app.tables.staticTexts["Yes"].tap()
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
@@ -557,7 +557,6 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
-        
         let integerField = app.textFields.element(boundBy: 0)
         XCTAssert(integerField.waitForExistence(timeout: 2))
         integerField.tap()
@@ -565,26 +564,31 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
-        // First result screen appears if at least one answer is correct.
-        sleep(1)
+        // First result screen should appear since at least one answer is correct.
+        sleep(3)
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
-        // Second result screen appears if all answers are correct.
-        sleep(1)
+        // Second result screen should appear since all answers are correct.
+        sleep(3)
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
         // Now the completion screen will appear with a "Done" button that we can tap
-        sleep(1)
+        sleep(3)
         XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
-
-        // Now we relaunch the survey
+    }
+    
+    func testMultipleEnableWhenExampleWithOneAnswerCorrect() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Expressions"]
         XCTAssert(multipleEnableWhenButton.waitForExistence(timeout: 2))
         multipleEnableWhenButton.tap()
 
-        // This time we answer only one question correctly
+        // Answer only one question correctly
         XCTAssert(app.tables.staticTexts["Yes"].waitForExistence(timeout: 2))
         app.tables.staticTexts["Yes"].tap()
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
@@ -595,6 +599,7 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 
+        let integerField = app.textFields.element(boundBy: 0)
         XCTAssert(integerField.waitForExistence(timeout: 2))
         integerField.tap()
         integerField.typeText("2\n")
@@ -602,7 +607,39 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Next"].tap()
 
         // Only one result screen should appear.
-        sleep(1)
+        sleep(3)
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
+        app.buttons["Next"].tap()
+
+        // Now the completion screen should appear.
+        sleep(3)
+        XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
+        app.buttons["Done"].tap()
+    }
+    
+    func testMultipleEnableWhenExampleWithNoAnswerCorrect() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let multipleEnableWhenButton = app.collectionViews.buttons["Multiple EnableWhen Expressions"]
+        XCTAssert(multipleEnableWhenButton.waitForExistence(timeout: 2))
+        multipleEnableWhenButton.tap()
+
+        // Answer all questions incorrectly
+        XCTAssert(app.tables.staticTexts["Yes"].waitForExistence(timeout: 2))
+        app.tables.staticTexts["No"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
+        app.buttons["Next"].tap()
+
+        XCTAssert(app.tables.staticTexts["orange"].waitForExistence(timeout: 2))
+        app.tables.staticTexts["orange"].tap()
+        XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
+        app.buttons["Next"].tap()
+
+        let integerField = app.textFields.element(boundBy: 0)
+        XCTAssert(integerField.waitForExistence(timeout: 2))
+        integerField.tap()
+        integerField.typeText("2\n")
         XCTAssert(app.buttons["Next"].waitForExistence(timeout: 2))
         app.buttons["Next"].tap()
 

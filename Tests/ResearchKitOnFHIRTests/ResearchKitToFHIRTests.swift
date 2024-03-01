@@ -183,7 +183,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
     }
     
     func testSingleChoiceResponse() {
-        let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system")
+        let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system", display: "Test Code")
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
         choiceResult.choiceAnswers = [testValue.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol]
@@ -198,12 +198,13 @@ final class ResearchKitToFHIRTests: XCTestCase {
         switch answer {
         case let .coding(coding):
             guard let code = coding.code?.value?.string,
+                  let display = coding.display?.value?.string,
                   let system = coding.system?.value?.url.absoluteString else {
                 XCTFail("Could not extract the code and system from the coding.")
                 return
             }
             
-            let valueCoding = ValueCoding(code: code, system: system)
+            let valueCoding = ValueCoding(code: code, system: system, display: display)
             XCTAssertEqual(testValue, valueCoding)
             
         default:
@@ -214,8 +215,8 @@ final class ResearchKitToFHIRTests: XCTestCase {
     
     func testMultipleChoiceResponse() {
         let testValues = [
-            ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system"),
-            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system")
+            ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 1"),
+            ValueCoding(code: "testCode2", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 2")
         ]
         
         let choiceResult = ORKChoiceQuestionResult(identifier: "choiceResult")
@@ -240,12 +241,13 @@ final class ResearchKitToFHIRTests: XCTestCase {
             switch answer {
             case let .coding(coding):
                 guard let code = coding.code?.value?.string,
+                      let display = coding.display?.value?.string,
                       let system = coding.system?.value?.url.absoluteString else {
                     XCTFail("Could not extract the code and system from the coding.")
                     return
                 }
                 
-                let valueCoding = ValueCoding(code: code, system: system)
+                let valueCoding = ValueCoding(code: code, system: system, display: display)
                 XCTAssertEqual(testValues[index], valueCoding)
                 
             default:

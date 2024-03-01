@@ -110,8 +110,9 @@
           "question": "c3fd1ee9-1f0d-4136-887c-f22589bbdc68",
           "operator": "=",
           "answerCoding": {
+            "code": "green",
             "system": "urn:uuid:2dab6b0b-4518-4c39-9f7f-a9da98e7c2f3",
-            "code": "green"
+            "display": "green"
           }
         },
         {
@@ -137,8 +138,9 @@
           "question": "c3fd1ee9-1f0d-4136-887c-f22589bbdc68",
           "operator": "=",
           "answerCoding": {
+            "code": "green",
             "system": "urn:uuid:2dab6b0b-4518-4c39-9f7f-a9da98e7c2f3",
-            "code": "green"
+            "display": "green"
           }
         },
         {
@@ -147,6 +149,7 @@
           "answerInteger": 12
         }
       ],
+      "enableBehavior": "all"
     }
   ]
 }

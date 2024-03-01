@@ -56,7 +56,7 @@ extension QuestionnaireItemEnableWhen {
             let resultSelector = ORKResultSelector(resultIdentifier: enableQuestionId)
             let predicate: NSPredicate?
             
-            // The translation from FHIR to ResearchKit preedicates requires negating the FHIR preedicates as FHIR preedicates activate steps while ResearchKit uses them to skip steps
+            // The translation from FHIR to ResearchKit predicates requires negating the FHIR predicates as FHIR predicates activate steps while ResearchKit uses them to skip steps
             switch answer {
             case .coding(let coding):
                 predicate = try coding.predicate(with: resultSelector, operator: fhirOperator)
@@ -90,7 +90,7 @@ extension Coding {
             return nil
         }
         
-        let expectedAnswer = ValueCoding(code: code, system: system)
+        let expectedAnswer = ValueCoding(code: code, system: system, display: display?.value?.string)
         
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
