@@ -22,7 +22,10 @@ struct ValueCoding: Equatable, Codable, RawRepresentable {
     let display: String?
     
     var rawValue: String {
-        guard let data = try? JSONEncoder().encode(self) else {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        
+        guard let data = try? encoder.encode(self) else {
             return "{}"
         }
         
