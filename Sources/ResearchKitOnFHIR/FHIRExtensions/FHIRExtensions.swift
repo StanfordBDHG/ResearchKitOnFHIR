@@ -24,7 +24,6 @@ extension QuestionnaireItem {
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
     }
     
-    
     /// Is the question hidden
     /// - Returns: A boolean representing whether the question should be shown to the user
     var hidden: Bool {
@@ -58,6 +57,19 @@ extension QuestionnaireItem {
         return NSNumber(value: minValue)
     }
     
+    /// The minimum value for a date answer.
+    /// - Returns: An optional `Date` containing the minimum date allowed.
+    var minDateValue: Date? {
+        guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
+              case let .date(dateValue) = minValueExtension.value,
+              let minDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults
+        else {
+            return nil
+        }
+        
+        return minDateValue
+    }
+    
     /// The maximum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the maximum value allowed.
     var maxValue: NSNumber? {
@@ -67,6 +79,19 @@ extension QuestionnaireItem {
             return nil
         }
         return NSNumber(value: maxValue)
+    }
+    
+    /// The maximum value for a date answer.
+    /// - Returns: An optional `Date` containing the maximum date allowed.
+    var maxDateValue: Date? {
+        guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
+              case let .date(dateValue) = maxValueExtension.value,
+              let maxDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults
+        else {
+            return nil
+        }
+        
+        return maxDateValue
     }
     
     /// The maximum number of decimal places for a decimal answer.
@@ -130,5 +155,15 @@ extension QuestionnaireItem {
     /// - Returns: an optional Extension if it was found.
     private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
         self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
+    }
+}
+
+extension FHIRDate {
+    /// Converts a `FHIRDate` to a `Date` with the time set to the start of day in the user's current time zone. 
+    /// If either the month or day are not provided, we will assume they are the first.
+    /// - Returns: An optional `Date`
+    var asDateAtStartOfDayWithDefaults: Date? {
+        let dateComponents = DateComponents(year: year, month: Int(month ?? 1), day: Int(day ?? 1))
+        return Calendar.current.date(from: dateComponents).map { Calendar.current.startOfDay(for: $0) }
     }
 }
