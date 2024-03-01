@@ -289,6 +289,67 @@ final class ExampleUITests: XCTestCase {
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
+    
+    func testDateValidation() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let dateTimeExampleButton = app.collectionViews.buttons["Date and Time Example"]
+        XCTAssert(dateTimeExampleButton.waitForExistence(timeout: 2))
+        dateTimeExampleButton.tap()
+            
+        // We will set the picker to a date before the minimum date, and expect that it resets to the minimum date
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "December")
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "25")
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "1970")
+            
+        // Wait for validation to complete and picker to reset
+        sleep(2)
+            
+        // Extract the date from the picker
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM d yyyy"
+        dateFormatter.timeZone = TimeZone.current
+            
+        let minTestResetMonth = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
+        let minTestResetDay = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
+        let minTestResetYear = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
+            
+        let minTestResetDateStr = "\(minTestResetMonth) \(minTestResetDay) \(minTestResetYear)"
+        let minTestResetDate = try XCTUnwrap(dateFormatter.date(from: minTestResetDateStr))
+            
+        // Validate that the date has reset to the minimum date value defined in the `Date and Time Example` questionnaire's first item
+        let minDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2001"))
+        XCTAssertEqual(
+            minTestResetDate,
+            minDate,
+            "The date picker did not reset to January 1, 2001."
+        )
+        
+        // Now, we will set the picker to a date after the maximum date, and expect that it resets to the maximum date
+        app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "January")
+        app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "1")
+        app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "2025")
+        
+        // Wait for validation to complete and picker to reset
+        sleep(2)
+        
+        // Extract the date from the picker
+        let maxTestResetMonth = try XCTUnwrap(app.pickerWheels.element(boundBy: 0).value as? String)
+        let maxTestResetDay = try XCTUnwrap(app.pickerWheels.element(boundBy: 1).value as? String)
+        let maxTestResetYear = try XCTUnwrap(app.pickerWheels.element(boundBy: 2).value as? String)
+            
+        let maxTestResetDateStr = "\(maxTestResetMonth) \(maxTestResetDay) \(maxTestResetYear)"
+        let maxTestResetDate = try XCTUnwrap(dateFormatter.date(from: maxTestResetDateStr))
+            
+        // Validate that the date has reset to the maximum date value defined in the `Date and Time Example` questionnaire's first item
+        let maxDate = try XCTUnwrap(dateFormatter.date(from: "January 1 2024"))
+        XCTAssertEqual(
+            maxTestResetDate,
+            maxDate,
+            "The date picker did not reset to January 1, 2024."
+        )
+    }
 
     func testFormExample() throws {
         let app = XCUIApplication()
