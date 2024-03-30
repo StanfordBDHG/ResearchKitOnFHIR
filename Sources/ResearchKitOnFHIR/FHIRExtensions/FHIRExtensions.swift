@@ -22,6 +22,7 @@ extension QuestionnaireItem {
         static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
         static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
+        static let entryFormat = "http://hl7.org/fhir/StructureDefinition/entryFormat"
     }
     
     /// Is the question hidden
@@ -147,7 +148,16 @@ extension QuestionnaireItem {
         }
         return stringMessage
     }
-    
+
+    var placeholderText: String? {
+        guard let entryFormatExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.entryFormat),
+              case let .string(placeholder) = entryFormatExtension.value,
+              let placeholderText = placeholder.value?.string else {
+            return nil
+        }
+        return placeholderText
+    }
+
     
     /// Checks this QuestionnaireItem for an extension matching the given URL and then return it if it exists.
     /// - Parameters:

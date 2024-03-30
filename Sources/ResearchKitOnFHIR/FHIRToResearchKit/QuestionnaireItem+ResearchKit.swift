@@ -37,6 +37,7 @@ extension Array where Element == QuestionnaireItem {
                 }
             case QuestionnaireItemType.group:
                 // Converts multiple questions in a group into a ResearchKit form step
+                // TODO: there is also a required property here???
                 if let groupStep = question.groupToORKFormStep(title: title, valueSets: valueSets) {
                     surveySteps.append(groupStep)
                 }
@@ -74,6 +75,8 @@ extension QuestionnaireItem {
         
         let questionText = text?.value?.string ?? ""
         let answer = try? self.toORKAnswerFormat(valueSets: valueSets)
+
+        // TODO: ability to change .text of the question step?
         return ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
     }
     
@@ -90,7 +93,7 @@ extension QuestionnaireItem {
         
         let formStep = ORKFormStep(identifier: id)
         formStep.title = title
-        formStep.text = text?.value?.string ?? ""
+        formStep.text = text?.value?.string ?? "" // TODO: this cannot be modified!
         var formItems = [ORKFormItem]()
 
         var containsRequiredSteps = false
@@ -166,6 +169,7 @@ extension QuestionnaireItem {
             }
             return ORKTextChoiceAnswerFormat(style: choiceAnswerStyle, textChoices: answerOptions)
         case .date:
+            // TODO: can we support the norvegian parsing? TODO: can we support that?
             return ORKDateAnswerFormat(
                 style: .date,
                 defaultDate: nil,
@@ -201,7 +205,13 @@ extension QuestionnaireItem {
         case .text, .string:
             let maximumLength = Int(maxLength?.value?.integer ?? 0)
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
-            
+
+            answerFormat.multipleLines = type.value == .text
+            // TODO: answerFormat.keyboardType = .phonePad
+            // TODO: ??? answerFormat.autocapitalizationType = .words
+            // TODO: ??? answerFormat.textContentType = .telephoneNumber
+            answerFormat.placeholder = self.placeholderText
+
             // Applies a regular expression for validation, if defined
             if let validationRegularExpression = validationRegularExpression {
                 answerFormat.validationRegularExpression = validationRegularExpression
