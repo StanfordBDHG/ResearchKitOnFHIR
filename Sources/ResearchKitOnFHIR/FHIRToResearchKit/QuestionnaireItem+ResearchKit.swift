@@ -111,7 +111,7 @@ extension QuestionnaireItem {
             }
 
             if question.type == .display {
-                let formItem = ORKFormItem(sectionTitle: questionText)
+                let formItem = ORKFormItem(sectionTitle: questionText, detailText: question.placeholderText, learnMoreItem: nil, showsProgress: false)
                 formItems.append(formItem)
             } else if let answerFormat = try? question.toORKAnswerFormat(valueSets: valueSets) {
                 let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
@@ -123,6 +123,7 @@ extension QuestionnaireItem {
                         containsRequiredSteps = true
                     }
                 }
+                formItem.placeholder = question.placeholderText
 
                 formItems.append(formItem)
             }
@@ -130,7 +131,7 @@ extension QuestionnaireItem {
 
         formStep.formItems = formItems
         // if optional, the `Next` button will appear
-        formStep.isOptional = !containsRequiredSteps || !(required?.value?.bool == true)
+        formStep.isOptional = !(containsRequiredSteps || required?.value?.bool == true)
         return formStep
     }
     
