@@ -169,7 +169,6 @@ extension QuestionnaireItem {
             }
             return ORKTextChoiceAnswerFormat(style: choiceAnswerStyle, textChoices: answerOptions)
         case .date:
-            // TODO: can we support the norvegian parsing? TODO: can we support that?
             return ORKDateAnswerFormat(
                 style: .date,
                 defaultDate: nil,
@@ -207,7 +206,11 @@ extension QuestionnaireItem {
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
 
             answerFormat.multipleLines = type.value == .text
-            // TODO: answerFormat.keyboardType = .phonePad
+#if os(iOS) || os(visionOS)
+            if let keyboardType {
+                answerFormat.keyboardType = keyboardType
+            }
+#endif
             // TODO: ??? answerFormat.autocapitalizationType = .words
             // TODO: ??? answerFormat.textContentType = .telephoneNumber
             answerFormat.placeholder = self.placeholderText

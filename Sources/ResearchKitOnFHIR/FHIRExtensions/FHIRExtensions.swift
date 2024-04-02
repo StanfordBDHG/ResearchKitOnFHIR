@@ -8,6 +8,7 @@
 
 import Foundation
 import ModelsR4
+import SwiftUI
 
 
 extension QuestionnaireItem {
@@ -17,14 +18,18 @@ extension QuestionnaireItem {
         static let questionnaireUnit = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
         static let regex = "http://hl7.org/fhir/StructureDefinition/regex"
         static let sliderStepValue = "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue"
-        static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
         static let maxDecimalPlaces = "http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces"
         static let minValue = "http://hl7.org/fhir/StructureDefinition/minValue"
         static let maxValue = "http://hl7.org/fhir/StructureDefinition/maxValue"
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
         static let entryFormat = "http://hl7.org/fhir/StructureDefinition/entryFormat"
+
+        static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
+#if os(iOS) || os(visionOS)
+        static let keyboardType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-keyboardtype"
+#endif
     }
-    
+
     /// Is the question hidden
     /// - Returns: A boolean representing whether the question should be shown to the user
     var hidden: Bool {
@@ -157,6 +162,46 @@ extension QuestionnaireItem {
         }
         return placeholderText
     }
+
+
+#if os(iOS) || os(visionOS)
+    var keyboardType: UIKeyboardType? {
+        guard let keyboardTypeExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.keyboardType),
+              case let .string(keyboardTypeValue) = keyboardTypeExtension.value,
+              let keyboardTypeString = keyboardTypeValue.value?.string else {
+            return nil
+        }
+
+        switch keyboardTypeString {
+        case "default":
+            return .default
+        case "asciiCapable":
+            return .asciiCapable
+        case "numbersAndPunctuation":
+            return .numbersAndPunctuation
+        case "URL":
+            return .URL
+        case "numberPad":
+            return .numberPad
+        case "phonePad":
+            return .phonePad
+        case "namePhonePad":
+            return .namePhonePad
+        case "emailAddress":
+            return .emailAddress
+        case "decimalPad":
+            return .decimalPad
+        case "twitter":
+            return .twitter
+        case "webSearch":
+            return .webSearch
+        case "asciiCapableNumberPad":
+            return .asciiCapableNumberPad
+        default:
+            return nil
+        }
+    }
+#endif
 
     
     /// Checks this QuestionnaireItem for an extension matching the given URL and then return it if it exists.
