@@ -9,9 +9,12 @@
 import Foundation
 import ModelsR4
 import SwiftUI
+import OSLog
 
 
 extension QuestionnaireItem {
+    private static logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
+
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
         static let itemControl = "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl"
@@ -27,6 +30,10 @@ extension QuestionnaireItem {
         static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
 #if os(iOS) || os(visionOS)
         static let keyboardType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-keyboardtype"
+#endif
+#if os(iOS) || os(visionOS) || os(tvOS)
+        static let textContentType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-textcontenttype"
+        static let autocapitalizationType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-autocapitalizationType"
 #endif
     }
 
@@ -198,6 +205,131 @@ extension QuestionnaireItem {
         case "asciiCapableNumberPad":
             return .asciiCapableNumberPad
         default:
+            Self.logger.warning("Encountered unexpected keyboardType in FHIR extension: \(keyboardTypeString)")
+            return nil
+        }
+    }
+#endif
+#if os(iOS) || os(visionOS) || os(tvOS)
+    var autocapitalizationType: UITextAutocapitalizationType? {
+        guard let autocapitalizationTypeExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.autocapitalizationType),
+              case let .string(autocapitalizationTypeValue) = autocapitalizationTypeExtension.value,
+              let autocapitalizationTypeString = autocapitalizationTypeValue.value?.string else {
+            return nil
+        }
+
+        switch autocapitalizationTypeString {
+        case "none":
+            return UITextAutocapitalizationType.none
+        case "words":
+            return .words
+        case "sentences":
+            return .sentences
+        case "allCharacters":
+            return .allCharacters
+        default:
+            Self.logger.warning("Encountered unexpected autocapitalizationType in FHIR extension: \(autocapitalizationTypeString)")
+            return nil
+        }
+    }
+
+    var textContentType: UITextContentType? {
+        guard let contentTypeExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.keyboardType),
+              case let .string(contentTypeValue) = contentTypeExtension.value,
+              let contentTypeString = contentTypeValue.value?.string else {
+            return nil
+        }
+
+        switch contentTypeString {
+        case "URL":
+            return .URL
+        case "namePrefix":
+            return .namePrefix
+        case "name":
+            return .name
+        case "nameSuffix":
+            return .nameSuffix
+        case "givenName":
+            return .givenName
+        case "middleName":
+            return .middleName
+        case "familyName":
+            return .familyName
+        case "nickname":
+            return .nickname
+        case "organizationName":
+            return .organizationName
+        case "jobTitle":
+            return .jobTitle
+        case "location":
+            return .location
+        case "fullStreetAddress":
+            return .fullStreetAddress
+        case "streetAddressLine1":
+            return .streetAddressLine1
+        case "streetAddressLine2":
+            return .streetAddressLine2
+        case "addressCity":
+            return .addressCity
+        case "addressCityAndState":
+            return .addressCityAndState
+        case "addressState":
+            return .addressState
+        case "postalCode":
+            return .postalCode
+        case "sublocality":
+            return .sublocality
+        case "countryName":
+            return .countryName
+        case "username":
+            return .username
+        case "password":
+            return .password
+        case "newPassword":
+            return .newPassword
+        case "oneTimeCode":
+            return .oneTimeCode
+        case "emailAddress":
+            return .emailAddress
+        case "telephoneNumber":
+            return .telephoneNumber
+        case "creditCardNumber":
+            return .creditCardNumber
+        case "dateTime":
+            return .dateTime
+        case "flightNumber":
+            return .flightNumber
+        case "shipmentTrackingNumber":
+            return .shipmentTrackingNumber
+        default:
+            if #available(iOS 17, visionOS 1, tvOS 17, *) {
+                switch contentTypeString {
+                case "creditCardExpiration":
+                    return .creditCardExpiration
+                case "creditCardExpirationMonth":
+                    return .creditCardExpirationMonth
+                case "creditCardExpirationYear":
+                    return .creditCardExpirationYear
+                case "creditCardSecurityCode":
+                    return .creditCardSecurityCode
+                case "creditCardType":
+                    return .creditCardType
+                case "creditCardName":
+                    return .creditCardName
+                case "creditCardGivenName":
+                    return .creditCardGivenName
+                case "creditCardMiddleName":
+                    return .creditCardMiddleName
+                case "creditCardFamilyName":
+                    return .creditCardFamilyName
+                case "birthdate":
+                    return .birthdate
+                default:
+                    break
+                }
+            }
+
+            Self.logger.warning("Encountered unexpected textContentType in FHIR extension: \(contentTypeString)")
             return nil
         }
     }
