@@ -8,13 +8,11 @@
 
 import Foundation
 import ModelsR4
-import SwiftUI
 import OSLog
+import SwiftUI
 
 
 extension QuestionnaireItem {
-    private static let logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
-
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
         static let itemControl = "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl"
@@ -36,6 +34,8 @@ extension QuestionnaireItem {
         static let autocapitalizationType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-autocapitalizationType"
 #endif
     }
+
+    private static let logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
 
     /// Is the question hidden
     /// - Returns: A boolean representing whether the question should be shown to the user
