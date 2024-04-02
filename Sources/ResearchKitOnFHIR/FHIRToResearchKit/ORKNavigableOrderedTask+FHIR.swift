@@ -27,10 +27,8 @@ extension ORKNavigableOrderedTask {
             throw FHIRToResearchKitConversionError.noItems
         }
         
-        // The task ID is set to the canonical URL of the questionnaire
-        guard let id = questionnaire.url?.value?.url.absoluteString else {
-            throw FHIRToResearchKitConversionError.noURL
-        }
+        // The task ID is set to the canonical URL of the questionnaire. If not present, random UUID string will be used
+        let id = questionnaire.url?.value?.url.absoluteString ?? UUID().uuidString
         
         // Convert each FHIR Questionnaire Item to an ORKStep
         let valueSets = questionnaire.getContainedValueSets()

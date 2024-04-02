@@ -13,8 +13,6 @@ import ModelsR4
 public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible, Equatable {
     /// The parsed FHIR Questionnaire didn't contain any items.
     case noItems
-    /// The parsed FHIR Questionnaire does not have a URL.
-    case noURL
     /// An unsupported operator was used.
     case unsupportedOperator(QuestionnaireItemOperator)
     /// An unsupported answer type was used.
@@ -29,8 +27,6 @@ public enum FHIRToResearchKitConversionError: Error, CustomStringConvertible, Eq
         switch self {
         case .noItems:
             return "The parsed FHIR Questionnaire didn't contain any items"
-        case .noURL:
-            return "The parsed FHIR Questionnaire does not have a URL"
         case let .unsupportedOperator(fhirOperator):
             return "An unsupported operator was used: \(fhirOperator)"
         case let .unsupportedAnswer(answer):

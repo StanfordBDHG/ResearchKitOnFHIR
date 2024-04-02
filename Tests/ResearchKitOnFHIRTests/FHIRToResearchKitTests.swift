@@ -137,9 +137,7 @@ final class FHIRToResearchKitTests: XCTestCase {
         XCTAssertEqual(thrownError as? FHIRToResearchKitConversionError, .noItems)
     }
     
-    func testNoURLException() throws {
-        var thrownError: Error?
-        
+    func testNoURL() throws {
         // Creates a questionnaire and adds an item but does not set a URL
         let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         questionnaire.item = [
@@ -148,16 +146,12 @@ final class FHIRToResearchKitTests: XCTestCase {
                 type: FHIRPrimitive(QuestionnaireItemType.display)
             )
         ]
+
+        let task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
         
-        XCTAssertThrowsError(try ORKNavigableOrderedTask(questionnaire: questionnaire)) {
-            thrownError = $0
-        }
-        
-        XCTAssertTrue(
-            thrownError is FHIRToResearchKitConversionError,
-            "This FHIR Questionnaire does not have a URL"
+        XCTAssertNotNil(
+            UUID(uuidString: task.identifier),
+            "In case there's no URL provided, random UUID will be generated and assigned to the ID"
         )
-        
-        XCTAssertEqual(thrownError as? FHIRToResearchKitConversionError, .noURL)
     }
 }
