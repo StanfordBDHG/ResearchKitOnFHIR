@@ -80,7 +80,7 @@ extension QuestionnaireItem {
         let step = ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
 
         if prefix != nil {
-            step.text = questionText
+            step.text = text?.value?.string
         }
 
         return step
