@@ -13,7 +13,7 @@ import OSLog
 
 
 extension QuestionnaireItem {
-    private static logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
+    private static let logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
 
     /// Supported FHIR extensions for QuestionnaireItems
     private enum SupportedExtensions {
