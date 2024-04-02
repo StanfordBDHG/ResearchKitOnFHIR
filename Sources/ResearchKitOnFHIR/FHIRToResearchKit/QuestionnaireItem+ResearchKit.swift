@@ -93,7 +93,7 @@ extension QuestionnaireItem {
         
         let formStep = ORKFormStep(identifier: id)
         formStep.title = title
-        formStep.text = text?.value?.string ?? "" // TODO: this cannot be modified!
+        formStep.text = text?.value?.string ?? ""
         var formItems = [ORKFormItem]()
 
         var containsRequiredSteps = false
@@ -117,10 +117,10 @@ extension QuestionnaireItem {
             
             formItems.append(formItem)
         }
-        
+
         formStep.formItems = formItems
         // if optional, the `Next` button will appear
-        formStep.isOptional = !containsRequiredSteps
+        formStep.isOptional = !containsRequiredSteps || !(required?.value?.bool == true)
         return formStep
     }
     
