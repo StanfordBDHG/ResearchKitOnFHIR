@@ -25,13 +25,14 @@ extension QuestionnaireItem {
         static let hidden = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
         static let entryFormat = "http://hl7.org/fhir/StructureDefinition/entryFormat"
 
-        static let validationMessage = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
+        static let validationMessageLegacy = "http://biodesign.stanford.edu/fhir/StructureDefinition/validationtext"
+        static let validationMessage = "http://bdh.stanford.edu/fhir/StructureDefinition/validationtext"
 #if os(iOS) || os(visionOS)
-        static let keyboardType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-keyboardtype"
+        static let keyboardType = "http://bdh.stanford.edu/fhir/StructureDefinition/ios-keyboardtype"
 #endif
 #if os(iOS) || os(visionOS) || os(tvOS)
-        static let textContentType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-textcontenttype"
-        static let autocapitalizationType = "http://biodesign.stanford.edu/fhir/StructureDefinition/ios-autocapitalizationType"
+        static let textContentType = "http://bdh.stanford.edu/fhir/StructureDefinition/ios-textcontenttype"
+        static let autocapitalizationType = "http://bdh.stanford.edu/fhir/StructureDefinition/ios-autocapitalizationType"
 #endif
     }
 
@@ -153,7 +154,8 @@ extension QuestionnaireItem {
     /// The validation message for a question.
     /// - Returns: An optional `String` containing the validation message, if it exists.
     var validationMessage: String? {
-        guard let validationMessageExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.validationMessage),
+        guard let validationMessageExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.validationMessage)
+                ?? getExtensionInQuestionnaireItem(url: SupportedExtensions.validationMessageLegacy),
               case let .string(message) = validationMessageExtension.value,
               let stringMessage = message.value?.string else {
             return nil
