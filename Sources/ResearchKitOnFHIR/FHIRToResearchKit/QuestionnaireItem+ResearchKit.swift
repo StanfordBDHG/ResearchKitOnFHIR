@@ -72,9 +72,18 @@ extension QuestionnaireItem {
             return nil
         }
         
-        let questionText = text?.value?.string ?? ""
         let answer = try? self.toORKAnswerFormat(valueSets: valueSets)
-        return ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
+
+        let prefix = prefix?.value?.string
+        let questionText = prefix ?? text?.value?.string ?? ""
+
+        let step = ORKQuestionStep(identifier: identifier, title: title, question: questionText, answer: answer)
+
+        if prefix != nil {
+            step.text = text?.value?.string
+        }
+
+        return step
     }
     
     /// Converts a FHIR QuestionnaireItem that contains a group of question items into a ResearchKit form (ORKFormStep).
@@ -97,27 +106,32 @@ extension QuestionnaireItem {
 
         for question in nestedQuestions {
             guard let questionId = question.linkId.value?.string,
-                  let questionText = question.text?.value?.string,
-                  let answerFormat = try? question.toORKAnswerFormat(valueSets: valueSets) else {
+                  let questionText = question.text?.value?.string else {
                 continue
             }
-            
-            let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
-            if let required = question.required?.value?.bool {
-                // if !optional, the `Continue` will stay disabled till the question is answered.
-                formItem.isOptional = !required
 
-                if required {
-                    containsRequiredSteps = true
+            if question.type == .display {
+                let formItem = ORKFormItem(sectionTitle: questionText, detailText: question.placeholderText, learnMoreItem: nil, showsProgress: false)
+                formItems.append(formItem)
+            } else if let answerFormat = try? question.toORKAnswerFormat(valueSets: valueSets) {
+                let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
+                if let required = question.required?.value?.bool {
+                    // if !optional, the `Continue` will stay disabled till the question is answered.
+                    formItem.isOptional = !required
+
+                    if required {
+                        containsRequiredSteps = true
+                    }
                 }
+                formItem.placeholder = question.placeholderText
+
+                formItems.append(formItem)
             }
-            
-            formItems.append(formItem)
         }
-        
+
         formStep.formItems = formItems
         // if optional, the `Next` button will appear
-        formStep.isOptional = !containsRequiredSteps
+        formStep.isOptional = !(containsRequiredSteps || required?.value?.bool == true)
         return formStep
     }
     
@@ -201,7 +215,23 @@ extension QuestionnaireItem {
         case .text, .string:
             let maximumLength = Int(maxLength?.value?.integer ?? 0)
             let answerFormat = ORKTextAnswerFormat(maximumLength: maximumLength)
-            
+
+            answerFormat.multipleLines = type.value == .text
+#if os(iOS) || os(visionOS)
+            if let keyboardType {
+                answerFormat.keyboardType = keyboardType
+            }
+#endif
+#if os(iOS) || os(visionOS) || os(tvOS)
+            if let textContentType {
+                answerFormat.textContentType = textContentType
+            }
+            if let autocapitalizationType {
+                answerFormat.autocapitalizationType = autocapitalizationType
+            }
+#endif
+            answerFormat.placeholder = self.placeholderText
+
             // Applies a regular expression for validation, if defined
             if let validationRegularExpression = validationRegularExpression {
                 answerFormat.validationRegularExpression = validationRegularExpression
