@@ -180,7 +180,9 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
         default:
             return .failure(unit.start, .unsupportedUnit(unit: unit.getText()))
         }
-        assert(DateComponents.supportedKeyPaths.contains(keyPath), "Tried to apply unsupported keyPath to date component expression.")
+        if !DateComponents.supportedKeyPaths.contains(keyPath) {
+            return .failure(unit.start, .internalError)
+        }
 
         var components = DateComponents()
         components[keyPath: keyPath] = value
