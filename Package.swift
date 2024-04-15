@@ -25,7 +25,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "2.2.25")),
-        .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0"))
+        .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0")),
+        .package(url: "https://github.com/antlr/antlr4", from: "4.13.1")
     ],
     targets: [
         .target(
@@ -33,7 +34,8 @@ let package = Package(
             dependencies: [
                 .product(name: "ResearchKit", package: "ResearchKit"),
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
-                .product(name: "ModelsR4", package: "FHIRModels")
+                .product(name: "ModelsR4", package: "FHIRModels"),
+                .target(name: "FHIRPathParser")
             ]
         ),
         .target(
@@ -57,11 +59,26 @@ let package = Package(
                 .copy("Resources/SliderExample.json")
             ]
         ),
+        .target(
+            name: "FHIRPathParser",
+            dependencies: [
+                .product(name: "Antlr4", package: "antlr4")
+            ],
+            exclude: [
+                "ANTLUtils"
+            ]
+        ),
         .testTarget(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
                 .target(name: "ResearchKitOnFHIR"),
                 .target(name: "FHIRQuestionnaires")
+            ]
+        ),
+        .testTarget(
+            name: "FHIRPathParserTests",
+            dependencies: [
+                .target(name: "FHIRPathParser")
             ]
         )
     ]
