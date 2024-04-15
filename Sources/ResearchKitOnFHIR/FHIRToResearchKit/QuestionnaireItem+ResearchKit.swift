@@ -188,7 +188,13 @@ extension QuestionnaireItem {
                 calendar: nil
             )
         case .dateTime:
-            return ORKDateAnswerFormat(style: .dateAndTime)
+            return ORKDateAnswerFormat(
+                style: .dateAndTime,
+                defaultDate: nil,
+                minimumDate: minDateValue,
+                maximumDate: maxDateValue,
+                calendar: nil
+            )
         case .time:
             return ORKTimeOfDayAnswerFormat()
         case .decimal, .quantity:
