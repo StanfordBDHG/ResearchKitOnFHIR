@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import FHIRPathParser
 import Foundation
 import ModelsR4
 import OSLog
@@ -34,6 +35,9 @@ extension QuestionnaireItem {
         static let textContentType = "http://bdh.stanford.edu/fhir/StructureDefinition/ios-textcontenttype"
         static let autocapitalizationType = "http://bdh.stanford.edu/fhir/StructureDefinition/ios-autocapitalizationType"
 #endif
+
+        static let dateMaxValue = "http://ehelse.no/fhir/StructureDefinition/sdf-maxvalue"
+        static let dateMinValue = "http://ehelse.no/fhir/StructureDefinition/sdf-minvalue"
     }
 
     private static let logger = Logger(subsystem: "edu.stanford.spezi.researchkit-on-fhir", category: "FHIRExtensions")
@@ -74,14 +78,21 @@ extension QuestionnaireItem {
     /// The minimum value for a date answer.
     /// - Returns: An optional `Date` containing the minimum date allowed.
     var minDateValue: Date? {
-        guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
+        if let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
               case let .date(dateValue) = minValueExtension.value,
-              let minDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults
-        else {
-            return nil
+              let minDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults {
+            return minDateValue
+        } else if let minDateValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.dateMinValue),
+               case let .string(dateExpression) = minDateValueExtension.value,
+               let minDateExpression = dateExpression.value?.string {
+            do {
+                return try FHIRPathExpression.evaluate(expression: minDateExpression)
+            } catch {
+                Self.logger.error("Failed to parse minDate expression \(minDateExpression): \(error)")
+            }
         }
-        
-        return minDateValue
+
+        return nil
     }
     
     /// The maximum value for a numerical answer.
@@ -98,14 +109,21 @@ extension QuestionnaireItem {
     /// The maximum value for a date answer.
     /// - Returns: An optional `Date` containing the maximum date allowed.
     var maxDateValue: Date? {
-        guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
+        if let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
               case let .date(dateValue) = maxValueExtension.value,
-              let maxDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults
-        else {
-            return nil
+              let maxDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults {
+            return maxDateValue
+        } else if let maxDateValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.dateMaxValue),
+                  case let .string(dateExpression) = maxDateValueExtension.value,
+                  let maxDateExpression = dateExpression.value?.string {
+            do {
+                return try FHIRPathExpression.evaluate(expression: maxDateExpression)
+            } catch {
+                Self.logger.error("Failed to parse maxDate expression \(maxDateExpression): \(error)")
+            }
         }
-        
-        return maxDateValue
+
+        return nil
     }
     
     /// The maximum number of decimal places for a decimal answer.
