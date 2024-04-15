@@ -1,5 +1,14 @@
 ### FHIRPath Grammar
-TODO: make this DOCC?
+
+<!--
+                  
+This source file is part of the ResearchKitOnFHIR open source project
+
+SPDX-FileCopyrightText: 2024 Stanford University and the project authors (see CONTRIBUTORS.md)
+
+SPDX-License-Identifier: MIT
+             
+-->
 
 _All files in this directory won't be part of the Swift target._
 
