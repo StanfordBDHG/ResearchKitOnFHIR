@@ -34,7 +34,8 @@ let package = Package(
             dependencies: [
                 .product(name: "ResearchKit", package: "ResearchKit"),
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
-                .product(name: "ModelsR4", package: "FHIRModels")
+                .product(name: "ModelsR4", package: "FHIRModels"),
+                .target(name: "FHIRPathParser")
             ]
         ),
         .target(
