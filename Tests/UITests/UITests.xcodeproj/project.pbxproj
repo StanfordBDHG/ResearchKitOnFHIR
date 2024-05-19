@@ -37,6 +37,7 @@
 /* Begin PBXFileReference section */
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
+		2F2EE4D32BF9CDFC0022CDA8 /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ../..; sourceTree = "<group>"; };
 		654BD47828BEBA8200B012D2 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65545D0428BEBC57000C70E4 /* ExampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		654BD46F28BEBA8200B012D2 = {
 			isa = PBXGroup;
 			children = (
+				2F2EE4D32BF9CDFC0022CDA8 /* ResearchKitOnFHIR */,
 				654BD47A28BEBA8200B012D2 /* TestApp */,
 				65EB88CE28D3331F003BE06A /* TestAppUITests */,
 				654BD47928BEBA8200B012D2 /* Products */,
