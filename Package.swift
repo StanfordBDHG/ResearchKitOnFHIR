@@ -14,17 +14,17 @@ import PackageDescription
 let package = Package(
     name: "ResearchKitOnFHIR",
     platforms: [
-        .iOS(.v15),
-        .watchOS(.v8),
+        .iOS(.v17),
+        .watchOS(.v10),
         .visionOS(.v1),
-        .macOS(.v12)
+        .macOS(.v14)
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "2.2.25")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "3.0.1")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/antlr/antlr4", from: "4.13.1")
     ],

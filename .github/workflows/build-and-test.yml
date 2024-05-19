@@ -29,7 +29,7 @@ jobs:
     with:
       artifactname: Example.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
-      path: 'Example'
+      path: 'Tests/UITests'
       scheme: Example
   uploadcoveragereport:
     name: Upload Coverage Report
