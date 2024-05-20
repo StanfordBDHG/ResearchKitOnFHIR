@@ -35,8 +35,6 @@ final class ExampleUITests: XCTestCase {
     }
     
     func testSkipLogicExample() throws {
-        throw XCTSkip("Failing with a runtime error, seems to point to the other text option.")
-        
         let app = XCUIApplication()
         app.launch()
         
@@ -86,8 +84,6 @@ final class ExampleUITests: XCTestCase {
     }
 
     func testOpenChoiceExample() throws {
-        throw XCTSkip("Failing with a runtime error, seems to point to the other text option.")
-        
         let app = XCUIApplication()
         app.launch()
 
@@ -357,8 +353,6 @@ final class ExampleUITests: XCTestCase {
     }
 
     func testFormExample() throws {
-        throw XCTSkip("Failing with a runtime error, seems to point to the other text option.")
-        
         let app = XCUIApplication()
         app.launch()
 
@@ -473,8 +467,6 @@ final class ExampleUITests: XCTestCase {
     }
 
     func testGAD7Example() throws {
-        throw XCTSkip("Skipping this test case, seems like we need to improve the logic when to select a question with the automatic scrolling ...")
-        
         let app = XCUIApplication()
         app.launch()
 

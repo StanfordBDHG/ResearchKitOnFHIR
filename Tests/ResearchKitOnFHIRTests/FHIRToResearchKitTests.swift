@@ -14,15 +14,11 @@ import XCTest
 
 final class FHIRToResearchKitTests: XCTestCase {
     func testCreateORKNavigableOrderedTask() throws {
-        throw XCTSkip("Failing with a runtime error, seems to point to the other text option.")
-        
         let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
         XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
     }
     
     func testConvertQuestionnaireItemToORKSteps() throws {
-        throw XCTSkip("Failing with a runtime error, seems to point to the other text option.")
-        
         // Test the number validation example
         let numberExampleTitle = Questionnaire.numberExample.title?.value?.string ?? "title"
         let numberExampleSteps = Questionnaire.numberExample.item?.fhirQuestionnaireItemsToORKSteps(title: numberExampleTitle, valueSets: [])

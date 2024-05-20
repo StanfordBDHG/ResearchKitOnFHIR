@@ -303,14 +303,14 @@ extension QuestionnaireItem {
             if openChoice {
                 // If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
                 let otherChoiceText = NSLocalizedString("Other", comment: "")
-                let otherChoiceResult = ValueCoding(code: "other", system: "other", display: otherChoiceText)
                 let otherChoice = ORKTextChoiceOther.choice(
                     withText: otherChoiceText,
                     detailText: nil,
-                    value: otherChoiceResult.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol,
+                    value: otherChoiceText as NSSecureCoding & NSCopying & NSObjectProtocol,
                     exclusive: true,
                     textViewPlaceholderText: ""
                 )
+                
                 choices.append(otherChoice)
             }
         }
