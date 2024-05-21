@@ -253,7 +253,7 @@ extension QuestionnaireItem {
     /// Converts FHIR text answer choices to ResearchKit `ORKTextChoice`.
     /// - Parameter - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An array of `ORKTextChoice` objects, each representing a textual answer option.
-    private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] { // swiftlint:disable:this function_body_length
+    private func toORKTextChoice(valueSets: [ValueSet], openChoice: Bool) -> [ORKTextChoice] {
         var choices: [ORKTextChoice] = []
         
         // If the `QuestionnaireItem` has an `answerValueSet` defined which is a reference to a contained `ValueSet`,
@@ -303,14 +303,14 @@ extension QuestionnaireItem {
             if openChoice {
                 // If the `QuestionnaireItemType` is `open-choice`, allow user to enter in their own free-text answer.
                 let otherChoiceText = NSLocalizedString("Other", comment: "")
-                let otherChoiceResult = ValueCoding(code: "other", system: "other", display: otherChoiceText)
                 let otherChoice = ORKTextChoiceOther.choice(
                     withText: otherChoiceText,
                     detailText: nil,
-                    value: otherChoiceResult.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol,
+                    value: otherChoiceText as NSSecureCoding & NSCopying & NSObjectProtocol,
                     exclusive: true,
                     textViewPlaceholderText: ""
                 )
+                
                 choices.append(otherChoice)
             }
         }

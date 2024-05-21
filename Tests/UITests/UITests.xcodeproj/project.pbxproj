@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		27E00A5828C13ABE00AF17BC /* QuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */; };
 		27E00A5A28C13AF100AF17BC /* QuestionnaireListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */; };
+		2F0A1B4B2BF9CB85009A390A /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F0A1B4A2BF9CB85009A390A /* FHIRQuestionnaires */; };
+		2F0A1B4D2BF9CB85009A390A /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F0A1B4C2BF9CB85009A390A /* ResearchKitOnFHIR */; };
 		2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53129261578008AA30B /* FHIRQuestionnaires */; };
 		2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */ = {isa = PBXBuildFile; productRef = 2F63D53329261578008AA30B /* ResearchKitOnFHIR */; };
 		654BD48028BEBA8400B012D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654BD47F28BEBA8400B012D2 /* Assets.xcassets */; };
@@ -35,8 +37,8 @@
 /* Begin PBXFileReference section */
 		27E00A5728C13ABE00AF17BC /* QuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireView.swift; sourceTree = "<group>"; };
 		27E00A5928C13AF100AF17BC /* QuestionnaireListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireListView.swift; sourceTree = "<group>"; };
-		2F63D53029261568008AA30B /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ..; sourceTree = "<group>"; };
-		654BD47828BEBA8200B012D2 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F2EE4D32BF9CDFC0022CDA8 /* ResearchKitOnFHIR */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ResearchKitOnFHIR; path = ../..; sourceTree = "<group>"; };
+		654BD47828BEBA8200B012D2 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654BD47F28BEBA8400B012D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65545D0428BEBC57000C70E4 /* ExampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		65545D0C28BEBEBB000C70E4 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -45,7 +47,7 @@
 		657CB91B28D296AE006B0A3F /* QuestionnaireResponseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireResponseStorage.swift; sourceTree = "<group>"; };
 		657CB91D28D29EE7006B0A3F /* String+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSON.swift"; sourceTree = "<group>"; };
 		657CB91F28D2A9A9006B0A3F /* QuestionnaireJSONView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireJSONView.swift; sourceTree = "<group>"; };
-		65EB88CD28D3331F003BE06A /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65EB88CD28D3331F003BE06A /* TestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65EB88CF28D3331F003BE06A /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F0A1B4D2BF9CB85009A390A /* ResearchKitOnFHIR in Frameworks */,
+				2F0A1B4B2BF9CB85009A390A /* FHIRQuestionnaires in Frameworks */,
 				2F63D53429261578008AA30B /* ResearchKitOnFHIR in Frameworks */,
 				2F63D53229261578008AA30B /* FHIRQuestionnaires in Frameworks */,
 			);
@@ -72,9 +76,9 @@
 		654BD46F28BEBA8200B012D2 = {
 			isa = PBXGroup;
 			children = (
-				2F63D53029261568008AA30B /* ResearchKitOnFHIR */,
-				654BD47A28BEBA8200B012D2 /* ExampleApp */,
-				65EB88CE28D3331F003BE06A /* ExampleUITests */,
+				2F2EE4D32BF9CDFC0022CDA8 /* ResearchKitOnFHIR */,
+				654BD47A28BEBA8200B012D2 /* TestApp */,
+				65EB88CE28D3331F003BE06A /* TestAppUITests */,
 				654BD47928BEBA8200B012D2 /* Products */,
 				65545CFF28BEBB87000C70E4 /* Frameworks */,
 			);
@@ -83,13 +87,13 @@
 		654BD47928BEBA8200B012D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				654BD47828BEBA8200B012D2 /* Example.app */,
-				65EB88CD28D3331F003BE06A /* ExampleUITests.xctest */,
+				654BD47828BEBA8200B012D2 /* TestApp.app */,
+				65EB88CD28D3331F003BE06A /* TestAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		654BD47A28BEBA8200B012D2 /* ExampleApp */ = {
+		654BD47A28BEBA8200B012D2 /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
 				65545D0428BEBC57000C70E4 /* ExampleApp.swift */,
@@ -101,7 +105,7 @@
 				654BD47F28BEBA8400B012D2 /* Assets.xcassets */,
 				65545D0C28BEBEBB000C70E4 /* Localizable.strings */,
 			);
-			path = ExampleApp;
+			path = TestApp;
 			sourceTree = "<group>";
 		};
 		65545CFF28BEBB87000C70E4 /* Frameworks */ = {
@@ -145,20 +149,20 @@
 			path = Questionnaire;
 			sourceTree = "<group>";
 		};
-		65EB88CE28D3331F003BE06A /* ExampleUITests */ = {
+		65EB88CE28D3331F003BE06A /* TestAppUITests */ = {
 			isa = PBXGroup;
 			children = (
 				65EB88CF28D3331F003BE06A /* ExampleUITests.swift */,
 			);
-			path = ExampleUITests;
+			path = TestAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		654BD47728BEBA8200B012D2 /* Example */ = {
+		654BD47728BEBA8200B012D2 /* TestApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 654BD48628BEBA8400B012D2 /* Build configuration list for PBXNativeTarget "Example" */;
+			buildConfigurationList = 654BD48628BEBA8400B012D2 /* Build configuration list for PBXNativeTarget "TestApp" */;
 			buildPhases = (
 				654BD47428BEBA8200B012D2 /* Sources */,
 				654BD47528BEBA8200B012D2 /* Frameworks */,
@@ -168,18 +172,20 @@
 			);
 			dependencies = (
 			);
-			name = Example;
+			name = TestApp;
 			packageProductDependencies = (
 				2F63D53129261578008AA30B /* FHIRQuestionnaires */,
 				2F63D53329261578008AA30B /* ResearchKitOnFHIR */,
+				2F0A1B4A2BF9CB85009A390A /* FHIRQuestionnaires */,
+				2F0A1B4C2BF9CB85009A390A /* ResearchKitOnFHIR */,
 			);
 			productName = ResearchKitToFHIRExample;
-			productReference = 654BD47828BEBA8200B012D2 /* Example.app */;
+			productReference = 654BD47828BEBA8200B012D2 /* TestApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		65EB88CC28D3331F003BE06A /* ExampleUITests */ = {
+		65EB88CC28D3331F003BE06A /* TestAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65EB88D728D3331F003BE06A /* Build configuration list for PBXNativeTarget "ExampleUITests" */;
+			buildConfigurationList = 65EB88D728D3331F003BE06A /* Build configuration list for PBXNativeTarget "TestAppUITests" */;
 			buildPhases = (
 				65EB88C928D3331F003BE06A /* Sources */,
 				65EB88CA28D3331F003BE06A /* Frameworks */,
@@ -190,9 +196,9 @@
 			dependencies = (
 				65EB88D428D3331F003BE06A /* PBXTargetDependency */,
 			);
-			name = ExampleUITests;
+			name = TestAppUITests;
 			productName = ExampleUITests;
-			productReference = 65EB88CD28D3331F003BE06A /* ExampleUITests.xctest */;
+			productReference = 65EB88CD28D3331F003BE06A /* TestAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -203,7 +209,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					654BD47728BEBA8200B012D2 = {
 						CreatedOnToolsVersion = 14.0;
@@ -215,7 +221,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 654BD47328BEBA8200B012D2 /* Build configuration list for PBXProject "Example" */;
+			buildConfigurationList = 654BD47328BEBA8200B012D2 /* Build configuration list for PBXProject "UITests" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -224,12 +230,15 @@
 				Base,
 			);
 			mainGroup = 654BD46F28BEBA8200B012D2;
+			packageReferences = (
+				2F0A1B492BF9CB85009A390A /* XCLocalSwiftPackageReference "../../" */,
+			);
 			productRefGroup = 654BD47928BEBA8200B012D2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				654BD47728BEBA8200B012D2 /* Example */,
-				65EB88CC28D3331F003BE06A /* ExampleUITests */,
+				654BD47728BEBA8200B012D2 /* TestApp */,
+				65EB88CC28D3331F003BE06A /* TestAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -282,7 +291,7 @@
 /* Begin PBXTargetDependency section */
 		65EB88D428D3331F003BE06A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 654BD47728BEBA8200B012D2 /* Example */;
+			target = 654BD47728BEBA8200B012D2 /* TestApp */;
 			targetProxy = 65EB88D328D3331F003BE06A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -292,6 +301,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -324,6 +334,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -352,6 +363,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -384,6 +396,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -414,7 +427,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Example;
+				INFOPLIST_KEY_CFBundleDisplayName = TestApp;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses camera to test image capture";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -426,7 +439,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.researchkitonfhirexample;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.researchkitonfhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -450,7 +463,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Example;
+				INFOPLIST_KEY_CFBundleDisplayName = TestApp;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses camera to test image capture";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -462,7 +475,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.researchkitonfhirexample;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.researchkitonfhir;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -481,15 +494,16 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.researchkitonfhir.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = Example;
+				TEST_TARGET_NAME = TestApp;
 			};
 			name = Debug;
 		};
@@ -501,22 +515,23 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.ExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stanford.bdhg.researchkitonfhir.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = Example;
+				TEST_TARGET_NAME = TestApp;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		654BD47328BEBA8200B012D2 /* Build configuration list for PBXProject "Example" */ = {
+		654BD47328BEBA8200B012D2 /* Build configuration list for PBXProject "UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				654BD48428BEBA8400B012D2 /* Debug */,
@@ -525,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		654BD48628BEBA8400B012D2 /* Build configuration list for PBXNativeTarget "Example" */ = {
+		654BD48628BEBA8400B012D2 /* Build configuration list for PBXNativeTarget "TestApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				654BD48728BEBA8400B012D2 /* Debug */,
@@ -534,7 +549,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65EB88D728D3331F003BE06A /* Build configuration list for PBXNativeTarget "ExampleUITests" */ = {
+		65EB88D728D3331F003BE06A /* Build configuration list for PBXNativeTarget "TestAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65EB88D528D3331F003BE06A /* Debug */,
@@ -545,7 +560,22 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		2F0A1B492BF9CB85009A390A /* XCLocalSwiftPackageReference "../../" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		2F0A1B4A2BF9CB85009A390A /* FHIRQuestionnaires */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FHIRQuestionnaires;
+		};
+		2F0A1B4C2BF9CB85009A390A /* ResearchKitOnFHIR */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ResearchKitOnFHIR;
+		};
 		2F63D53129261578008AA30B /* FHIRQuestionnaires */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FHIRQuestionnaires;
