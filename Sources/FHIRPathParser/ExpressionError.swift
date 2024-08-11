@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Antlr4
+@preconcurrency import Antlr4
 
 
 public struct ExpressionError: Error {

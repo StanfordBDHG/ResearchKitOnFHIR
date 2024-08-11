@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import ModelsR4
+@preconcurrency import ModelsR4
 
 
 /// An error that is thrown when translating a FHIR `Questionnaire` to an `ORKNavigableOrderedTask`

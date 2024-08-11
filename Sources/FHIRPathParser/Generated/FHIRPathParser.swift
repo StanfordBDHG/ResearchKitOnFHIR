@@ -1,9 +1,9 @@
 // Generated from FHIRPath.g4 by ANTLR 4.13.1
-import Antlr4
+@preconcurrency import Antlr4
 
 open class FHIRPathParser: Parser {
 
-	internal static var _decisionToDFA: [DFA] = {
+	internal static let _decisionToDFA: [DFA] = {
           var decisionToDFA = [DFA]()
           let length = FHIRPathParser._ATN.getNumberOfDecisions()
           for i in 0..<length {

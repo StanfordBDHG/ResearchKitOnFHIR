@@ -8,7 +8,15 @@
 // SPDX-License-Identifier: MIT
 //
 
+import class Foundation.ProcessInfo
 import PackageDescription
+
+
+#if swift(<6)
+let swiftConcurrency: SwiftSetting = .enableExperimentalFeature("StrictConcurrency")
+#else
+let swiftConcurrency: SwiftSetting = .enableUpcomingFeature("StrictConcurrency")
+#endif
 
 
 let package = Package(
@@ -27,7 +35,7 @@ let package = Package(
         .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "3.0.1")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/antlr/antlr4", from: "4.13.1")
-    ],
+    ] + swiftLintPackage(),
     targets: [
         .target(
             name: "ResearchKitOnFHIR",
@@ -36,7 +44,11 @@ let package = Package(
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
                 .product(name: "ModelsR4", package: "FHIRModels"),
                 .target(name: "FHIRPathParser")
-            ]
+            ],
+            swiftSettings: [
+                swiftConcurrency
+            ],
+            plugins: [] + swiftLintPlugin()
         ),
         .target(
             name: "FHIRQuestionnaires",
@@ -57,7 +69,11 @@ let package = Package(
                 .copy("Resources/MultipleEnableWhen.json"),
                 .copy("Resources/ImageCapture.json"),
                 .copy("Resources/SliderExample.json")
-            ]
+            ],
+            swiftSettings: [
+                swiftConcurrency
+            ],
+            plugins: [] + swiftLintPlugin()
         ),
         .target(
             name: "FHIRPathParser",
@@ -66,20 +82,50 @@ let package = Package(
             ],
             exclude: [
                 "ANTLUtils"
-            ]
+            ],
+            swiftSettings: [
+                swiftConcurrency
+            ],
+            plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
                 .target(name: "ResearchKitOnFHIR"),
                 .target(name: "FHIRQuestionnaires")
-            ]
+            ],
+            swiftSettings: [
+                swiftConcurrency
+            ],
+            plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
             name: "FHIRPathParserTests",
             dependencies: [
                 .target(name: "FHIRPathParser")
-            ]
+            ],
+            swiftSettings: [
+                swiftConcurrency
+            ],
+            plugins: [] + swiftLintPlugin()
         )
     ]
 )
+
+
+func swiftLintPlugin() -> [Target.PluginUsage] {
+    // Fully quit Xcode and open again with `open --env SPEZI_DEVELOPMENT_SWIFTLINT /Applications/Xcode.app`
+    if ProcessInfo.processInfo.environment["SPEZI_DEVELOPMENT_SWIFTLINT"] != nil {
+        [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")]
+    } else {
+        []
+    }
+}
+
+func swiftLintPackage() -> [PackageDescription.Package.Dependency] {
+    if ProcessInfo.processInfo.environment["SPEZI_DEVELOPMENT_SWIFTLINT"] != nil {
+        [.package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.1"))]
+    } else {
+        []
+    }
+}
