@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable duplicate_imports function_default_parameter_at_end
+// swiftlint:disable function_default_parameter_at_end
 import ModelsR4
 import ResearchKit
 @_exported import class ResearchKit.ORKNavigableOrderedTask

@@ -1,9 +1,9 @@
 // Generated from FHIRPath.g4 by ANTLR 4.13.1
-import Antlr4
+@preconcurrency import Antlr4
 
 open class FHIRPathLexer: Lexer {
 
-	internal static var _decisionToDFA: [DFA] = {
+	internal static let _decisionToDFA: [DFA] = {
           var decisionToDFA = [DFA]()
           let length = FHIRPathLexer._ATN.getNumberOfDecisions()
           for i in 0..<length {

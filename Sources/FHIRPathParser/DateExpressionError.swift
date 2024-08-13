@@ -59,6 +59,9 @@ extension DateExpressionError {
 }
 
 
+extension DateExpressionError.FailedDateOperationReason: Sendable {}
+
+
 extension Result where Failure == Error {
     static func failure(_ token: Token?, _ error: DateExpressionError) -> Result<Success, Failure> {
         .failure(ExpressionError(token: token, underlyingError: error))

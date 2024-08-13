@@ -21,7 +21,8 @@ final class ExampleUITests: XCTestCase {
     }
 
     // MARK: UI Tests for Example Questionnaires
-    
+
+    @MainActor
     func testQuestionnaireJSON() throws {
         let app = XCUIApplication()
         app.launch()
@@ -33,7 +34,8 @@ final class ExampleUITests: XCTestCase {
         app.collectionViews.buttons["View JSON"].tap()
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
-    
+
+    @MainActor
     func testSkipLogicExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -83,6 +85,7 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    @MainActor
     func testOpenChoiceExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -113,6 +116,7 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Done"].tap()
     }
 
+    @MainActor
     func testContainedValueSetExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -151,6 +155,7 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    @MainActor
     func testNumberExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -197,6 +202,7 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    @MainActor
     func textValidationExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -231,6 +237,7 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    @MainActor
     func testDateTimeExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -290,7 +297,8 @@ final class ExampleUITests: XCTestCase {
         // Dismiss results view
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
-    
+
+    @MainActor
     func testDateValidation() throws {
         let app = XCUIApplication()
         app.launch()
@@ -352,6 +360,7 @@ final class ExampleUITests: XCTestCase {
         )
     }
 
+    @MainActor
     func testFormExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -397,6 +406,7 @@ final class ExampleUITests: XCTestCase {
         app.swipeDown(velocity: XCUIGestureVelocity.fast)
     }
 
+    @MainActor
     func testSliderExample() throws {
         let app = XCUIApplication()
         app.launch()
@@ -426,7 +436,8 @@ final class ExampleUITests: XCTestCase {
             XCTFail("Slider value is not a readable number.")
         }
     }
-    
+
+    @MainActor
     func testMultipleEnableWhenExampleWithAllAnswersCorrect() throws {
         let app = XCUIApplication()
         app.launch()
@@ -468,7 +479,8 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
     }
-    
+
+    @MainActor
     func testMultipleEnableWhenExampleWithOneAnswerCorrect() throws {
         let app = XCUIApplication()
         app.launch()
@@ -505,7 +517,8 @@ final class ExampleUITests: XCTestCase {
         XCTAssert(app.buttons["Done"].waitForExistence(timeout: 2))
         app.buttons["Done"].tap()
     }
-    
+
+    @MainActor
     func testMultipleEnableWhenExampleWithNoAnswerCorrect() throws {
         let app = XCUIApplication()
         app.launch()
@@ -538,6 +551,7 @@ final class ExampleUITests: XCTestCase {
         app.buttons["Done"].tap()
     }
 
+    @MainActor
     func testImageCaptureExample() {
         let app = XCUIApplication()
         app.launch()

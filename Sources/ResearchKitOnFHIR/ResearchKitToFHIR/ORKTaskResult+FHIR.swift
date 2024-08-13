@@ -6,7 +6,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-// swiftlint:disable duplicate_imports
 import Foundation
 import ModelsR4
 import ResearchKit
