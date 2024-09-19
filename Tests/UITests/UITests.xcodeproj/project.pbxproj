@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -222,7 +222,6 @@
 				};
 			};
 			buildConfigurationList = 654BD47328BEBA8200B012D2 /* Build configuration list for PBXProject "UITests" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -233,6 +232,7 @@
 			packageReferences = (
 				2F0A1B492BF9CB85009A390A /* XCLocalSwiftPackageReference "../../" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 654BD47928BEBA8200B012D2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -357,6 +357,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -413,6 +414,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
