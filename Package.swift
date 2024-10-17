@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 
 //
 // This source file is part of the ResearchKitOnFHIR open source project
@@ -10,13 +10,6 @@
 
 import class Foundation.ProcessInfo
 import PackageDescription
-
-
-#if swift(<6)
-let swiftConcurrency: SwiftSetting = .enableExperimentalFeature("StrictConcurrency")
-#else
-let swiftConcurrency: SwiftSetting = .enableUpcomingFeature("StrictConcurrency")
-#endif
 
 
 let package = Package(
@@ -32,9 +25,9 @@ let package = Package(
         .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordBDHG/ResearchKit", .upToNextMinor(from: "3.0.1")),
+        .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "3.0.1")),
         .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.5.0")),
-        .package(url: "https://github.com/antlr/antlr4", from: "4.13.1")
+        .package(url: "https://github.com/antlr/antlr4.git", from: "4.13.1")
     ] + swiftLintPackage(),
     targets: [
         .target(
@@ -44,9 +37,6 @@ let package = Package(
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
                 .product(name: "ModelsR4", package: "FHIRModels"),
                 .target(name: "FHIRPathParser")
-            ],
-            swiftSettings: [
-                swiftConcurrency
             ],
             plugins: [] + swiftLintPlugin()
         ),
@@ -70,9 +60,6 @@ let package = Package(
                 .copy("Resources/ImageCapture.json"),
                 .copy("Resources/SliderExample.json")
             ],
-            swiftSettings: [
-                swiftConcurrency
-            ],
             plugins: [] + swiftLintPlugin()
         ),
         .target(
@@ -83,9 +70,6 @@ let package = Package(
             exclude: [
                 "ANTLUtils"
             ],
-            swiftSettings: [
-                swiftConcurrency
-            ],
             plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
@@ -94,18 +78,12 @@ let package = Package(
                 .target(name: "ResearchKitOnFHIR"),
                 .target(name: "FHIRQuestionnaires")
             ],
-            swiftSettings: [
-                swiftConcurrency
-            ],
             plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
             name: "FHIRPathParserTests",
             dependencies: [
                 .target(name: "FHIRPathParser")
-            ],
-            swiftSettings: [
-                swiftConcurrency
             ],
             plugins: [] + swiftLintPlugin()
         )
@@ -124,7 +102,7 @@ func swiftLintPlugin() -> [Target.PluginUsage] {
 
 func swiftLintPackage() -> [PackageDescription.Package.Dependency] {
     if ProcessInfo.processInfo.environment["SPEZI_DEVELOPMENT_SWIFTLINT"] != nil {
-        [.package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.1"))]
+        [.package(url: "https://github.com/realm/SwiftLint.git", from: "0.55.1")]
     } else {
         []
     }
