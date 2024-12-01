@@ -61,4 +61,13 @@ struct ValueCoding: Equatable, Codable, RawRepresentable {
         try container.encode(system, forKey: .system)
         try container.encode(display, forKey: .display)
     }
+    
+    
+    var regexPatternForMatchingORKChoiceQuestionResult: String {
+        if let display {
+            #"\{"code":"\#(code)","display":"\#(display)","system":"\#(system)"\}"#
+        } else {
+            #"\{"code":"\#(code)","display":.*,"system":"\#(system)"\}"#
+        }
+    }
 }

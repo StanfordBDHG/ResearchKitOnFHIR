@@ -22,24 +22,16 @@ extension ORKNavigableOrderedTask {
                 continue
             }
             
-            if enableWhen.count > 1 {
-                let enableBehavior = question.enableBehavior?.value ?? .all
-                let allPredicates = enableWhen.compactMap { try? $0.predicate }
-                var compoundPredicate = NSCompoundPredicate()
-                switch enableBehavior {
-                case .all:
-                    compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
-                case .any:
-                    compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
-                }
-                
-                self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: compoundPredicate), forStepIdentifier: questionId)
-            } else {
-                guard let predicate = try enableWhen.first?.predicate else {
-                    continue
-                }
-                self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
+            let enableBehavior = question.enableBehavior?.value ?? .all
+            let allPredicates = try enableWhen.compactMap { try $0.predicate }
+            let predicate: NSPredicate
+            switch enableBehavior {
+            case .all:
+                predicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
+            case .any:
+                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
             }
+            self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: questionId)
         }
     }
 }
@@ -94,7 +86,8 @@ extension Coding {
         
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
-            expectedAnswerValue: expectedAnswer.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol
+//            expectedAnswerValue: expectedAnswer.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol
+            matchingPattern: expectedAnswer.regexPatternForMatchingORKChoiceQuestionResult
         )
         
         switch fhirOperator {
