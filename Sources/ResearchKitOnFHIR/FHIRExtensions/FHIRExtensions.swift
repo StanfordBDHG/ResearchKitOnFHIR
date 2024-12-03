@@ -374,3 +374,16 @@ extension FHIRDate {
         return Calendar.current.date(from: dateComponents).map { Calendar.current.startOfDay(for: $0) }
     }
 }
+
+
+extension FHIRPrimitive {
+    @inlinable
+    public static func != (lhs: Self, rhs: PrimitiveType) -> Bool {
+        !(lhs == rhs)
+    }
+    
+    @inlinable
+    public static func != (lhs: PrimitiveType, rhs: Self) -> Bool {
+        rhs != lhs
+    }
+}

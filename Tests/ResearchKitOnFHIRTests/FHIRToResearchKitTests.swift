@@ -13,39 +13,44 @@ import XCTest
 
 
 final class FHIRToResearchKitTests: XCTestCase {
+    /// - Note: "FHIR extensions" here meaning Swift extensions on FHIR types, not actual FHIR extensions.
+    func testFHIRExtensions() {
+        XCTAssertEqual(Questionnaire.numberExample.flattenedItems.count, 3)
+        XCTAssertEqual(Questionnaire.numberExample.flattenedQuestions.count, 3)
+        XCTAssertEqual(Questionnaire.formExample.flattenedItems.count, 5)
+        XCTAssertEqual(Questionnaire.formExample.flattenedQuestions.count, 3)
+        XCTAssertEqual(Questionnaire.skipLogicExample.flattenedItems.count, 3)
+        XCTAssertEqual(Questionnaire.skipLogicExample.flattenedQuestions.count, 3)
+    }
+    
+    
     func testCreateORKNavigableOrderedTask() throws {
-        let orknavigableOrderedTask = try ORKNavigableOrderedTask(questionnaire: Questionnaire.skipLogicExample)
-        XCTAssert(!orknavigableOrderedTask.steps.isEmpty)
+        let questionnaire = Questionnaire.skipLogicExample
+        let task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
+        XCTAssert(!task.steps.isEmpty)
+        XCTAssertEqual(task.steps.count, questionnaire.flattenedItems.count)
     }
 
+
     func testConvertQuestionnaireItemToORKSteps() throws {
-        // Test the number validation example
-        let numberExampleTitle = Questionnaire.numberExample.title?.value?.string ?? "title"
-        let numberExampleSteps = Questionnaire.numberExample.item?.fhirQuestionnaireItemsToORKSteps(title: numberExampleTitle, valueSets: [])
-        let unwrappedNumberExampleSteps = try XCTUnwrap(numberExampleSteps)
-        XCTAssertEqual(unwrappedNumberExampleSteps.count, 3)
-
-        // Tests the form example
-        let formExampleTitle = Questionnaire.formExample.title?.value?.string ?? "title"
-        let formExampleSteps = Questionnaire.formExample.item?.fhirQuestionnaireItemsToORKSteps(title: formExampleTitle, valueSets: [])
-        let unwrappedFormExampleSteps = try XCTUnwrap(formExampleSteps)
-        XCTAssertEqual(unwrappedFormExampleSteps.count, 2)
-
-        // Tests the skip logic example
-        let skipLogicExampleTitle = Questionnaire.skipLogicExample.title?.value?.string ?? "title"
-        let skipLogicExampleSteps = Questionnaire.skipLogicExample.item?.fhirQuestionnaireItemsToORKSteps(title: skipLogicExampleTitle, valueSets: [])
-        let unwrappedSkipLogicExampleSteps = try XCTUnwrap(skipLogicExampleSteps)
-        XCTAssertEqual(unwrappedSkipLogicExampleSteps.count, 3)
+        let testQuestionnaire = { (questionnaire: Questionnaire) throws in
+            let steps = questionnaire.toORKSteps()
+            XCTAssertEqual(steps.count, questionnaire.flattenedItems.count { $0.type != .group })
+            for (item, step) in zip(questionnaire.flattenedItems, steps) {
+                XCTAssertEqual(try XCTUnwrap(item.linkId.value).string, step.identifier)
+                XCTAssertEqual(item.text?.value?.string, step.text)
+            }
+        }
+        
+        try testQuestionnaire(.numberExample)
+        testQuestionnaire(.formExample)
+        testQuestionnaire(.skipLogicExample)
     }
 
     func testImageCaptureStep() throws {
-        let imageCaptureExampleTitle = Questionnaire.imageCaptureExample.title?.value?.string ?? "title"
-        let imageCaptureSteps = Questionnaire.imageCaptureExample.item?.fhirQuestionnaireItemsToORKSteps(
-            title: imageCaptureExampleTitle,
-            valueSets: []
-        )
-        let unwrappedImageCaptureExampleSteps = try XCTUnwrap(imageCaptureSteps)
-        XCTAssertEqual(unwrappedImageCaptureExampleSteps.count, 1)
+        let questionnaire = Questionnaire.imageCaptureExample
+        let steps = questionnaire.toORKSteps()
+        XCTAssertEqual(steps.count, 1)
     }
 
     func testGetContainedValueSets() throws {

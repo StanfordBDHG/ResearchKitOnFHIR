@@ -10,58 +10,69 @@ import ModelsR4
 import ResearchKit
 
 
-extension Array where Element == QuestionnaireItem {
-    /// Converts FHIR `QuestionnaireItems` (questions) to ResearchKit `ORKSteps`.
-    /// - Parameters:
-    ///   - title: A `String` that will be rendered above the questions by ResearchKit.
-    ///   - valueSets: An array of `ValueSet` items containing sets of answer choices
-    /// - Returns:An `Array` of ResearchKit `ORKSteps`.
-    func fhirQuestionnaireItemsToORKSteps(title: String, valueSets: [ValueSet]) -> [ORKStep] {
-        // swiftlint:disable:previous cyclomatic_complexity
-        var surveySteps: [ORKStep] = []
-        surveySteps.reserveCapacity(self.count)
-        
-        for question in self {
-            guard let questionType = question.type.value,
-                  !question.hidden else {
-                continue
-            }
-            
-            switch questionType {
-            case QuestionnaireItemType.attachment:
-                // The FHIR Questionnaire attachment type is meant to support binary file upload, including
-                // images. ResearchKit does not support arbitrary binary file upload, but does support image
-                // capture, so we map this type to an ORKImageCaptureStep.
-                if let attachmentStep = question.attachmentToORKImageCaptureStep() {
-                    surveySteps.append(attachmentStep)
-                }
-            case QuestionnaireItemType.group:
-                // Converts multiple questions in a group into a ResearchKit form step
-                if let groupStep = question.groupToORKFormStep(title: title, valueSets: valueSets) {
-                    surveySteps.append(groupStep)
-                }
-            case QuestionnaireItemType.display:
-                // Creates a ResearchKit instruction step with the string to display
-                if let instructionStep = question.displayToORKInstructionStep(title: title) {
-                    surveySteps.append(instructionStep)
-                }
-            default:
-                // Converts individual questions to ResearchKit Question steps
-                if let step = question.toORKQuestionStep(title: title, valueSets: valueSets) {
-                    if let required = question.required?.value?.bool {
-                        step.isOptional = !required
-                    }
-                    surveySteps.append(step)
-                }
-            }
-        }
-        
-        return surveySteps
+extension Questionnaire {
+    /// Translates a FHIR `Questionnaire` into a series of ResearchKit `ORKSteps`.
+    /// - throws: if there is an issue with one of the items in the questionnaire,
+    ///     or if the questionnaire contains items which cannot be represented using the ResearchKit types.
+    func toORKSteps() -> [ORKStep] {
+        (item ?? []).flatMap { $0.toORKSteps(in: self) }
     }
 }
 
 
 extension QuestionnaireItem {
+    fileprivate func toORKSteps(in questionnaire: Questionnaire) -> [ORKStep] {
+        guard !self.hidden,
+              let questionType = self.type.value else {
+            return []
+        }
+        let title = questionnaire.title?.value?.string ?? ""
+        let valueSets = questionnaire.getContainedValueSets()
+        
+        var steps: [ORKStep] = []
+        var alreadyHandledNestedItems = false
+        
+        switch questionType {
+        case .group:
+            // Converts multiple questions in a group into a ResearchKit form step
+            if let groupStep = self.groupToORKFormStep(title: title, valueSets: valueSets) {
+                steps.append(groupStep)
+            }
+            // -groupToORKFormStep turns any potential nested items into parts of the form;
+            // we need to skip them here since otherwise we'd end up including them twice.
+            alreadyHandledNestedItems = true
+        case .display:
+            // Creates a ResearchKit instruction step with the string to display
+            if let instructionStep = self.displayToORKInstructionStep(title: title) {
+                steps.append(instructionStep)
+            }
+        case .question, .boolean, .decimal, .integer, .date, .dateTime, .time, .string, .text, .url, .choice, .openChoice, .reference, .quantity:
+            // Converts individual questions to ResearchKit Question steps
+            if let step = self.toORKQuestionStep(title: title, valueSets: valueSets) {
+                if let required = self.required?.value?.bool {
+                    step.isOptional = !required
+                }
+                steps.append(step)
+            }
+        case .attachment:
+            // The FHIR Questionnaire attachment type is meant to support binary file upload, including
+            // images. ResearchKit does not support arbitrary binary file upload, but does support image
+            // capture, so we map this type to an ORKImageCaptureStep.
+            if let attachmentStep = self.attachmentToORKImageCaptureStep() {
+                steps.append(attachmentStep)
+            }
+        }
+        
+        // Also handle any potential nested questions, if necessary.
+        if !alreadyHandledNestedItems, let nestedItems = self.item {
+            for item in nestedItems {
+                steps.append(contentsOf: item.toORKSteps(in: questionnaire))
+            }
+        }
+        
+        return steps
+    }
+    
     /// Converts a FHIR `QuestionnaireItem` to a ResearchKit `ORKQuestionStep`.
     /// - Parameters:
     ///   - title: A `String` that will be displayed above the question when rendered by ResearchKit.
@@ -92,7 +103,8 @@ extension QuestionnaireItem {
     ///   - valueSets: An array of `ValueSet` items containing sets of answer choices
     /// - Returns: An ORKFormStep object (a ResearchKit form step containing all of the nested questions).
     fileprivate func groupToORKFormStep(title: String, valueSets: [ValueSet]) -> ORKFormStep? {
-        guard let id = linkId.value?.string,
+        guard self.type == .group,
+              let id = linkId.value?.string,
               let nestedQuestions = item else {
             return nil
         }
@@ -118,7 +130,6 @@ extension QuestionnaireItem {
                 if let required = question.required?.value?.bool {
                     // if !optional, the `Continue` will stay disabled till the question is answered.
                     formItem.isOptional = !required
-
                     if required {
                         containsRequiredSteps = true
                     }
@@ -140,7 +151,8 @@ extension QuestionnaireItem {
     ///   - title: A `String` to display at the top of the view rendered by ResearchKit.
     /// - Returns: A ResearchKit `ORKInstructionStep`.
     fileprivate func displayToORKInstructionStep(title: String) -> ORKInstructionStep? {
-        guard let id = linkId.value?.string,
+        guard self.type == .display,
+              let id = linkId.value?.string,
               let text = text?.value?.string else {
             return nil
         }
