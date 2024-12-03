@@ -29,9 +29,9 @@ extension ORKNavigableOrderedTask {
             let predicate: NSPredicate
             switch enableBehavior {
             case .all:
-                predicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
-            case .any:
                 predicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
+            case .any:
+                predicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
             }
             self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: itemId)
         }
