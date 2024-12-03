@@ -43,8 +43,8 @@ final class FHIRToResearchKitTests: XCTestCase {
         }
         
         try testQuestionnaire(.numberExample)
-        testQuestionnaire(.formExample)
-        testQuestionnaire(.skipLogicExample)
+        try testQuestionnaire(.formExample)
+        try testQuestionnaire(.skipLogicExample)
     }
 
     func testImageCaptureStep() throws {

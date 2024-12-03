@@ -145,6 +145,18 @@ extension FHIRPrimitive where PrimitiveType == FHIRDate {
                 minimumExpectedAnswer: nil,
                 maximumExpectedAnswer: date
             )
+        case .greaterThan:
+            return ORKResultPredicate.predicateForDateQuestionResult(
+                with: resultSelector,
+                minimumExpectedAnswer: Date(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate.nextUp),
+                maximumExpectedAnswer: nil
+            )
+        case .lessThan:
+            return ORKResultPredicate.predicateForDateQuestionResult(
+                with: resultSelector,
+                minimumExpectedAnswer: nil,
+                maximumExpectedAnswer: Date(timeIntervalSinceReferenceDate: date.timeIntervalSinceReferenceDate.nextDown)
+            )
         default:
             throw FHIRToResearchKitConversionError.unsupportedOperator(fhirOperator)
         }

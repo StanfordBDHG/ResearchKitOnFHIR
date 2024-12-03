@@ -72,7 +72,7 @@ extension Questionnaire {
         return retval
     }
     
-    // TODO check that this is correct (eg: it should skip sections/etc!)
+    
     var flattenedQuestions: [QuestionnaireItem] {
         flattenedItems { $0.type.value?.isDirectlyAnswerableQuestion == true }
     }
