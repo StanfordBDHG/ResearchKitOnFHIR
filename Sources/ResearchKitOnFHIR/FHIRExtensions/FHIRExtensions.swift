@@ -377,11 +377,13 @@ extension FHIRDate {
 
 
 extension FHIRPrimitive {
+    /// Returns a Boolean value indicating whether a `FHIRPrimitive`'s value is not equal to the specified `rhs` value.
     @inlinable
     public static func != (lhs: Self, rhs: PrimitiveType) -> Bool {
         !(lhs == rhs)
     }
     
+    /// Returns a Boolean value indicating whether a `FHIRPrimitive`'s value is not equal to the specified `lhs` value.
     @inlinable
     public static func != (lhs: PrimitiveType, rhs: Self) -> Bool {
         rhs != lhs

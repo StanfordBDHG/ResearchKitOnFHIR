@@ -54,6 +54,13 @@ extension Questionnaire {
         flattenedItems()
     }
     
+    /// All directly answerable items in the questionnaire, flattened.
+    /// - Note: individual items in the returned array may still contain nested items;
+    ///     the purpose of this property is to easily be able to access all questions in the questionnaire, without having to explicitly take any nesting into account.
+    var flattenedQuestions: [QuestionnaireItem] {
+        flattenedItems { $0.type.value?.isDirectlyAnswerableQuestion == true }
+    }
+    
     /// Flattens all `QuestionnaireItem`s in the questionnaire into an array.
     /// - parameter predicate: A predicate for filtering which items should be included. By default, all items are included.
     ///     Note that excluding an item via the predicate will only exclude it from being added to the returned array.
@@ -71,13 +78,7 @@ extension Questionnaire {
         item?.forEach(imp)
         return retval
     }
-    
-    
-    var flattenedQuestions: [QuestionnaireItem] {
-        flattenedItems { $0.type.value?.isDirectlyAnswerableQuestion == true }
-    }
 }
-
 
 
 extension QuestionnaireItemType {
@@ -88,7 +89,8 @@ extension QuestionnaireItemType {
             false
         case .display:
             false
-        case .question, .boolean, .decimal, .integer, .date, .dateTime, .time, .string, .text, .url, .choice, .openChoice, .attachment, .reference, .quantity:
+        case .question, .boolean, .decimal, .integer, .date, .dateTime, .time, .string, .text, .url,
+                .choice, .openChoice, .attachment, .reference, .quantity:
             true
         }
     }

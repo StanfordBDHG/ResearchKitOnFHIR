@@ -21,7 +21,7 @@ extension Questionnaire {
 
 
 extension QuestionnaireItem {
-    fileprivate func toORKSteps(in questionnaire: Questionnaire) -> [ORKStep] {
+    fileprivate func toORKSteps(in questionnaire: Questionnaire) -> [ORKStep] { // swiftlint:disable:this cyclomatic_complexity
         guard !self.hidden,
               let questionType = self.type.value else {
             return []

@@ -179,7 +179,7 @@ extension FHIRPrimitive where PrimitiveType == FHIRInteger {
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
                 expectedAnswer: Int(integerValue)
-            ).negated()
+            ).negated() // swiftlint:disable:this multiline_function_chains
         case .lessThanOrEqual:
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
@@ -222,7 +222,7 @@ extension FHIRPrimitive where PrimitiveType == FHIRDecimal {
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
                 expectedAnswer: doubleValue
-            ).negated()
+            ).negated() // swiftlint:disable:this multiline_function_chains
         case .lessThanOrEqual:
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
