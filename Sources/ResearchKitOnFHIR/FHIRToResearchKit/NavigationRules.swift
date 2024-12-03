@@ -80,7 +80,7 @@ extension Coding {
         let expectedAnswer = ValueCoding(code: code, system: system, display: display?.value?.string)
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
-            matchingPattern: expectedAnswer.regexPatternForMatchingORKChoiceQuestionResult
+            matchingPattern: expectedAnswer.patternForMatchingORKChoiceQuestionResult
         )
         switch fhirOperator {
         case .equal:
