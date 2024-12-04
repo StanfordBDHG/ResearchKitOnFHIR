@@ -262,7 +262,15 @@ extension Decimal {
 extension NSPredicate {
     /// Returns a negated version of the predicate.
     func negated() -> NSPredicate {
-        NSCompoundPredicate(notPredicateWithSubpredicate: self)
+        if let predicte = self as? NSCompoundPredicate,
+           predicte.compoundPredicateType == .not,
+           predicte.subpredicates.count == 1,
+           let subpred = predicte.subpredicates.first as? NSPredicate {
+            // if the predicate is already negated, we return the inner (i.e., non-negated) predicate.
+            return subpred
+        } else {
+            return NSCompoundPredicate(notPredicateWithSubpredicate: self)
+        }
     }
 }
 
