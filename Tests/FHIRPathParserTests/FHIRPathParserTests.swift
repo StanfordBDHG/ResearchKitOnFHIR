@@ -30,7 +30,16 @@ final class FHIRPathParserTests: XCTestCase {
         
         let tests: [Test] = [
             Test(input: "@1998-06-02Z", expectedOutput: .invalid),
-            Test(input: "@1998-06-02T20:15:00", expectedOutput: .date(.init(
+            Test(input: "@T", expectedOutput: .invalid),
+            Test(input: "@1998-06-02T13:15:00-05:00", expectedOutput: .date(.init(
+                timeZone: tz1,
+                year: 1998,
+                month: 6,
+                day: 2,
+                hour: 20,
+                minute: 15
+            ))),
+            Test(input: "@1998-06-03T02:15:00+08:00", expectedOutput: .date(.init(
                 timeZone: tz1,
                 year: 1998,
                 month: 6,
