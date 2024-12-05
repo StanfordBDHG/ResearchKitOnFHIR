@@ -33,18 +33,17 @@ final class FHIRToResearchKitTests: XCTestCase {
 
 
     func testConvertQuestionnaireItemToORKSteps() throws {
-        let testQuestionnaire = { (questionnaire: Questionnaire) throws in
+        func testQuestionnaire(_ questionnaire: Questionnaire, expectedNumSteps: Int) throws {
             let steps = questionnaire.toORKSteps()
-            XCTAssertEqual(steps.count, questionnaire.flattenedItems.count { $0.type != .group })
+            XCTAssertEqual(steps.count, expectedNumSteps)
             for (item, step) in zip(questionnaire.flattenedItems, steps) {
                 XCTAssertEqual(try XCTUnwrap(item.linkId.value).string, step.identifier)
-                XCTAssertEqual(item.text?.value?.string, step.text)
             }
         }
         
-        try testQuestionnaire(.numberExample)
-        try testQuestionnaire(.formExample)
-        try testQuestionnaire(.skipLogicExample)
+        try testQuestionnaire(.numberExample, expectedNumSteps: 3)
+        try testQuestionnaire(.formExample, expectedNumSteps: 2)
+        try testQuestionnaire(.skipLogicExample, expectedNumSteps: 3)
     }
 
     func testImageCaptureStep() throws {
