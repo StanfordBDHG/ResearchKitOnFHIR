@@ -62,3 +62,24 @@ struct ValueCoding: Equatable, Codable, RawRepresentable {
         try container.encode(display, forKey: .display)
     }
 }
+
+
+extension ValueCoding {
+    /// Returns a regular expression which can be used when creating `ORKChoiceQuestionResult` predicates.
+    /// The reason why this exists, is that there might, in some cases, be a mismatch between the information we have here
+    /// in the ValueCoding, and the information the `ORKChoiceQuestionResult` stores.
+    /// This is caused by the fact that in the context in which the question is answered (i.e., in the context of the question item itself),
+    /// the `display` value is known (and encoded into the result object), but if we want to check for some previous question's result
+    /// (e.g., in the context of a later question's `enableWhen` conditions), then the `display` value will not be known.
+    /// (Because it typically isn't included in the `enableWhen` condition.)
+    /// However, if we were to check the `enableWhen` condition's valueCoding against the one of the question answering context,
+    /// we'd end up comparing one with a null `display` value against one with a non-null `display` value.
+    /// (This would, obviously, cause the comparison to always fail, and conditional questions would never be enabled and presented to the patient.)
+    var patternForMatchingORKChoiceQuestionResult: String { // swiftlint:disable:this identifier_name
+        if let display {
+            #"^\{"code":"\#(code)","display":"\#(display)","system":"\#(system)"\}$"#
+        } else {
+            #"^\{"code":"\#(code)","display":.*,"system":"\#(system)"\}$"#
+        }
+    }
+}

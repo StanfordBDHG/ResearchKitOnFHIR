@@ -102,26 +102,31 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
         guard let node = ctx.DATETIME() else {
             return .failure(ctx.start, .malformedSyntaxTree)
         }
-
-        // we either have a date like `@2015-02-04`
-        // or we have a date time like `@2015-02-04T14:34:28+09:00`
-        // so we need two different parsers
-
-        let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
-        let dateTimeFormatter = ISO8601DateFormatter()
-        dateTimeFormatter.formatOptions = .withInternetDateTime
-
         let text = node.getText()
-        let startIndex = text.index(after: text.startIndex) // skip the `@`
-
-        let string = String(text.suffix(from: startIndex))
-
-        guard let date = dateTimeFormatter.date(from: string) ?? dateFormatter.date(from: string) else {
+        do {
+            let (result, timeZone) = try DateTimeLiteralParser.parse(text)
+            var dateComponents: DateComponents
+            switch result {
+            case .date(let date):
+                dateComponents = date.components
+            case .time(let time):
+                dateComponents = time.components
+            case .dateTime(let dateTime):
+                dateComponents = dateTime.components
+            }
+            dateComponents.timeZone = timeZone ?? .current
+            // Setting the components' timeZone to the one we extracted from the parsing (or the current one as a fallback),
+            // and then calling -date(from:) should always result in a Date with the system's current time zone.
+            // This way, we can elegantly support parsing dates with different time zones, in a way that when you use them
+            // the behaviour will be what you expect (the date being interpreted relative to the current time zone, as
+            // is the case with essentially all Date/Calendar-related APIs).
+            guard let date = Calendar.current.date(from: dateComponents) else {
+                return .failure(node.getSymbol(), .invalidLiteral)
+            }
+            return .success(.date(date))
+        } catch {
             return .failure(node.getSymbol(), .invalidLiteral)
         }
-
-        return .success(.date(date))
     }
 
     override func visitTimeLiteral(_ ctx: FHIRPathParser.TimeLiteralContext) -> Result<DateEvaluationValue, Error>? {
