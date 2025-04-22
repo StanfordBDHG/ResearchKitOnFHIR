@@ -23,17 +23,18 @@ extension ORKNavigableOrderedTask {
             }
             
             let enableBehavior = item.enableBehavior?.value ?? .all
-            // The translation from FHIR to ResearchKit predicates requires negating the FHIR predicates
-            // as FHIR predicates activate steps while ResearchKit uses them to skip steps.
-            let allPredicates = try enableWhen.compactMap { try $0.predicate?.negated() }
+            
+            let allPredicates = try enableWhen.compactMap { try $0.predicate(for: self) }
             let predicate: NSPredicate
             switch enableBehavior {
             case .all:
-                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
+                predicate = .and(allPredicates)
             case .any:
-                predicate = NSCompoundPredicate(orPredicateWithSubpredicates: allPredicates)
+                predicate = .or(allPredicates)
             }
-            self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: predicate), forStepIdentifier: itemId)
+            // The translation from FHIR to ResearchKit predicates requires negating the FHIR predicates
+            // as FHIR predicates activate steps while ResearchKit uses them to skip steps.
+            self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: .not(predicate)), forStepIdentifier: itemId)
         }
     }
 }
@@ -44,27 +45,29 @@ extension QuestionnaireItemEnableWhen {
     /// - Note: This predicate will evaluate to true if the item should be enabled.
     ///     When using it with e.g. ResearchKit, you will typically need to negate it, since in that context
     ///     predicates are used mainly to determine when a step should be skipped (i.e., disabled).
-    fileprivate var predicate: NSPredicate? {
-        get throws {
-            guard let enableQuestionId = question.value?.string,
-                  let fhirOperator = `operator`.value else {
-                return nil
-            }
-            let resultSelector = ORKResultSelector(resultIdentifier: enableQuestionId)
-            switch answer {
-            case .coding(let coding):
-                return try coding.predicate(with: resultSelector, operator: fhirOperator)
-            case .boolean(let boolean):
-                return try boolean.predicate(with: resultSelector, operator: fhirOperator)
-            case .date(let fhirDate):
-                return try fhirDate.predicate(with: resultSelector, operator: fhirOperator)
-            case .integer(let integerValue):
-                return try integerValue.predicate(with: resultSelector, operator: fhirOperator)
-            case .decimal(let decimalValue):
-                return try decimalValue.predicate(with: resultSelector, operator: fhirOperator)
-            default:
-                throw FHIRToResearchKitConversionError.unsupportedAnswer(answer)
-            }
+    fileprivate func predicate(for task: ORKNavigableOrderedTask) throws -> NSPredicate? {
+        guard let enableQuestionId = question.value?.string,
+              let fhirOperator = `operator`.value else {
+            return nil
+        }
+        let formSteps = task.steps.compactMap { $0 as? ORKFormStep }
+        let stepIdentifier = formSteps
+            .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) != nil }?
+            .identifier
+        let resultSelector = ORKResultSelector(stepIdentifier: stepIdentifier, resultIdentifier: enableQuestionId)
+        switch answer {
+        case .coding(let coding):
+            return try coding.predicate(with: resultSelector, operator: fhirOperator)
+        case .boolean(let boolean):
+            return try boolean.predicate(with: resultSelector, operator: fhirOperator)
+        case .date(let fhirDate):
+            return try fhirDate.predicate(with: resultSelector, operator: fhirOperator)
+        case .integer(let integerValue):
+            return try integerValue.predicate(with: resultSelector, operator: fhirOperator)
+        case .decimal(let decimalValue):
+            return try decimalValue.predicate(with: resultSelector, operator: fhirOperator)
+        default:
+            throw FHIRToResearchKitConversionError.unsupportedAnswer(answer)
         }
     }
 }
@@ -86,7 +89,7 @@ extension Coding {
         case .equal:
             return predicate
         case .notEqual:
-            return predicate.negated()
+            return .not(predicate)
         default:
             throw FHIRToResearchKitConversionError.unsupportedOperator(fhirOperator)
         }
@@ -103,7 +106,7 @@ extension FHIRPrimitive where PrimitiveType == FHIRBool {
             let noAnswerPredicate = ORKResultPredicate.predicateForNilQuestionResult(with: resultSelector)
             // if booleanValue is true, then what we're checking for here is `EXISTS == TRUE`,
             // which is of course the same as "NO ANSWER == FALSE", hence why we need to negate in that case.
-            return booleanValue ? noAnswerPredicate.negated() : noAnswerPredicate
+            return booleanValue ? .not(noAnswerPredicate) : noAnswerPredicate
         case .equal:
             return ORKResultPredicate.predicateForBooleanQuestionResult(
                 with: resultSelector,
@@ -176,10 +179,12 @@ extension FHIRPrimitive where PrimitiveType == FHIRInteger {
                 expectedAnswer: Int(integerValue)
             )
         case .notEqual:
-            return ORKResultPredicate.predicateForNumericQuestionResult(
-                with: resultSelector,
-                expectedAnswer: Int(integerValue)
-            ).negated() // swiftlint:disable:this multiline_function_chains
+            return .not(
+                ORKResultPredicate.predicateForNumericQuestionResult(
+                    with: resultSelector,
+                    expectedAnswer: Int(integerValue)
+                )
+            )
         case .lessThanOrEqual:
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
@@ -219,10 +224,12 @@ extension FHIRPrimitive where PrimitiveType == FHIRDecimal {
                 expectedAnswer: doubleValue
             )
         case .notEqual:
-            return ORKResultPredicate.predicateForNumericQuestionResult(
-                with: resultSelector,
-                expectedAnswer: doubleValue
-            ).negated() // swiftlint:disable:this multiline_function_chains
+            return .not(
+                ORKResultPredicate.predicateForNumericQuestionResult(
+                    with: resultSelector,
+                    expectedAnswer: doubleValue
+                )
+            )
         case .lessThanOrEqual:
             return ORKResultPredicate.predicateForNumericQuestionResult(
                 with: resultSelector,
@@ -260,16 +267,37 @@ extension Decimal {
 
 
 extension NSPredicate {
-    /// Returns a negated version of the predicate.
-    func negated() -> NSPredicate {
-        if let predicte = self as? NSCompoundPredicate,
-           predicte.compoundPredicateType == .not,
-           predicte.subpredicates.count == 1,
-           let subpred = predicte.subpredicates.first as? NSPredicate {
+    static func not(_ predicate: NSPredicate) -> NSPredicate {
+        if let notPredicate = predicate as? NSCompoundPredicate,
+           notPredicate.compoundPredicateType == .not,
+           notPredicate.subpredicates.count == 1,
+           let subPredicate = notPredicate.subpredicates.first as? NSPredicate {
             // if the predicate is already negated, we return the inner (i.e., non-negated) predicate.
-            return subpred
+            return subPredicate
         } else {
-            return NSCompoundPredicate(notPredicateWithSubpredicate: self)
+            return NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
+        }
+    }
+    
+    static func and(_ predicates: [NSPredicate]) -> NSPredicate {
+        switch predicates.count {
+        case 0:
+            return NSPredicate(value: true)
+        case 1:
+            return predicates[0]
+        default:
+            return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+    }
+    
+    static func or(_ predicates: [NSPredicate]) -> NSPredicate {
+        switch predicates.count {
+        case 0:
+            return NSPredicate(value: true)
+        case 1:
+            return predicates[0]
+        default:
+            return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         }
     }
 }
