@@ -124,6 +124,8 @@ extension QuestionnaireItem {
 
             if question.type == .display {
                 let formItem = ORKFormItem(sectionTitle: questionText, detailText: question.placeholderText, learnMoreItem: nil, showsProgress: false)
+                let predicate = try? question.predicate(for: [self])
+                formItem.visibilityRule = predicate.map { ORKPredicateFormItemVisibilityRule(predicate: $0) }
                 formItems.append(formItem)
             } else if let answerFormat = try? question.toORKAnswerFormat(valueSets: valueSets) {
                 let formItem = ORKFormItem(identifier: questionId, text: questionText, answerFormat: answerFormat)
