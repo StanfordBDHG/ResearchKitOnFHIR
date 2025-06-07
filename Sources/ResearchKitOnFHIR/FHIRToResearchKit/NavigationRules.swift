@@ -22,19 +22,25 @@ extension ORKNavigableOrderedTask {
                 continue
             }
             
-            let enableBehavior = item.enableBehavior?.value ?? .all
-            
-            let allPredicates = try enableWhen.compactMap { try $0.predicate(for: self) }
-            let predicate: NSPredicate
-            switch enableBehavior {
-            case .all:
-                predicate = .and(allPredicates)
-            case .any:
-                predicate = .or(allPredicates)
-            }
+            let predicate = try item.predicate(for: items) ?? .or([])
             // The translation from FHIR to ResearchKit predicates requires negating the FHIR predicates
             // as FHIR predicates activate steps while ResearchKit uses them to skip steps.
             self.setSkip(ORKPredicateSkipStepNavigationRule(resultPredicate: .not(predicate)), forStepIdentifier: itemId)
+        }
+    }
+}
+
+extension QuestionnaireItem {
+    internal func predicate(for items: [QuestionnaireItem]) throws -> NSPredicate? {
+        guard let enableWhen else {
+            return nil
+        }
+        
+        let enableBehavior = enableBehavior?.value ?? .all
+        let allPredicates = try enableWhen.compactMap { try $0.predicate(for: items) }
+        return switch enableBehavior {
+        case .all: .and(allPredicates)
+        case .any: .or(allPredicates)
         }
     }
 }
@@ -45,15 +51,15 @@ extension QuestionnaireItemEnableWhen {
     /// - Note: This predicate will evaluate to true if the item should be enabled.
     ///     When using it with e.g. ResearchKit, you will typically need to negate it, since in that context
     ///     predicates are used mainly to determine when a step should be skipped (i.e., disabled).
-    fileprivate func predicate(for task: ORKNavigableOrderedTask) throws -> NSPredicate? {
+    fileprivate func predicate(for items: [QuestionnaireItem]) throws -> NSPredicate? {
         guard let enableQuestionId = question.value?.string,
               let fhirOperator = `operator`.value else {
             return nil
         }
-        let formSteps = task.steps.compactMap { $0 as? ORKFormStep }
-        let stepIdentifier = formSteps
-            .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) != nil }?
-            .identifier
+
+        let stepIdentifier = items
+            .first { $0.item?.contains(where: { $0.linkId.value?.string == enableQuestionId }) != nil }?
+            .linkId.value?.string
         let resultSelector = ORKResultSelector(stepIdentifier: stepIdentifier, resultIdentifier: enableQuestionId)
         switch answer {
         case .coding(let coding):
