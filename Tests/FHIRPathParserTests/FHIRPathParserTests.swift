@@ -7,10 +7,12 @@
 //
 
 @testable import FHIRPathParser
-import XCTest
+import Foundation
+import Testing
 
 
-final class FHIRPathParserTests: XCTestCase {
+struct FHIRPathParserTests {
+    @Test("Literal parsing")
     func testLiteralParsing() throws { // swiftlint:disable:this function_body_length
         enum ExpectedOutput {
             /// we expect the parsing to fail and throw an error
@@ -26,7 +28,7 @@ final class FHIRPathParserTests: XCTestCase {
             let expectedOutput: ExpectedOutput
         }
         
-        let tz1 = try XCTUnwrap(TimeZone(identifier: "Europe/Berlin"))
+        let tz1 = try #require(TimeZone(identifier: "Europe/Berlin"))
         
         let tests: [Test] = [
             Test(input: "@1998-06-02Z", expectedOutput: .invalid),
@@ -56,7 +58,7 @@ final class FHIRPathParserTests: XCTestCase {
                 minute: 15
             ))),
             Test(input: "@2017-11-05T01:30:00-04:00", expectedOutput: .date(.init(
-                timeZone: try XCTUnwrap(.init(secondsFromGMT: -4 * 60 * 60)),
+                timeZone: .init(secondsFromGMT: -4 * 60 * 60),
                 year: 2017,
                 month: 11,
                 day: 5,
@@ -77,25 +79,27 @@ final class FHIRPathParserTests: XCTestCase {
         for test in tests {
             switch test.expectedOutput {
             case .invalid:
-                XCTAssertThrowsError(try FHIRPathExpression.evaluate(expression: test.input, as: Date.self))
+                #expect(throws: (any Error).self) {
+                    try FHIRPathExpression.evaluate(expression: test.input, as: Date.self)
+                }
             case .date(let expectedComponents):
                 let cal = Calendar.current
                 let parsedDate = try FHIRPathExpression.evaluate(expression: test.input, as: Date.self)
-                let parsedDateComponents = try XCTUnwrap(cal.convert(
+                let parsedDateComponents = try #require(cal.convert(
                     components: cal.dateComponents([.year, .month, .day, .hour, .minute, .second], from: parsedDate),
                     bySettingTimeZoneTo: .gmt,
                     componentsToReturn: [.year, .month, .day, .hour, .minute, .second]
                 ))
-                let expectedComponents = try XCTUnwrap(cal.convert(
+                let expectedComponents = try #require(cal.convert(
                     components: expectedComponents,
                     bySettingTimeZoneTo: .gmt,
                     componentsToReturn: [.year, .month, .day, .hour, .minute, .second]
                 ))
-                let expectedDate = try XCTUnwrap(cal.date(from: expectedComponents))
+                let expectedDate = try #require(cal.date(from: expectedComponents))
                 for (keyPath, componentName) in componentsToTest {
                     let actual = parsedDateComponents[keyPath: keyPath]
                     let expected = expectedComponents[keyPath: keyPath]
-                    XCTAssert(
+                    #expect(
                         actual == expected || (actual == nil && expected == 0) || (actual == 0 && expected == nil),
                         "[\(componentName)] Expected: \(String(describing: expected)); Actual: \(String(describing: actual)) (for test input '\(test.input)'; parsedDate: \(parsedDate); expectedDate: \(expectedDate)"
                     )
@@ -104,6 +108,7 @@ final class FHIRPathParserTests: XCTestCase {
         }
     }
     
+    @Test("Date type has no time")
     func testDateTypeHasNoTime() throws {
         let cal = Calendar.current
         let inputs: [String] = [
@@ -119,134 +124,146 @@ final class FHIRPathParserTests: XCTestCase {
                 [.year, .month, .day, .hour, .minute, .second, .nanosecond],
                 from: result
             )
-            XCTAssertEqual(components.hour, 0)
-            XCTAssertEqual(components.minute, 0)
-            XCTAssertEqual(components.second, 0)
-            XCTAssertEqual(components.nanosecond, 0)
+            #expect(components.hour == 0)
+            #expect(components.minute == 0)
+            #expect(components.second == 0)
+            #expect(components.nanosecond == 0)
         }
     }
     
     
+    @Test("Time literal parsing")
     func testTimeLiteralParsing() throws {
         // (non-date) time objects are currently not supported; we expect all of these to fail.
         let inputs = ["timeOfDay()", "@T10:30:00", "@T11:21:09", "@T14:34:28"]
         for expr in inputs {
-            XCTAssertThrowsError(try FHIRPathExpression.evaluate(expression: expr, as: Date.self))
+            #expect(throws: (any Error).self) {
+                try FHIRPathExpression.evaluate(expression: expr, as: Date.self)
+            }
         }
     }
     
     
+    @Test("Basic add expression")
     func testBasicAddExpression() throws {
         let cal = Calendar.current
         let result: Date = try FHIRPathExpression.evaluate(expression: "today() + 3 months")
         let resultComponents = cal.dateComponents([.year, .month, .day, .hour, .minute, .second], from: result)
         let nowComponents = cal.dateComponents(
             [.year, .month, .day],
-            from: try XCTUnwrap(cal.date(byAdding: .month, value: 3, to: .now))
+            from: try #require(cal.date(byAdding: .month, value: 3, to: .now))
         )
         
-        XCTAssertEqual(resultComponents.year, nowComponents.year)
-        XCTAssertEqual(resultComponents.month, nowComponents.month)
-        XCTAssertEqual(resultComponents.day, nowComponents.day)
-        XCTAssertEqual(resultComponents.hour, 0)
-        XCTAssertEqual(resultComponents.minute, 0)
-        XCTAssertEqual(resultComponents.second, 0)
+        #expect(resultComponents.year == nowComponents.year)
+        #expect(resultComponents.month == nowComponents.month)
+        #expect(resultComponents.day == nowComponents.day)
+        #expect(resultComponents.hour == 0)
+        #expect(resultComponents.minute == 0)
+        #expect(resultComponents.second == 0)
     }
 
     
+    @Test("Basic subtract expression")
     func testBasicSubtractExpression() throws {
         let cal = Calendar.current
         let result: Date = try FHIRPathExpression.evaluate(expression: "today() - 3 months")
         let resultComponents = cal.dateComponents([.year, .month, .day, .hour, .minute, .second], from: result)
         let nowComponents = cal.dateComponents(
             [.year, .month, .day],
-            from: try XCTUnwrap(cal.date(byAdding: .month, value: -3, to: .now))
+            from: try #require(cal.date(byAdding: .month, value: -3, to: .now))
         )
 
-        XCTAssertEqual(resultComponents.year, nowComponents.year)
-        XCTAssertEqual(resultComponents.month, nowComponents.month)
-        XCTAssertEqual(resultComponents.day, nowComponents.day)
-        XCTAssertEqual(resultComponents.hour, 0)
-        XCTAssertEqual(resultComponents.minute, 0)
-        XCTAssertEqual(resultComponents.second, 0)
+        #expect(resultComponents.year == nowComponents.year)
+        #expect(resultComponents.month == nowComponents.month)
+        #expect(resultComponents.day == nowComponents.day)
+        #expect(resultComponents.hour == 0)
+        #expect(resultComponents.minute == 0)
+        #expect(resultComponents.second == 0)
     }
 
     
+    @Test("Unary expression")
     func testUnaryExpression() throws {
         let cal = Calendar.current
         let result: Date = try FHIRPathExpression.evaluate(expression: "today() + (- 3 months)")
         let resultComponents = cal.dateComponents([.year, .month, .day, .hour, .minute, .second], from: result)
         let nowComponents = cal.dateComponents(
             [.year, .month, .day],
-            from: try XCTUnwrap(cal.date(byAdding: .month, value: -3, to: .now))
+            from: try #require(cal.date(byAdding: .month, value: -3, to: .now))
         )
 
-        XCTAssertEqual(resultComponents.year, nowComponents.year)
-        XCTAssertEqual(resultComponents.month, nowComponents.month)
-        XCTAssertEqual(resultComponents.day, nowComponents.day)
-        XCTAssertEqual(resultComponents.hour, 0)
-        XCTAssertEqual(resultComponents.minute, 0)
-        XCTAssertEqual(resultComponents.second, 0)
+        #expect(resultComponents.year == nowComponents.year)
+        #expect(resultComponents.month == nowComponents.month)
+        #expect(resultComponents.day == nowComponents.day)
+        #expect(resultComponents.hour == 0)
+        #expect(resultComponents.minute == 0)
+        #expect(resultComponents.second == 0)
     }
 
     
+    @Test("Now expression")
     func testNowExpression() throws {
         let cal = Calendar.current
         let result: Date = try FHIRPathExpression.evaluate(expression: "now()")
         let nowComponents = cal.dateComponents([.year, .month, .day, .hour, .minute], from: .now)
         let resultComponents = cal.dateComponents([.year, .month, .day, .hour, .minute], from: result)
 
-        XCTAssertEqual(resultComponents.year, nowComponents.year)
-        XCTAssertEqual(resultComponents.month, nowComponents.month)
-        XCTAssertEqual(resultComponents.day, nowComponents.day)
-        XCTAssertEqual(resultComponents.hour, nowComponents.hour)
-        XCTAssertEqual(resultComponents.minute, nowComponents.minute)
+        #expect(resultComponents.year == nowComponents.year)
+        #expect(resultComponents.month == nowComponents.month)
+        #expect(resultComponents.day == nowComponents.day)
+        #expect(resultComponents.hour == nowComponents.hour)
+        #expect(resultComponents.minute == nowComponents.minute)
     }
 
     
+    @Test("Fixed date time expression")
     func testFixedDateTimeExpression() throws {
         let date: Date = try FHIRPathExpression.evaluate(expression: "@2015-02-04T14:34:28+00:00 + 3 minutes")
-        let timeZone = try XCTUnwrap(TimeZone(secondsFromGMT: 0))
+        let timeZone = try #require(TimeZone(secondsFromGMT: 0))
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = timeZone
 
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-        XCTAssertEqual(components.year, 2015)
-        XCTAssertEqual(components.month, 2)
-        XCTAssertEqual(components.day, 4)
-        XCTAssertEqual(components.hour, 14)
-        XCTAssertEqual(components.minute, 34 + 3)
-        XCTAssertEqual(components.second, 28)
+        #expect(components.year == 2015)
+        #expect(components.month == 2)
+        #expect(components.day == 4)
+        #expect(components.hour == 14)
+        #expect(components.minute == 34 + 3)
+        #expect(components.second == 28)
     }
 
     
+    @Test("Fixed date expression")
     func testFixedDateExpression() throws {
         let date: Date = try FHIRPathExpression.evaluate(expression: "@2015-02-04 + 1 day")
 
         let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-        XCTAssertEqual(components.year, 2015)
-        XCTAssertEqual(components.month, 2)
-        XCTAssertEqual(components.day, 5)
-        XCTAssertEqual(components.hour, 0)
-        XCTAssertEqual(components.minute, 0)
-        XCTAssertEqual(components.second, 0)
+        #expect(components.year == 2015)
+        #expect(components.month == 2)
+        #expect(components.day == 5)
+        #expect(components.hour == 0)
+        #expect(components.minute == 0)
+        #expect(components.second == 0)
     }
 
     
+    @Test("Unsupported expression")
     func testUnsupportedExpression() throws {
-        XCTAssertThrowsError(try FHIRPathExpression.evaluate(expression: "today() = today()", as: Date.self)) { error in
-            guard let error = error as? ExpressionError,
-                  let dateError = error.underlyingError as? DateExpressionError else {
-                XCTFail("Unexpected error type: \(error)")
+        do {
+            _ = try FHIRPathExpression.evaluate(expression: "today() = today()", as: Date.self)
+            Issue.record("Expected an error to be thrown")
+        } catch let error as ExpressionError {
+            guard let dateError = error.underlyingError as? DateExpressionError else {
+                Issue.record("Unexpected error type: \(error)")
                 return
             }
-
             guard case let .unsupportedOperator(`operator`) = dateError else {
-                XCTFail("Unexpected error type: \(dateError)")
+                Issue.record("Unexpected error type: \(dateError)")
                 return
             }
-
-            XCTAssertEqual(`operator`, "=")
+            #expect(`operator` == "=")
+        } catch {
+            Issue.record("Unexpected error type: \(error)")
         }
     }
 }

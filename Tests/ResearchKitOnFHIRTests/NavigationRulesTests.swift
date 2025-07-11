@@ -9,10 +9,10 @@
 import ModelsR4
 import ResearchKit
 @testable import ResearchKitOnFHIR
-import XCTest
+import Testing
 
 
-final class NavigationRulesTests: XCTestCase {
+struct NavigationRulesTests {
     private func createORKNavigableOrderedTask(
         firstItemID: String,
         firstItemType: QuestionnaireItemType,
@@ -36,6 +36,7 @@ final class NavigationRulesTests: XCTestCase {
         return orkNavigableOrderedTask
     }
 
+    @Test("Integer equal")
     func testIntegerEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -51,9 +52,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .integer,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Integer not equal")
     func testIntegerNotEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -69,9 +71,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .integer,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Integer less than or equal")
     func testIntegerLessThanOrEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -87,9 +90,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .integer,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Integer greater than or equal")
     func testIntegerGreaterThanOrEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -105,9 +109,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .integer,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Decimal equal")
     func testDecimalEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -123,9 +128,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .decimal,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Decimal not equal")
     func testDecimalNotEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -141,9 +147,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .decimal,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Decimal greater than or equal")
     func testDecimalGreaterThanOrEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -159,9 +166,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .decimal,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Decimal less than or equal")
     func testDecimalLessThanOrEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -177,9 +185,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .decimal,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Date less than")
     func testDateLessThan() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -195,9 +204,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .date,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Date greater than")
     func testDateGreaterThan() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let enableWhen = QuestionnaireItemEnableWhen(
@@ -213,9 +223,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .date,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Coding equal")
     func testCodingEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let coding = Coding(
@@ -234,9 +245,10 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .choice,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 
+    @Test("Coding not equal")
     func testCodingNotEqual() throws {
         let firstItemID = UUID().uuidString, secondItemID = UUID().uuidString
         let coding = Coding(
@@ -255,6 +267,6 @@ final class NavigationRulesTests: XCTestCase {
             secondItemType: .choice,
             enableWhen: enableWhen
         )
-        XCTAssertNotNil(task.skipNavigationRule(forStepIdentifier: secondItemID))
+        #expect(task.skipNavigationRule(forStepIdentifier: secondItemID) != nil)
     }
 }
