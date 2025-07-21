@@ -80,9 +80,13 @@ extension ValueCoding {
         let escapedSystem = NSRegularExpression.escapedPattern(for: system)
         if let display {
             let escapedDisplay = NSRegularExpression.escapedPattern(for: display)
-            return #"^\{"code":"\#(escapedCode)","display":"\#(escapedDisplay)","system":"\#(escapedSystem)"\}$"#
+            let pattern = #"^\{"code":"\#(escapedCode)","display":"\#(escapedDisplay)","system":"\#(escapedSystem)"\}$"#
+            print("PATTERN", pattern)
+            return pattern
         } else {
-            return #"^\{"code":"\#(escapedCode)","display":.*,"system":"\#(escapedSystem)"\}$"#
+            let pattern = #"^\{"code":"\#(escapedCode)","display":.*,"system":"\#(escapedSystem)"\}$"#
+            print("PATTERN", pattern)
+            return pattern
         }
     }
 }
