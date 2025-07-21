@@ -76,20 +76,29 @@ extension ValueCoding {
     /// we'd end up comparing one with a null `display` value against one with a non-null `display` value.
     /// (This would, obviously, cause the comparison to always fail, and conditional questions would never be enabled and presented to the patient.)
     var patternForMatchingORKChoiceQuestionResult: String { // swiftlint:disable:this identifier_name
-        let jsonEncodedCode = (try? String(data: JSONEncoder().encode(code), encoding: .utf8)) ?? code
-        let escapedCode = NSRegularExpression.escapedPattern(for: jsonEncodedCode)
-        let jsonEncodedSystem = (try? String(data: JSONEncoder().encode(system), encoding: .utf8)) ?? system
-        let escapedSystem = NSRegularExpression.escapedPattern(for: jsonEncodedSystem)
         if let display {
-            let jsonEncodedDisplay = (try? String(data: JSONEncoder().encode(display), encoding: .utf8)) ?? display
-            let escapedDisplay = NSRegularExpression.escapedPattern(for: jsonEncodedDisplay)
-            let pattern = #"^\{"code":"\#(escapedCode)","display":"\#(escapedDisplay)","system":"\#(escapedSystem)"\}$"#
+            let pattern = #"^\{"code":"\#(code.jsonRegexString)","display":"\#(display.jsonRegexString)","system":"\#(system.jsonRegexString)"\}$"#
             print("PATTERN", pattern)
             return pattern
         } else {
-            let pattern = #"^\{"code":"\#(escapedCode)","display":.*,"system":"\#(escapedSystem)"\}$"#
+            let pattern = #"^\{"code":"\#(code.jsonRegexString)","display":.*,"system":"\#(system.jsonRegexString)"\}$"#
             print("PATTERN", pattern)
             return pattern
+        }
+    }
+}
+
+extension String {
+    fileprivate var jsonRegexString: String {
+        do {
+            let jsonData = try JSONEncoder().encode(self)
+            guard let string = String(data: jsonData, encoding: .utf8) else {
+                return NSRegularExpression.escapedPattern(for: self)
+            }
+            let stringWithoutSurroundingQuotes = String(string.dropFirst().dropLast())
+            return NSRegularExpression.escapedPattern(for: stringWithoutSurroundingQuotes)
+        } catch {
+            return NSRegularExpression.escapedPattern(for: self)
         }
     }
 }
