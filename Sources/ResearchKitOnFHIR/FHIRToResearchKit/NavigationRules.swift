@@ -54,7 +54,6 @@ extension QuestionnaireItemEnableWhen {
         let stepIdentifier = formSteps
             .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) ?? false }?
             .identifier
-        print("stepIdentifier", stepIdentifier)
         let resultSelector = ORKResultSelector(stepIdentifier: stepIdentifier, resultIdentifier: enableQuestionId)
         switch answer {
         case .coding(let coding):
@@ -82,13 +81,10 @@ extension Coding {
         }
         
         let expectedAnswer = ValueCoding(code: code, system: system, display: display?.value?.string)
-        let pattern = expectedAnswer.patternForMatchingORKChoiceQuestionResult
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
-            matchingPattern: pattern
+            matchingPattern: expectedAnswer.patternForMatchingORKChoiceQuestionResult
         )
-        let stringValue = ValueCoding(code: code, system: system, display: display?.value?.string ?? "").rawValue
-        print("pattern matches itself:", try? NSRegularExpression(pattern: pattern).matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count)))
         switch fhirOperator {
         case .equal:
             return predicate

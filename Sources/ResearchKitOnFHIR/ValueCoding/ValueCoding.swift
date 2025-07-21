@@ -77,19 +77,15 @@ extension ValueCoding {
     /// (This would, obviously, cause the comparison to always fail, and conditional questions would never be enabled and presented to the patient.)
     var patternForMatchingORKChoiceQuestionResult: String { // swiftlint:disable:this identifier_name
         if let display {
-            let pattern = #"^\{"code":\#(code.jsonRegexString),"display":\#(display.jsonRegexString),"system":\#(system.jsonRegexString)\}$"#
-            print("PATTERN", pattern)
-            return pattern
+            return #"^\{"code":\#(code.jsonPattern),"display":\#(display.jsonPattern),"system":\#(system.jsonPattern)\}$"#
         } else {
-            let pattern = #"^\{"code":\#(code.jsonRegexString),"display":.*,"system":\#(system.jsonRegexString)\}$"#
-            print("PATTERN", pattern)
-            return pattern
+            return #"^\{"code":\#(code.jsonPattern),"display":.*,"system":\#(system.jsonPattern)\}$"#
         }
     }
 }
 
 extension String {
-    fileprivate var jsonRegexString: String {
+    fileprivate var jsonPattern: String {
         do {
             let jsonData = try JSONEncoder().encode(self)
             guard let string = String(data: jsonData, encoding: .utf8) else {
