@@ -81,10 +81,13 @@ extension Coding {
         }
         
         let expectedAnswer = ValueCoding(code: code, system: system, display: display?.value?.string)
+        let pattern = expectedAnswer.patternForMatchingORKChoiceQuestionResult
         let predicate = ORKResultPredicate.predicateForChoiceQuestionResult(
             with: resultSelector,
-            matchingPattern: expectedAnswer.patternForMatchingORKChoiceQuestionResult
+            matchingPattern: pattern
         )
+        let stringValue = ValueCoding(code: code, system: system, display: display?.value?.string ?? "").rawValue
+        print("pattern matches itself:", try? NSRegularExpression(pattern: pattern).matches(in: stringValue, range: NSRange(location: 0, length: stringValue.count)))
         switch fhirOperator {
         case .equal:
             return predicate
