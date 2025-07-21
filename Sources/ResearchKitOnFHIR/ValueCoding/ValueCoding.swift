@@ -76,10 +76,13 @@ extension ValueCoding {
     /// we'd end up comparing one with a null `display` value against one with a non-null `display` value.
     /// (This would, obviously, cause the comparison to always fail, and conditional questions would never be enabled and presented to the patient.)
     var patternForMatchingORKChoiceQuestionResult: String { // swiftlint:disable:this identifier_name
+        let escapedCode = NSRegularExpression.escapedPattern(for: code)
+        let escapedSystem = NSRegularExpression.escapedPattern(for: system)
         if let display {
-            #"^\{"code":"\#(code)","display":"\#(display)","system":"\#(system)"\}$"#
+            let escapedDisplay = NSRegularExpression.escapedPattern(for: display)
+            return #"^\{"code":"\#(escapedCode)","display":"\#(escapedDisplay)","system":"\#(escapedSystem)"\}$"#
         } else {
-            #"^\{"code":"\#(code)","display":.*,"system":"\#(system)"\}$"#
+            return #"^\{"code":"\#(escapedCode)","display":.*,"system":"\#(escapedSystem)"\}$"#
         }
     }
 }
