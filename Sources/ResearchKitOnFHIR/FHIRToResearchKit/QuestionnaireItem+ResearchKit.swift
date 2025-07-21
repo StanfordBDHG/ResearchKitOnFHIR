@@ -290,6 +290,7 @@ extension QuestionnaireItem {
                     continue
                 }
                 let valueCoding = ValueCoding(code: code, system: system, display: display)
+                print("Coding:", valueCoding.rawValue)
                 let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
@@ -308,6 +309,7 @@ extension QuestionnaireItem {
                     continue
                 }
                 let valueCoding = ValueCoding(code: code, system: system, display: display)
+                print("Coding:", valueCoding.rawValue)
                 let choice = ORKTextChoice(text: display, value: valueCoding.rawValue as NSSecureCoding & NSCopying & NSObjectProtocol)
                 choices.append(choice)
             }
