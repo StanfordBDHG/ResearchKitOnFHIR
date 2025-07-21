@@ -50,7 +50,12 @@ extension QuestionnaireItemEnableWhen {
               let fhirOperator = `operator`.value else {
             return nil
         }
-        let resultSelector = ORKResultSelector(resultIdentifier: enableQuestionId)
+        let formSteps = task.steps.compactMap { $0 as? ORKFormStep }
+        let stepIdentifier = formSteps
+            .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) != nil }?
+            .identifier
+        print("stepIdentifier", stepIdentifier)
+        let resultSelector = ORKResultSelector(stepIdentifier: stepIdentifier, resultIdentifier: enableQuestionId)
         switch answer {
         case .coding(let coding):
             return try coding.predicate(with: resultSelector, operator: fhirOperator)
