@@ -52,7 +52,7 @@ extension QuestionnaireItemEnableWhen {
         }
         let formSteps = task.steps.compactMap { $0 as? ORKFormStep }
         let stepIdentifier = formSteps
-            .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) != nil }?
+            .first { $0.formItems?.contains(where: { $0.identifier == enableQuestionId }) ?? false }?
             .identifier
         let resultSelector = ORKResultSelector(stepIdentifier: stepIdentifier, resultIdentifier: enableQuestionId)
         switch answer {
