@@ -9,10 +9,10 @@
 import FHIRQuestionnaires
 import ResearchKit
 @testable import ResearchKitOnFHIR
-import XCTest
+import Testing
 
 
-final class ResearchKitToFHIRTests: XCTestCase {
+struct ResearchKitToFHIRTests {
     private func createStepResult(_ result: ORKResult) -> ORKStepResult {
         let stepResult = ORKStepResult(identifier: result.identifier)
         stepResult.results = [result]
@@ -26,6 +26,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
         return taskResult
     }
 
+    @Test("Text response")
     func testTextResponse() {
         let testValue = "test answer"
         var responseValue: String?
@@ -41,9 +42,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = value.value?.string {
             responseValue = unwrappedValue
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Boolean response")
     func testBooleanResponse() {
         let testValue = true
         var responseValue = false
@@ -59,9 +61,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = value.value?.bool {
             responseValue = unwrappedValue
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Decimal response")
     func testDecimalResponse() {
         let testValue: Decimal = 1.5
         var responseValue: Decimal?
@@ -77,9 +80,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = value.value?.decimal {
             responseValue = unwrappedValue
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Integer response")
     func testIntegerResponse() {
         let testValue = 1
         var responseValue: Int?
@@ -96,9 +100,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = value.value?.integer {
             responseValue = Int(unwrappedValue)
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Scale response")
     func testScaleResponse() {
         let testValue = 1
         var responseValue: Int?
@@ -114,9 +119,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = value.value?.integer {
             responseValue = Int(unwrappedValue)
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Quantity response")
     func testQuantityResponse() {
         let testValue: Decimal = 1.5
         let testUnit = "g"
@@ -138,10 +144,11 @@ final class ResearchKitToFHIRTests: XCTestCase {
             responseValue = unwrappedValue
             responseUnit = unit
         }
-        XCTAssertEqual(testValue, responseValue)
-        XCTAssertEqual(testUnit, responseUnit)
+        #expect(testValue == responseValue)
+        #expect(testUnit == responseUnit)
     }
 
+    @Test("DateTime response")
     func testDateTimeResponse() {
         let testValue = Date()
         var responseValue: Date?
@@ -157,9 +164,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let unwrappedValue = try? value.value?.asNSDate() {
             responseValue = unwrappedValue
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Time response")
     func testTimeResponse() {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: Date())
@@ -179,9 +187,10 @@ final class ResearchKitToFHIRTests: XCTestCase {
            let hourValue = value.value?.hour {
             responseValue = DateComponents(hour: Int(hourValue), minute: Int(minuteValue))
         }
-        XCTAssertEqual(testValue, responseValue)
+        #expect(testValue == responseValue)
     }
 
+    @Test("Single choice response")
     func testSingleChoiceResponse() {
         let testValue = ValueCoding(code: "testCode", system: "http://biodesign.stanford.edu/test-system", display: "Test Code")
 
@@ -191,7 +200,7 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         let fhirResponse = taskResult.fhirResponse
         guard let answer = fhirResponse.item?.first?.answer?.first?.value else {
-            XCTFail("Could not find the answer in the FHIR response.")
+            Issue.record("Could not find the answer in the FHIR response.")
             return
         }
 
@@ -200,19 +209,20 @@ final class ResearchKitToFHIRTests: XCTestCase {
             guard let code = coding.code?.value?.string,
                   let display = coding.display?.value?.string,
                   let system = coding.system?.value?.url.absoluteString else {
-                XCTFail("Could not extract the code and system from the coding.")
+                Issue.record("Could not extract the code and system from the coding.")
                 return
             }
 
             let valueCoding = ValueCoding(code: code, system: system, display: display)
-            XCTAssertEqual(testValue, valueCoding)
+            #expect(testValue == valueCoding)
 
         default:
-            XCTFail("Expected a coding value.")
+            Issue.record("Expected a coding value.")
         }
     }
 
 
+    @Test("Multiple choice response")
     func testMultipleChoiceResponse() {
         let testValues = [
             ValueCoding(code: "testCode1", system: "http://biodesign.stanford.edu/test-system", display: "Test Code 1"),
@@ -228,12 +238,12 @@ final class ResearchKitToFHIRTests: XCTestCase {
 
         guard let firstItem = fhirResponse.item?.first,
               let answers = firstItem.answer?.compactMap({ $0.value }) else {
-            XCTFail("Invalid FHIR response.")
+            Issue.record("Invalid FHIR response.")
             return
         }
 
         guard answers.count == testValues.count else {
-            XCTFail("Number of returned answers (\(answers.count)) does not match expected (\(testValues.count)).")
+            Issue.record("Number of returned answers (\(answers.count)) does not match expected (\(testValues.count)).")
             return
         }
 
@@ -243,19 +253,20 @@ final class ResearchKitToFHIRTests: XCTestCase {
                 guard let code = coding.code?.value?.string,
                       let display = coding.display?.value?.string,
                       let system = coding.system?.value?.url.absoluteString else {
-                    XCTFail("Could not extract the code and system from the coding.")
+                    Issue.record("Could not extract the code and system from the coding.")
                     return
                 }
 
                 let valueCoding = ValueCoding(code: code, system: system, display: display)
-                XCTAssertEqual(testValues[index], valueCoding)
+                #expect(testValues[index] == valueCoding)
 
             default:
-                XCTFail("Expected a coding value.")
+                Issue.record("Expected a coding value.")
             }
         }
     }
 
+    @Test("Attachment result")
     func testAttachmentResult() {
         let fileResult = ORKFileResult(identifier: "File Result")
         let urlString = "file://images/image.jpg"
@@ -267,13 +278,14 @@ final class ResearchKitToFHIRTests: XCTestCase {
         let answer = fhirResponse.item?.first?.answer?.first?.value
 
         guard case let .attachment(fhirAttachment) = answer else {
-            XCTFail("Could not extract attachment file URL.")
+            Issue.record("Could not extract attachment file URL.")
             return
         }
 
-        XCTAssertEqual(fhirAttachment.url, urlString.asFHIRURIPrimitive())
+        #expect(fhirAttachment.url == urlString.asFHIRURIPrimitive())
     }
 
+    @Test("ORKFileResult with no URL")
     func testORKFileResultWithNoURL() {
         let fileResult = ORKFileResult(identifier: "File Result")
         fileResult.fileURL = nil
@@ -282,6 +294,6 @@ final class ResearchKitToFHIRTests: XCTestCase {
         let fhirResponse = taskResult.fhirResponse
         let answer = fhirResponse.item?.first?.answer?.first?.value
 
-        XCTAssertNil(answer)
+        #expect(answer == nil)
     }
 }
