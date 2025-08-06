@@ -70,17 +70,26 @@ struct FHIRToResearchKitTests {
         #expect(itemControlValue == "slider")
     }
     
-    func testCodingRegexPattern() throws {
-        let codingWithDisplay = ValueCoding(code: "medication.value-yes", system: "http://researchkitonfhir.biodesign.stanford.edu/fhir/Coding/medication-value-exists", display: "Yes")
+    @Test("Coding Regex Pattern")
+    func codingRegexPattern() throws {
+        let codingWithDisplay = ValueCoding(
+            code: "medication.value-yes",
+            system: "http://researchkitonfhir.biodesign.stanford.edu/fhir/Coding/medication-value-exists",
+            display: "Yes"
+        )
         let patternWithDisplay = codingWithDisplay.patternForMatchingORKChoiceQuestionResult
         let expressionWithDisplay = try NSRegularExpression(pattern: patternWithDisplay)
         let rawValueWithDisplay = codingWithDisplay.rawValue
-        XCTAssert(!expressionWithDisplay.matches(in: rawValueWithDisplay, range: NSRange(location: 0, length: rawValueWithDisplay.count)).isEmpty)
+        #expect(!expressionWithDisplay.matches(in: rawValueWithDisplay, range: NSRange(location: 0, length: rawValueWithDisplay.count)).isEmpty)
 
-        let codingWithoutDisplay = ValueCoding(code: "medication.value-yes", system: "http://researchkitonfhir.biodesign.stanford.edu/fhir/Coding/medication-value-exists", display: nil)
+        let codingWithoutDisplay = ValueCoding(
+            code: "medication.value-yes",
+            system: "http://researchkitonfhir.biodesign.stanford.edu/fhir/Coding/medication-value-exists",
+            display: nil
+        )
         let patternWithoutDisplay = codingWithoutDisplay.patternForMatchingORKChoiceQuestionResult
         let expressionWithoutDisplay = try NSRegularExpression(pattern: patternWithoutDisplay)
-        XCTAssert(!expressionWithoutDisplay.matches(in: rawValueWithDisplay, range: NSRange(location: 0, length: rawValueWithDisplay.count)).isEmpty)
+        #expect(!expressionWithoutDisplay.matches(in: rawValueWithDisplay, range: NSRange(location: 0, length: rawValueWithDisplay.count)).isEmpty)
     }
 
     @Test("Regex extension")
