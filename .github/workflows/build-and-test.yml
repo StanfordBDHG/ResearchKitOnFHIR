@@ -29,8 +29,6 @@ jobs:
         platform:
           - name: iOS
             destination: 'platform=iOS Simulator,name=iPhone 17 Pro'
-          - name: macOS
-            destination: 'platform=macOS,arch=arm64'
       fail-fast: false
     with:
       runsonlabels: '["macOS", "self-hosted"]'
