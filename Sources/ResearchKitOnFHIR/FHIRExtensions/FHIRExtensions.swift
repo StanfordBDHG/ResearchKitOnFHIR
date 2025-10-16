@@ -67,63 +67,25 @@ extension QuestionnaireItem {
     /// The minimum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the minimum value allowed.
     var minValue: NSNumber? {
-        guard let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
-              case let .integer(integerValue) = minValueExtension.value,
-              let minValue = integerValue.value?.integer as? Int32 else {
-            return nil
-        }
-        return NSNumber(value: minValue)
-    }
-    
-    /// The minimum value for a date answer.
-    /// - Returns: An optional `Date` containing the minimum date allowed.
-    var minDateValue: Date? {
-        if let minValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.minValue),
-              case let .date(dateValue) = minValueExtension.value,
-              let minDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults {
-            return minDateValue
-        } else if let minDateValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.dateMinValue),
-               case let .string(dateExpression) = minDateValueExtension.value,
-               let minDateExpression = dateExpression.value?.string {
-            do {
-                return try FHIRPathExpression.evaluate(expression: minDateExpression)
-            } catch {
-                Self.logger.error("Failed to parse minDate expression \(minDateExpression): \(error)")
-            }
-        }
-
-        return nil
+        numericMinMaxValue(url: SupportedExtensions.minValue)
     }
     
     /// The maximum value for a numerical answer.
     /// - Returns: An optional `NSNumber` containing the maximum value allowed.
     var maxValue: NSNumber? {
-        guard let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
-              case let .integer(integerValue) = maxValueExtension.value,
-              let maxValue = integerValue.value?.integer as? Int32 else {
-            return nil
-        }
-        return NSNumber(value: maxValue)
+        numericMinMaxValue(url: SupportedExtensions.maxValue)
+    }
+    
+    /// The minimum value for a date answer.
+    /// - Returns: An optional `Date` containing the minimum date allowed.
+    var minDateValue: Date? {
+        dateMinMaxValue(url1: SupportedExtensions.minValue, url2: SupportedExtensions.dateMinValue)
     }
     
     /// The maximum value for a date answer.
     /// - Returns: An optional `Date` containing the maximum date allowed.
     var maxDateValue: Date? {
-        if let maxValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.maxValue),
-              case let .date(dateValue) = maxValueExtension.value,
-              let maxDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults {
-            return maxDateValue
-        } else if let maxDateValueExtension = getExtensionInQuestionnaireItem(url: SupportedExtensions.dateMaxValue),
-                  case let .string(dateExpression) = maxDateValueExtension.value,
-                  let maxDateExpression = dateExpression.value?.string {
-            do {
-                return try FHIRPathExpression.evaluate(expression: maxDateExpression)
-            } catch {
-                Self.logger.error("Failed to parse maxDate expression \(maxDateExpression): \(error)")
-            }
-        }
-
-        return nil
+        dateMinMaxValue(url1: SupportedExtensions.maxValue, url2: SupportedExtensions.dateMaxValue)
     }
     
     /// The maximum number of decimal places for a decimal answer.
@@ -362,6 +324,37 @@ extension QuestionnaireItem {
     /// - Returns: an optional Extension if it was found.
     private func getExtensionInQuestionnaireItem(url: String) -> Extension? {
         self.`extension`?.first(where: { $0.url.value?.url.absoluteString == url })
+    }
+    
+    private func numericMinMaxValue(url: String) -> NSNumber? {
+        switch getExtensionInQuestionnaireItem(url: url)?.value {
+        case .integer(let integer):
+            (integer.value?.integer).map { NSNumber(value: $0) }
+        case .decimal(let decimal):
+            (decimal.value?.decimal).map { NSDecimalNumber(decimal: $0) }
+        case .quantity(let quantity):
+            // Note: this operates on the assumption that the unit used by the min/maxValue quantity is using the same unit as the question itself.
+            (quantity.value?.value?.decimal).map { NSDecimalNumber(decimal: $0) }
+        default:
+            nil
+        }
+    }
+    
+    private func dateMinMaxValue(url1: String, url2: String) -> Date? {
+        if let maxValueExtension = getExtensionInQuestionnaireItem(url: url1),
+           case let .date(dateValue) = maxValueExtension.value,
+           let maxDateValue = dateValue.value?.asDateAtStartOfDayWithDefaults {
+            return maxDateValue
+        } else if let maxDateValueExtension = getExtensionInQuestionnaireItem(url: url2),
+                  case let .string(dateExpression) = maxDateValueExtension.value,
+                  let maxDateExpression = dateExpression.value?.string {
+            do {
+                return try FHIRPathExpression.evaluate(expression: maxDateExpression)
+            } catch {
+                Self.logger.error("Failed to parse maxDate expression \(maxDateExpression): \(error)")
+            }
+        }
+        return nil
     }
 }
 
