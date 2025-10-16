@@ -351,7 +351,7 @@ extension QuestionnaireItem {
             do {
                 return try FHIRPathExpression.evaluate(expression: maxDateExpression)
             } catch {
-                Self.logger.error("Failed to parse maxDate expression \(maxDateExpression): \(error)")
+                Self.logger.error("Failed to parse date expression \(maxDateExpression): \(error)")
             }
         }
         return nil
