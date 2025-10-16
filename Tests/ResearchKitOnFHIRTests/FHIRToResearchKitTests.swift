@@ -123,23 +123,28 @@ struct FHIRToResearchKitTests {
 
     @Test("Minimum value extension")
     func testMinValueExtension() throws {
-        let minValue = Questionnaire.numberExample.item?.first?.minValue
-        let unwrappedMinValue = try #require(minValue)
-        #expect(unwrappedMinValue == 1)
+        let minValues = try #require(Questionnaire.numberExample.item).map(\.minValue)
+        #expect(minValues == [
+            NSNumber(value: 1),
+            NSNumber(value: 1),
+            NSNumber(value: 1)
+        ])
     }
 
     @Test("Maximum value extension")
     func testMaxValueExtension() throws {
-        let maxValue = Questionnaire.numberExample.item?.first?.maxValue
-        let unwrappedMaxValue = try #require(maxValue)
-        #expect(unwrappedMaxValue == 100)
+        let minValues = try #require(Questionnaire.numberExample.item).map(\.maxValue)
+        #expect(minValues == [
+            NSNumber(value: 100),
+            NSNumber(value: 100),
+            NSNumber(value: 100)
+        ])
     }
 
     @Test("Minimum date value extension")
     func testMinDateValueExtension() throws {
         let minDateValue = Questionnaire.dateTimeExample.item?.first?.minDateValue
         let unwrappedMinDateValue = try #require(minDateValue)
-
         #expect(unwrappedMinDateValue == Calendar.current.date(from: DateComponents(year: 2001, month: 1, day: 1)))
     }
 
@@ -147,7 +152,6 @@ struct FHIRToResearchKitTests {
     func testMaxDateValueExtension() throws {
         let maxDateValue = Questionnaire.dateTimeExample.item?.first?.maxDateValue
         let unwrappedMaxDateValue = try #require(maxDateValue)
-
         #expect(unwrappedMaxDateValue == Calendar.current.date(from: DateComponents(year: 2024, month: 1, day: 1)))
     }
 
@@ -165,7 +169,6 @@ struct FHIRToResearchKitTests {
         if let url = URL(string: "http://biodesign.stanford.edu/fhir/questionnaire/test") {
             questionnaire.url?.value = FHIRURI(url)
         }
-
         #expect(throws: FHIRToResearchKitConversionError.noItems) {
             try ORKNavigableOrderedTask(questionnaire: questionnaire)
         }
@@ -181,9 +184,7 @@ struct FHIRToResearchKitTests {
                 type: FHIRPrimitive(QuestionnaireItemType.display)
             )
         ]
-
         let task = try ORKNavigableOrderedTask(questionnaire: questionnaire)
-
         #expect(
             UUID(uuidString: task.identifier) != nil,
             "In case there's no URL provided, random UUID will be generated and assigned to the ID"

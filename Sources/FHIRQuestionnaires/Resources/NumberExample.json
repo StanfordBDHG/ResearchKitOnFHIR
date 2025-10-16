@@ -71,11 +71,11 @@
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 1
+          "valueDecimal": 1
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 100
+          "valueDecimal": 100
         }
       ]
     },
@@ -98,11 +98,21 @@
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 1
+          "valueQuantity":  {
+            "value": 1,
+            "unit": "g",
+            "system": "http://unitsofmeasure.org",
+            "code": "g"
+          }
         },
         {
           "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 100
+          "valueQuantity":  {
+            "value": 100,
+            "unit": "g",
+            "system": "http://unitsofmeasure.org",
+            "code": "g"
+          }
         }
       ],
       "required": false
