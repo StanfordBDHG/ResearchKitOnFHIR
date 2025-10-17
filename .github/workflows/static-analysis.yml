@@ -6,11 +6,18 @@
 # SPDX-License-Identifier: MIT
 #
 
-name: Pull Request
+name: Static Analysis
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: Static-Analysis-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   reuse_action:
@@ -19,3 +26,6 @@ jobs:
   swiftlint:
     name: SwiftLint
     uses: StanfordBDHG/.github/.github/workflows/swiftlint.yml@v2
+  markdown_link_check:
+    name: Markdown Link Check
+    uses: StanfordBDHG/.github/.github/workflows/markdown-link-check.yml@v2

@@ -15,27 +15,50 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: Build-and-Test-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  buildandtest:
-    name: Build and Test Swift Package
+  package_tests:
+    name: Build and Test Swift Package ${{ matrix.platform.name }} (${{ matrix.config }})
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    strategy:
+      matrix:
+        config: [Debug, Release]
+        platform:
+          - name: iOS
+            destination: 'platform=iOS Simulator,name=iPhone 17 Pro'
+      fail-fast: false
     with:
-      artifactname: ResearchKitOnFHIR-Package.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
       scheme: ResearchKitOnFHIR-Package
-  buildandtestuitests:
-    name: Build and Test UI Tests
+      destination: ${{ matrix.platform.destination }}
+      buildConfig: ${{ matrix.config }}
+      resultBundle: ${{ format('ResearchKitOnFHIR-{0}-{1}.xcresult', matrix.platform.name, matrix.config) }}
+      artifactname: ${{ format('ResearchKitOnFHIR-{0}-{1}.xcresult', matrix.platform.name, matrix.config) }}
+  ui_tests:
+    name: Build and Test UI Tests ${{ matrix.platform.name }} (${{ matrix.config }})
     uses: StanfordBDHG/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
+    strategy:
+      matrix:
+        config: [Debug, Release]
+        platform:
+          - name: iOS
+            destination: 'platform=iOS Simulator,name=iPhone 17 Pro'
+      fail-fast: false
     with:
-      artifactname: TestApp.xcresult
       runsonlabels: '["macOS", "self-hosted"]'
       path: 'Tests/UITests'
       scheme: TestApp
+      destination: ${{ matrix.platform.destination }}
+      resultBundle: ${{ format('TestApp-{0}-{1}.xcresult', matrix.platform.name, matrix.config) }}
+      artifactname: ${{ format('TestApp-{0}-{1}.xcresult', matrix.platform.name, matrix.config) }}
   uploadcoveragereport:
     name: Upload Coverage Report
-    needs: [buildandtest, buildandtestuitests]
+    needs: [package_tests, ui_tests]
     uses: StanfordBDHG/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
-      coveragereports: ResearchKitOnFHIR-Package.xcresult TestApp.xcresult
+      coveragereports: ResearchKitOnFHIR-*.xcresult TestApp-*.xcresult
     secrets:
       token: ${{ secrets.CODECOV_TOKEN }}
