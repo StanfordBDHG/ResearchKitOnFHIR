@@ -22,7 +22,8 @@ let package = Package(
     ],
     products: [
         .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
-        .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"])
+        .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"]),
+        .library(name: "FHIRPathParser", targets: ["FHIRPathParser"])
     ],
     dependencies: [
         .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "3.1.1")),
