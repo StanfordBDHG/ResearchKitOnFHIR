@@ -20,9 +20,11 @@ extension Date: _FHIRPathValue {
             switch value {
             case let .components(components):
                 // if the date components represent a valid date, we try the conversion
-                guard let date = Calendar.current.date(from: components) else {
+                print("Will convert \(components) to date")
+                guard components.year != nil, let date = Calendar.current.date(from: components) else {
                     throw DateExpressionError.failedDateOperation(reason: .componentsDoNotFormValidDate)
                 }
+                print("result: \(date)")
                 return date
             case let .date(date):
                 return date

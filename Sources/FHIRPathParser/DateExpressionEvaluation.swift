@@ -18,6 +18,7 @@ enum DateEvaluationValue {
 
 final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationValue, Error>> {
     private lazy var now = Date.now // ensure today is consistent across tokens
+    private let cal = Calendar.current
 
     override func visitPolarityExpression(_ ctx: FHIRPathParser.PolarityExpressionContext) -> Result<DateEvaluationValue, Error>? {
         guard let `operator` = ctx.getToken(at: 0),
@@ -35,10 +36,8 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
                 // taking the inverse of a date doesn't make sense
                 return .failure(`operator`.getSymbol(), .unsupportedOperator(operator: `operator`.getText()))
             }
-
             value = .components(-dateComponents)
         }
-
         return .success(value)
     }
 
@@ -55,13 +54,11 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
         }
 
         let lhsEvaluation = lhs.accept(self)
-
         guard case let .success(lhsValue) = lhsEvaluation else {
             return lhsEvaluation // propagate error
         }
 
         let rhsEvaluation = rhs.accept(self)
-
         guard case var .success(rhsValue) = rhsEvaluation else {
             return rhsEvaluation // propagate error
         }
@@ -71,21 +68,23 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
                 // subtracting two dates doesn't make sense
                 return .failure(`operator`.getSymbol(), .unsupportedOperator(operator: `operator`.getText()))
             }
-
             rhsValue = .components(-dateComponents)
         }
 
         switch (lhsValue, rhsValue) {
         case let (.date(date), .components(components)),
              let (.components(components), .date(date)):
-            guard let result = Calendar.current.date(byAdding: components, to: date) else {
+            guard let result = cal.date(byAdding: components, to: date) else {
                 return .failure(DateExpressionError.failedDateOperation(reason: .failedAddition(date, components)))
             }
             return .success(.date(result))
         case (.date, .date):
             return .failure(ctx.getStart(), .failedDateOperation(reason: .cannotAddTwoDates))
         case let (.components(lhs), .components(rhs)):
-            return .success(.components(lhs + rhs))
+            guard let result = cal.components(byAdding: rhs, to: lhs) else {
+                return .failure(ctx.getStart(), .failedDateOperation(reason: .cannotAddTwoDates))
+            }
+            return .success(.components(result))
         }
     }
 
@@ -94,7 +93,6 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
             // literals like string, null, bool, numbers, ... are not supported with date expressions
             return .failure(ctx.start, .invalidLiteral)
         }
-
         return result
     }
 
@@ -114,16 +112,10 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
             case .dateTime(let dateTime):
                 dateComponents = dateTime.components
             }
-            dateComponents.timeZone = timeZone ?? .current
-            // Setting the components' timeZone to the one we extracted from the parsing (or the current one as a fallback),
-            // and then calling -date(from:) should always result in a Date with the system's current time zone.
-            // This way, we can elegantly support parsing dates with different time zones, in a way that when you use them
-            // the behaviour will be what you expect (the date being interpreted relative to the current time zone, as
-            // is the case with essentially all Date/Calendar-related APIs).
-            guard let date = Calendar.current.date(from: dateComponents) else {
-                return .failure(node.getSymbol(), .invalidLiteral)
+            if let timeZone {
+                dateComponents.timeZone = timeZone
             }
-            return .success(.date(date))
+            return .success(.components(dateComponents))
         } catch {
             return .failure(node.getSymbol(), .invalidLiteral)
         }
@@ -133,8 +125,22 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
         guard let node = ctx.TIME() else {
             return .failure(ctx.start, .malformedSyntaxTree)
         }
-
-        return .failure(node.getSymbol(), .unsupportedTerm) // we currently cannot represent time
+        let text = node.getText()
+        do {
+            let (result, _) = try DateTimeLiteralParser.parse(text)
+            switch result {
+            case .time(let time):
+                return .success(.components(time.components))
+            case .date:
+                // should be unreachable
+                return .failure(node.getSymbol(), .invalidLiteral)
+            case .dateTime(let dateTime):
+                // should also be unreachable, but at least we can handle it
+                return .success(.components(dateTime.time.components))
+            }
+        } catch {
+            return .failure(node.getSymbol(), .internalError)
+        }
     }
 
     // swiftlint:disable:next cyclomatic_complexity
@@ -216,16 +222,15 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
             if let paramList = function.paramList() {
                 return .failure(paramList.start, .invalidFunctionParameters(expected: 0, received: (paramList.getChildCount() / 2) + 1))
             }
-
             let date: Date
             if identifierToken.getText() == "today" { // yields a Date
-                let todayComponents = Calendar.current.dateComponents([.year, .month, .day], from: now)
-                date = Calendar.current.date(from: todayComponents) ?? now
+                date = cal.startOfDay(for: now)
             } else { // "now" yields a DateTime
                 date = now
             }
-
             return .success(.date(date))
+        case "timeOfDay":
+            return .success(.components(cal.dateComponents([.hour, .minute, .second], from: now)))
         default:
             return .failure(identifierToken.getSymbol(), .unknownIdentifier(identifier: identifierToken.getText()))
         }

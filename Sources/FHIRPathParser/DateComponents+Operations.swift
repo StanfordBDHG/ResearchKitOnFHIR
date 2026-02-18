@@ -13,7 +13,6 @@ extension DateComponents {
     static var supportedKeyPaths: [WritableKeyPath<Self, Int?>] {
         [\.year, \.month, \.weekOfYear, \.day, \.hour, \.minute, \.second, \.nanosecond]
     }
-
     
     static prefix func - (components: Self) -> Self {
         var components = components
@@ -26,17 +25,33 @@ extension DateComponents {
         }
         return components
     }
+}
 
-    
-    static func + (lhs: Self, rhs: Self) -> Self {
-        var result = Self()
-        for keyPath in Self.supportedKeyPaths {
-            guard lhs[keyPath: keyPath] != nil || rhs[keyPath: keyPath] != nil else {
-                // if the component is nil in both inputs, we keep it nil in the output.
-                continue
-            }
-            result[keyPath: keyPath] = (lhs[keyPath: keyPath] ?? 0) + (rhs[keyPath: keyPath] ?? 0)
+
+extension DateComponents {
+    var hasYear: Bool {
+        year != nil
+    }
+}
+
+
+extension Calendar {
+    func components(byAdding rhs: DateComponents, to lhs: DateComponents) -> DateComponents? {
+        if !lhs.hasYear && rhs.hasYear {
+            // swap so that lhs has a year
+            return components(byAdding: lhs, to: rhs)
         }
+        let timeZone = lhs.timeZone ?? rhs.timeZone ?? self.timeZone
+        var lhs = lhs
+        lhs.timeZone = timeZone
+        guard let lhsDate = self.date(from: lhs) else {
+            return nil
+        }
+        guard let sumDate = self.date(byAdding: rhs, to: lhsDate) else {
+            return nil
+        }
+        var result = self.dateComponents(in: timeZone, from: sumDate)
+        result.calendar = nil
         return result
     }
 }
