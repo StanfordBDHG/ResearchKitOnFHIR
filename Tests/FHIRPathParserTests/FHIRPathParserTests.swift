@@ -6,14 +6,17 @@
 // SPDX-License-Identifier: MIT
 //
 
+// swiftlint:disable line_length
+
 @testable import FHIRPathParser
 import Foundation
 import Testing
 
 
-@Suite(.serialized)
-struct FHIRPathParserTests {
-    @Test func literalParsing() throws { // swiftlint:disable:this function_body_length
+@Suite(.serialized) // needs to be serialized bc Antlr has concurrency issues
+struct FHIRPathParserTests { // swiftlint:disable:this type_body_length
+    @Test
+    func literalParsing() throws { // swiftlint:disable:this function_body_length
         enum ExpectedOutput {
             /// we expect the parsing to fail and throw an error
             case invalid
@@ -265,7 +268,7 @@ struct FHIRPathParserTests {
             "@2015-02-04 + 1 day": .init(timeZone: .current, year: 2015, month: 2, day: 5),
             "@2015-02-04 + 2 days": .init(timeZone: .current, year: 2015, month: 2, day: 6),
             "@2015-02-04 - 7 days": .init(timeZone: .current, year: 2015, month: 1, day: 28),
-            "@2015-02-04 - 7 weeks": .init(timeZone: .current, year: 2014, month: 12, day: 17),
+            "@2015-02-04 - 7 weeks": .init(timeZone: .current, year: 2014, month: 12, day: 17)
         ]
         for (input, expected) in inputs {
             do {
@@ -284,14 +287,6 @@ struct FHIRPathParserTests {
                 #expect(components == expected)
             }
         }
-//        let date: Date = try FHIRPathExpression.evaluate(expression: "@2015-02-04 + 1 day")
-//        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-//        #expect(components.year == 2015)
-//        #expect(components.month == 2)
-//        #expect(components.day == 5)
-//        #expect(components.hour == 0)
-//        #expect(components.minute == 0)
-//        #expect(components.second == 0)
     }
     
     

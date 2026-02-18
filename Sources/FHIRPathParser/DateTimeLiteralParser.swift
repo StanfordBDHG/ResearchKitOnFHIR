@@ -45,6 +45,10 @@ struct DateTimeLiteralParser<Input: StringProtocol>: ~Copyable {
         var minute: Int = 0
         var second: Int = 0
         
+        var components: DateComponents {
+            DateComponents(hour: hour, minute: minute, second: second)
+        }
+        
         init() {}
         
         init?(hour: Int = 0, minute: Int = 0, second: Int = 0) {
@@ -54,10 +58,6 @@ struct DateTimeLiteralParser<Input: StringProtocol>: ~Copyable {
             self.hour = hour
             self.minute = minute
             self.second = second
-        }
-        
-        var components: DateComponents {
-            DateComponents(hour: hour, minute: minute, second: second)
         }
     }
     

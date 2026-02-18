@@ -41,7 +41,9 @@ final class DateExpressionEvaluation: FHIRPathBaseVisitor<Result<DateEvaluationV
         return .success(value)
     }
 
-    override func visitAdditiveExpression(_ ctx: FHIRPathParser.AdditiveExpressionContext) -> Result<DateEvaluationValue, Error>? {
+    override func visitAdditiveExpression( // swiftlint:disable:this cyclomatic_complexity
+        _ ctx: FHIRPathParser.AdditiveExpressionContext
+    ) -> Result<DateEvaluationValue, Error>? {
         guard let lhs = ctx.expression(0),
               let `operator` = ctx.getToken(at: 0),
               let rhs = ctx.expression(1) else {
