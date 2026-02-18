@@ -42,9 +42,7 @@ public enum FHIRPathExpression {
         let lexer = FHIRPathLexer(stream)
         let tokenStream = CommonTokenStream(lexer)
         let parser = try FHIRPathParser(tokenStream)
-
         let expression = try parser.expression()
-
         return try value.evaluate(expression)
     }
 }

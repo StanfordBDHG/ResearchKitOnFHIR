@@ -9,12 +9,16 @@
 import Foundation
 
 
+private let asciiDigits: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+
 /// Parser for ISO8601 DateTime literals as used in FHIRPath.
 /// Implemented in conformance with the `DATE`, `DATETIME`, and `TIME` rules
 /// [in the FHIRPath grammar](https://hl7.org/fhirpath/N1/grammar.html)
-struct DateTimeLiteralParser {
+struct DateTimeLiteralParser<Input: StringProtocol>: ~Copyable {
     enum ParseError: Error {
         case unexpectedToken(expected: [Character], found: Character?)
+        case invalidInput(reason: String)
         case unsupportedLiteral
     }
     
@@ -22,7 +26,7 @@ struct DateTimeLiteralParser {
     /// - Note: FHIRPath allows for partial `Date`s, in which case only some of the components are specified and,
     ///     starting at the first omitted component, all following components are omitted as well.
     ///     We currently do not support this; partial `Date`s are treated and represented the same as non-partial `Date`s with the omitted components set to 0.
-    struct Date {
+    struct Date: Equatable {
         var year: Int = 0
         var month: Int = 0
         var day: Int = 0
@@ -36,7 +40,7 @@ struct DateTimeLiteralParser {
     /// - Note: FHIRPath allows for partial `Time`s, in which case only some of the components are specified and,
     ///     starting at the first omitted component, all following components are omitted as well.
     ///     We currently do not support this; partial `Time`s are treated and represented the same as non-partial `Time`s with the omitted components set to 0.
-    struct Time {
+    struct Time: Equatable {
         var hour: Int = 0
         var minute: Int = 0
         var second: Int = 0
@@ -44,37 +48,63 @@ struct DateTimeLiteralParser {
         var components: DateComponents {
             DateComponents(hour: hour, minute: minute, second: second)
         }
+        
+        init() {}
+        
+        init?(hour: Int = 0, minute: Int = 0, second: Int = 0) {
+            guard (0..<24).contains(hour), (0..<60).contains(minute), (0..<60).contains(second) else {
+                return nil
+            }
+            self.hour = hour
+            self.minute = minute
+            self.second = second
+        }
     }
     
     /// A `DateTime` as defined by FHIRPath.
     /// - Note: FHIRPath allows for partial `DateTime`s, in which case the date component is specified, and the time component is omitted.
     ///     We currently do not support this; partial `DateTime`s are treated and represented the same as non-partial `DateTime`s with the ``Time`` components all set to 0.
-    struct DateTime {
+    struct DateTime: Equatable {
         var date: Date
         var time: Time
         
         var components: DateComponents {
-            date.components + time.components
+            DateComponents(
+                year: date.year,
+                month: date.month,
+                day: date.day,
+                hour: time.hour,
+                minute: time.minute,
+                second: time.second
+            )
         }
     }
     
-    enum Result {
+    enum Result: Equatable {
         case date(Date)
         case time(Time)
         case dateTime(DateTime)
     }
     
-    private let input: [Character]
-    private var position: Int = 0
+    private let input: Input
+    private var position: Input.Index
     
-    private var current: Character? { input[safe: position] }
-    private var next: Character? { input[safe: position + 1] }
-    private var isAtEnd: Bool { position >= input.endIndex }
-    private var numRemainingTokens: Int { input.count - position - 1 }
+    private var current: Character? {
+        input[safe: position]
+    }
+    private var next: Character? {
+        input[safe: input.index(after: position)]
+    }
+    private var isAtEnd: Bool {
+        position >= input.endIndex
+    }
+    private var numRemainingTokens: Int {
+        input.distance(from: position, to: input.endIndex)
+    }
     
     
     private mutating func consume(_ count: Int = 1) {
-        position += count
+        input.formIndex(&position, offsetBy: count)
     }
     
     /// Checks that the current token is equal to the specified expected value.
@@ -108,13 +138,13 @@ struct DateTimeLiteralParser {
     /// - Throws: if, when the function is called, the first token is not a decimal digit.
     private mutating func parseInt() throws(ParseError) -> Int {
         guard !isAtEnd else {
-            throw .unexpectedToken(expected: Self.asciiDigits, found: nil)
+            throw .unexpectedToken(expected: asciiDigits, found: nil)
         }
-        if let current, !Self.asciiDigits.contains(current) {
-            throw .unexpectedToken(expected: Self.asciiDigits, found: current)
+        if let current, !asciiDigits.contains(current) {
+            throw .unexpectedToken(expected: asciiDigits, found: current)
         }
         var value = 0
-        while let current, Self.asciiDigits.contains(current) {
+        while let current, asciiDigits.contains(current) {
             value *= 10
             // Safety: we know that current is an ascii character, and we know that the "0" literal is an ascii character.
             // Therefore, we can safely access the asciiValue for both of them.
@@ -133,16 +163,17 @@ extension DateTimeLiteralParser {
     /// - Returns: A tuple of a `Date` object representing the parse result, and the `TimeZone`
     ///     in which the date should be interpreted, if specified.
     /// - Throws: if the input cannot be parsed, e.g. because it is in an invalid format.
-    static func parse(_ input: String) throws(ParseError) -> (Result, TimeZone?) {
-        var parser = Self(input: Array(input))
+    static func parse(_ input: Input) throws(ParseError) -> (Result, TimeZone?) {
+        let parser = Self(input: input, position: input.startIndex)
         return try parser.run()
     }
     
     
     /// Implements parsing of the `DATE` and `TIME` rules defined in the grammar.
-    private mutating func run() throws(ParseError) -> (Result, TimeZone?) {
+    consuming private func run() throws(ParseError) -> (Result, TimeZone?) {
         try expectAndConsume("@")
         if current == "T" {
+            consume()
             let time = try parseTimeFormat()
             return (.time(time), nil)
         } else {
@@ -183,12 +214,20 @@ extension DateTimeLiteralParser {
         // [0-9][0-9] (':'[0-9][0-9] (':'[0-9][0-9] ('.'[0-9]+)?)?)?
         let hour = try parseInt()
         guard current == ":" else {
-            return .init(hour: hour)
+            if let time = Time(hour: hour) {
+                return time
+            } else {
+                throw .invalidInput(reason: "Invalid hour value '\(hour)'")
+            }
         }
         try expectAndConsume(":")
         let minute = try parseInt()
         guard current == ":" else {
-            return .init(hour: hour, minute: minute)
+            if let time = Time(hour: hour, minute: minute) {
+                return time
+            } else {
+                throw .invalidInput(reason: "Invalid time value '\(hour):\(minute)'")
+            }
         }
         try expectAndConsume(":")
         let second = try parseInt()
@@ -199,7 +238,11 @@ extension DateTimeLiteralParser {
             // We currently do not support this.
             throw .unsupportedLiteral
         default:
-            return .init(hour: hour, minute: minute, second: second)
+            if let time = Time(hour: hour, minute: minute, second: second) {
+                return time
+            } else {
+                throw .invalidInput(reason: "Invalid time value '\(hour):\(minute):\(second)'")
+            }
         }
     }
     
@@ -245,11 +288,6 @@ extension DateTimeLiteralParser {
             return TimeZone(secondsFromGMT: offsetInSeconds)
         }
     }
-}
-
-
-extension DateTimeLiteralParser {
-    private static let asciiDigits: [Character] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 }
 
 
