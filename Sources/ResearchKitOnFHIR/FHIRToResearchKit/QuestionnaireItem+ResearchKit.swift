@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import FHIRModelsExtensions
 import ModelsR4
 import ResearchKit
 
@@ -195,16 +196,16 @@ extension QuestionnaireItem {
             return ORKDateAnswerFormat(
                 style: .date,
                 defaultDate: nil,
-                minimumDate: minDateValue,
-                maximumDate: maxDateValue,
+                minimumDate: minDateValue.flatMap { Calendar.current.date(from: $0) },
+                maximumDate: maxDateValue.flatMap { Calendar.current.date(from: $0) },
                 calendar: nil
             )
         case .dateTime:
             return ORKDateAnswerFormat(
                 style: .dateAndTime,
                 defaultDate: nil,
-                minimumDate: minDateValue,
-                maximumDate: maxDateValue,
+                minimumDate: minDateValue.flatMap { Calendar.current.date(from: $0) },
+                maximumDate: maxDateValue.flatMap { Calendar.current.date(from: $0) },
                 calendar: nil
             )
         case .time:
