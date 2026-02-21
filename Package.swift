@@ -21,14 +21,12 @@ let package = Package(
         .macOS(.v14)
     ],
     products: [
-        .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"]),
-        .library(name: "FHIRQuestionnaires", targets: ["FHIRQuestionnaires"]),
-        .library(name: "FHIRPathParser", targets: ["FHIRPathParser"])
+        .library(name: "ResearchKitOnFHIR", targets: ["ResearchKitOnFHIR"])
     ],
     dependencies: [
         .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "3.1.1")),
         .package(url: "https://github.com/apple/FHIRModels.git", from: "0.7.0"),
-        .package(url: "https://github.com/antlr/antlr4.git", from: "4.13.1")
+        .package(url: "https://github.com/StanfordBDHG/FHIRModelsExtensions.git", from: "0.1.0")
     ] + swiftLintPackage(),
     targets: [
         .target(
@@ -37,54 +35,16 @@ let package = Package(
                 .product(name: "ResearchKit", package: "ResearchKit"),
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
                 .product(name: "ModelsR4", package: "FHIRModels"),
-                .target(name: "FHIRPathParser")
-            ],
-            plugins: [] + swiftLintPlugin()
-        ),
-        .target(
-            name: "FHIRQuestionnaires",
-            dependencies: [
-                .product(name: "ModelsR4", package: "FHIRModels")
-            ],
-            resources: [
-                .copy("Resources/SkipLogicExample.json"),
-                .copy("Resources/TextValidationExample.json"),
-                .copy("Resources/ContainedValueSetExample.json"),
-                .copy("Resources/NumberExample.json"),
-                .copy("Resources/DateTimeExample.json"),
-                .copy("Resources/PHQ-9.json"),
-                .copy("Resources/GAD-7.json"),
-                .copy("Resources/GCS.json"),
-                .copy("Resources/IPSS.json"),
-                .copy("Resources/FormExample.json"),
-                .copy("Resources/MultipleEnableWhen.json"),
-                .copy("Resources/ImageCapture.json"),
-                .copy("Resources/SliderExample.json")
-            ],
-            plugins: [] + swiftLintPlugin()
-        ),
-        .target(
-            name: "FHIRPathParser",
-            dependencies: [
-                .product(name: "Antlr4", package: "antlr4")
-            ],
-            exclude: [
-                "ANTLUtils"
+                .product(name: "FHIRModelsExtensions", package: "FHIRModelsExtensions"),
+                .product(name: "FHIRPathParser", package: "FHIRModelsExtensions")
             ],
             plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
-                .target(name: "ResearchKitOnFHIR"),
-                .target(name: "FHIRQuestionnaires")
-            ],
-            plugins: [] + swiftLintPlugin()
-        ),
-        .testTarget(
-            name: "FHIRPathParserTests",
-            dependencies: [
-                .target(name: "FHIRPathParser")
+                "ResearchKitOnFHIR",
+                .product(name: "FHIRQuestionnaires", package: "FHIRModelsExtensions")
             ],
             plugins: [] + swiftLintPlugin()
         )

@@ -32,7 +32,7 @@ jobs:
       fail-fast: false
     with:
       runsonlabels: '["macOS", "self-hosted"]'
-      scheme: ResearchKitOnFHIR-Package
+      scheme: ResearchKitOnFHIR
       destination: ${{ matrix.platform.destination }}
       buildConfig: ${{ matrix.config }}
       resultBundle: ${{ format('ResearchKitOnFHIR-{0}-{1}.xcresult', matrix.platform.name, matrix.config) }}

@@ -144,15 +144,19 @@ struct FHIRToResearchKitTests {
     @Test("Minimum date value extension")
     func testMinDateValueExtension() throws {
         let minDateValue = Questionnaire.dateTimeExample.item?.first?.minDateValue
-        let unwrappedMinDateValue = try #require(minDateValue)
-        #expect(unwrappedMinDateValue == Calendar.current.date(from: DateComponents(year: 2001, month: 1, day: 1)))
+        let unwrappedMinDate = try #require(minDateValue)
+        #expect(unwrappedMinDate.year == 2001)
+        #expect(unwrappedMinDate.month == 1)
+        #expect(unwrappedMinDate.day == 1)
     }
 
     @Test("Maximum date value extension")
     func testMaxDateValueExtension() throws {
         let maxDateValue = Questionnaire.dateTimeExample.item?.first?.maxDateValue
-        let unwrappedMaxDateValue = try #require(maxDateValue)
-        #expect(unwrappedMaxDateValue == Calendar.current.date(from: DateComponents(year: 2024, month: 1, day: 1)))
+        let unwrappedMaxDate = try #require(maxDateValue)
+        #expect(unwrappedMaxDate.year == 2024)
+        #expect(unwrappedMaxDate.month == 1)
+        #expect(unwrappedMaxDate.day == 1)
     }
 
     @Test("Maximum decimal extension")
