@@ -1,5 +1,4 @@
 // swift-tools-version:6.0
-
 //
 // This source file is part of the ResearchKitOnFHIR open source project
 // 
@@ -26,7 +25,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/StanfordBDHG/ResearchKit.git", .upToNextMinor(from: "3.1.1")),
         .package(url: "https://github.com/apple/FHIRModels.git", "0.8.0"..<"0.9.0"),
-        .package(url: "https://github.com/StanfordBDHG/FHIRModelsExtensions.git", from: "0.1.0")
+        .package(url: "https://github.com/StanfordSpezi/SpeziFHIR.git", branch: "lukas/movin-and-shakin")
     ] + swiftLintPackage(),
     targets: [
         .target(
@@ -35,8 +34,8 @@ let package = Package(
                 .product(name: "ResearchKit", package: "ResearchKit"),
                 .product(name: "ResearchKitSwiftUI", package: "ResearchKit"),
                 .product(name: "ModelsR4", package: "FHIRModels"),
-                .product(name: "FHIRModelsExtensions", package: "FHIRModelsExtensions"),
-                .product(name: "FHIRPathParser", package: "FHIRModelsExtensions")
+                .product(name: "FHIRModelsExtensions", package: "SpeziFHIR"),
+                .product(name: "FHIRPathParser", package: "SpeziFHIR")
             ],
             plugins: [] + swiftLintPlugin()
         ),
@@ -44,7 +43,7 @@ let package = Package(
             name: "ResearchKitOnFHIRTests",
             dependencies: [
                 "ResearchKitOnFHIR",
-                .product(name: "FHIRQuestionnaires", package: "FHIRModelsExtensions")
+                .product(name: "FHIRQuestionnaires", package: "SpeziFHIR")
             ],
             plugins: [] + swiftLintPlugin()
         )
