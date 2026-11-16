@@ -101,7 +101,7 @@ do {
 }
 ```
 
-Now you can present the task as described in the [ResearchKit documentation](https://github.com/StanfordBDHG/researchkit#4-present-the-task).
+Now you can present the task as described in the [ResearchKit documentation](https://github.com/StanfordBDHG/ResearchKit#surveys).
 
 ### Converting ResearchKit Task Results to FHIR QuestionnaireResponse
 
