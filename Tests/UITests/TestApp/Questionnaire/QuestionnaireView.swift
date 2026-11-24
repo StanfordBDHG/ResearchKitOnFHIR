@@ -42,7 +42,7 @@ struct QuestionnaireView: View {
         }
 
         // Convert the ResearchKit task results into FHIR
-        let fhirResponse = result.fhirResponse
+        var fhirResponse = result.fhirResponse
 
         // First, we will look for any attachments in the QuestionnaireResponse
         // and move them from their temporary location to a permanent location.
@@ -64,7 +64,8 @@ struct QuestionnaireView: View {
 
             // Search for attachments in the QuestionnaireResponse and move them to the newly created directory.
             if let responseItems = fhirResponse.item {
-                for item in responseItems {
+                // FHIR models are value types: write the updated answer back through the index.
+                for (index, item) in responseItems.enumerated() {
                     if case let .attachment(value) = item.answer?.first?.value {
                         guard let fileURL = value.url?.value?.url else {
                             continue
@@ -77,7 +78,7 @@ struct QuestionnaireView: View {
                             try FileManager.default.moveItem(at: fileURL, to: newPath)
 
                             // Update the item's answer with the new URL.
-                            item.answer?.first?.value = .attachment(
+                            fhirResponse.item?[index].answer?[0].value = .attachment(
                                 Attachment(url: newPath.asFHIRURIPrimitive())
                             )
                         } catch {

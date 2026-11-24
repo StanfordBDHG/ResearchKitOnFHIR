@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import class ModelsR4.QuestionnaireResponse
+import struct ModelsR4.QuestionnaireResponse
 import SwiftUI
 
 

@@ -169,7 +169,7 @@ struct FHIRToResearchKitTests {
     @Test("Questionnaire with no items")
     func testNoItemsException() throws {
         // Creates a questionnaire and set a URL, but does not add items
-        let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
+        var questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         if let url = URL(string: "http://biodesign.stanford.edu/fhir/questionnaire/test") {
             questionnaire.url?.value = FHIRURI(url)
         }
@@ -181,7 +181,7 @@ struct FHIRToResearchKitTests {
     @Test("Questionnaire with no URL")
     func testNoURL() throws {
         // Creates a questionnaire and adds an item but does not set a URL
-        let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
+        var questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         questionnaire.item = [
             QuestionnaireItem(
                 linkId: FHIRPrimitive(FHIRString(UUID().uuidString)),
