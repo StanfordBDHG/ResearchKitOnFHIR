@@ -27,7 +27,7 @@ extension ORKTaskResult {
             }
         }
         
-        let questionnaireResponse = QuestionnaireResponse(status: FHIRPrimitive(QuestionnaireResponseStatus.completed))
+        var questionnaireResponse = QuestionnaireResponse(status: FHIRPrimitive(QuestionnaireResponseStatus.completed))
         questionnaireResponse.item = questionnaireResponses
         questionnaireResponse.id = FHIRPrimitive(FHIRString(questionnaireResponseID))
         questionnaireResponse.authored = FHIRPrimitive(try? DateTime(date: Date()))
@@ -43,13 +43,13 @@ extension ORKTaskResult {
     // MARK: Functions for creating FHIR responses from ResearchKit results
     
     private func appendResponseAnswer(_ value: QuestionnaireResponseItemAnswer.ValueX?, to responseAnswers: inout [QuestionnaireResponseItemAnswer]) {
-        let responseAnswer = QuestionnaireResponseItemAnswer()
+        var responseAnswer = QuestionnaireResponseItemAnswer()
         responseAnswer.value = value
         responseAnswers.append(responseAnswer)
     }
 
     private func createResponse(_ result: ORKResult) -> QuestionnaireResponseItem {
-        let response = QuestionnaireResponseItem(linkId: FHIRPrimitive(FHIRString(result.identifier)))
+        var response = QuestionnaireResponseItem(linkId: FHIRPrimitive(FHIRString(result.identifier)))
         var responseAnswers: [QuestionnaireResponseItemAnswer] = []
         
         switch result {

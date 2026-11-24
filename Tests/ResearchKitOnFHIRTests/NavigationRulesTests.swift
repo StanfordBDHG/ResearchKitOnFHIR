@@ -20,7 +20,7 @@ struct NavigationRulesTests {
         secondItemType: QuestionnaireItemType,
         enableWhen: QuestionnaireItemEnableWhen
     ) throws -> ORKNavigableOrderedTask {
-        let questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
+        var questionnaire = Questionnaire(status: FHIRPrimitive(PublicationStatus.draft))
         questionnaire.url = FHIRPrimitive(FHIRURI(stringLiteral: "http://biodesign.stanford.edu/fhir/questionnaire/navigation-rule-test"))
         let questionnaireItemFirst = QuestionnaireItem(
             linkId: FHIRPrimitive(FHIRString(firstItemID)),
